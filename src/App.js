@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import { DefaultLayout } from "./Layouts";
 import { Home } from "./Pages";
+import Cart from "./Pages/Cart";
 
 function App() {
   const router = createBrowserRouter(
@@ -14,6 +15,7 @@ function App() {
       <>
         <Route path="/" element={<DefaultLayout />}>
           <Route index element={<Home />}></Route>
+          <Route path="/cart" element={<Cart />}></Route>
         </Route>
       </>
     )
