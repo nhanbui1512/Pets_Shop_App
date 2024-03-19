@@ -17,8 +17,8 @@ function App() {
           <Route index element={<Home />}></Route>
           <Route path="/cart" element={<Cart />}></Route>
         </Route>
-      </>
-    )
+      </>,
+    ),
   );
   return (
     <>
