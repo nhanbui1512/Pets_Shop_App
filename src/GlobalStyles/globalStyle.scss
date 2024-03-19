@@ -1,11 +1,12 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 
 :root {
   --black: #000;
   --white: #fff;
   --text-primary: #ccc;
   --orange-primary: #f50;
-  --font-family: "Inter", sans-serif;
+  --blue-primary: #064475;
+  --font-family: "Open Sans", sans-serif;
   --container-width: 1200px;
 }
 * {
@@ -16,7 +17,7 @@
 
 body {
   font-family: var(--font-family);
-  font-size: 1.6rem;
+  font-size: 1.2rem;
   line-height: 1.5;
   text-rendering: optimizeLegibility;
   overflow-y: scroll;
@@ -72,12 +73,20 @@ body {
 .mt-24 {
   margin-top: 24px;
 }
+.mb-22 {
+  margin-bottom: 22px;
+}
 .mg_24_0 {
   margin: 24px 0;
 }
 .pd_0_8 {
   padding: 0 8px;
 }
+
+.pd_10_0 {
+  padding: 10px 0;
+}
+
 .none-select {
   user-select: none;
 }

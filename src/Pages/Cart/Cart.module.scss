@@ -1,0 +1,152 @@
+.text-dec {
+  text-decoration: none;
+  color: #000;
+}
+
+.content-cart {
+  margin: 24px 0;
+}
+
+.content-cart_head {
+  text-transform: uppercase;
+  font-size: 28px;
+  font-weight: 400;
+  color: #000;
+}
+
+.content-box {
+  margin: 16px 0;
+}
+
+.content-box_title {
+  font-size: 14px;
+  font-weight: 400;
+  color: #555;
+}
+
+.content-box_table {
+  margin: 52px 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table thead tr,
+table tfoot tr {
+  background-color: #f0f0f0;
+}
+
+table thead th,
+table tfoot th {
+  border-top: 1px solid #a4a4a4;
+  border-bottom: 1px solid #a4a4a4;
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+  color: #000;
+}
+
+table th {
+  min-width: 140px;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 12px;
+  line-height: 20px;
+}
+
+.btn-cart_back {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #adadad;
+  padding: 12px;
+  background-color: #fff;
+  text-decoration: none;
+  color: #000;
+}
+
+.btn-icon_back {
+  font-size: 18px;
+  margin-right: 12px;
+}
+
+.btn-cast_title {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+th .btn-cart_update .btn-cast_title {
+  color: #adadad;
+}
+
+th .btn-cart_update:hover {
+  background-color: #c9c9c9;
+  border: 1px solid transparent;
+  transition: all linear 0.2s;
+}
+
+th .btn-cart_update:hover .btn-cast_title {
+  color: #000;
+  transition: all linear 0.2s;
+}
+
+.content-box_total {
+  width: 33.33333333%;
+  margin-left: 66.66666667%;
+}
+
+.content-box_house {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 0;
+  border-bottom: 1px solid #a4a4a4;
+}
+
+.content-box_header {
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.content-box_title {
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #000;
+}
+
+.content-box_price {
+  font-size: 18px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #003e8e;
+  margin-right: 52px;
+}
+
+.btn_total .content-box_house {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #003e8e;
+  color: #fff;
+}
+
+.btn-total_icon {
+  margin-right: 12px;
+}
+
+.btn_total .btn-total_title {
+  text-transform: uppercase;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 0.5;
+}
+
+.btn_total .content-box_house:hover,
+.btn-cart_back:hover {
+  opacity: 0.8;
+  transition: all linear 0.2s;
+}
