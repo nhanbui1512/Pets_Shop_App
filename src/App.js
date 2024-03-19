@@ -13,22 +13,20 @@ function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <>
-        <Route path="/">
-          <Route index element={<Home />}></Route>
-          <Route path="/cart" element={<Cart />}></Route>
-        </Route>
+        <Route element={<DefaultLayout />}>
+          <Route path="/">
+            <Route index element={<Home />}></Route>
+            <Route path="/cart" element={<Cart />}></Route>
+          </Route>
 
-        <Route path="/collections" element={<CollectionLayout />}>
-          <Route index element={<div>List Product</div>}></Route>
+          <Route path="/collections" element={<CollectionLayout />}>
+            <Route index element={<div>List Product</div>}></Route>
+          </Route>
         </Route>
       </>
     )
   );
-  return (
-    <DefaultLayout>
-      <RouterProvider router={router} />
-    </DefaultLayout>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

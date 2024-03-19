@@ -4,6 +4,7 @@ import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 const cx = classNames.bind(style);
 
@@ -64,14 +65,14 @@ function Navbar() {
           {/* items : Trang Chu  */}
           <ul>
             <li>
-              <a href="/home" title="Home">
+              <Link to={"/"} title="Home">
                 TRANG CHỦ
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/product" title="Product">
+              <Link to="/collections" title="Product">
                 SẢN PHẨM
-              </a>
+              </Link>
             </li>
             <li>
               <a href="/news" title="News">
