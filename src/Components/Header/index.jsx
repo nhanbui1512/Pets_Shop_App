@@ -1,4 +1,4 @@
-import style from "./header.scss";
+import style from "./header.module.scss";
 import classNames from "classnames/bind";
 const cx = classNames.bind(style);
 function Header() {
@@ -8,14 +8,14 @@ function Header() {
         <div className={cx("header-content_logo")}>
           <img src="/images/logo.webp" alt="logo" />
         </div>
-        <div className={cx("header-content_search search-container")}>
+        <div className={cx(["header-content_search", "search-container"])}>
           <input
             className={cx("input-search_header")}
-            id="search-box"
+            id={cx("search-box")}
             type="text"
             placeholder="Search for products, brands and more"
           />
-          <button id="search-button">Search</button>
+          <button id={cx("search-button")}>Search</button>
         </div>
         <div className={cx("header-content_auth")}>
           <div className={cx("header-content_auth_login")}>
