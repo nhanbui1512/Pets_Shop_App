@@ -7,9 +7,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faEye } from "@fortawesome/free-solid-svg-icons";
 const cx = classNames.bind(styles);
 
-function ProductItem({ data }) {
+function ProductItem({ data, className }) {
   return (
-    <div className={cx("wrapper")}>
+    <div className={cx("wrapper", { [className]: className })}>
       <div className="mb-22">
         <div className="col">
           <div className={cx("image-container")}>

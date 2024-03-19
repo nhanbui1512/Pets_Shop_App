@@ -2,12 +2,6 @@
   background-color: #fff;
   border: 1px solid #d4d4d4;
   padding: 0 16px;
-  + .wrapper {
-    border-left: none;
-  }
-  &:first-child {
-    border-left: none;
-  }
 }
 .image-container {
   cursor: pointer;
