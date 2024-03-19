@@ -38,12 +38,6 @@ function SellerList() {
           {data.map((item, index) => (
             <ProductItem key={index} data={item} />
           ))}
-          {/* <ProductItem />
-          <ProductItem />
-          <ProductItem />
-          <ProductItem />
-          <ProductItem />
-          <ProductItem /> */}
         </div>
       </div>
     </div>
