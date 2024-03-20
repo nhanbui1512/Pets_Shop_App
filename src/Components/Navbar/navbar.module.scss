@@ -49,6 +49,8 @@
   overflow-y: auto;
   max-height: 400px;
   width: 200px;
+  z-index: 10;
+  background-color: #ffff
 }
 
 .main-item:hover {
@@ -163,9 +165,10 @@
   min-width: 12px;
 }
 .nav-items {
+  width: 55%;
   display: flex;
   align-items: center;
-  font-size: 1.2 rem;
+  font-size: 1 rem;
 }
 .nav-items > ul {
   list-style: none;
@@ -193,4 +196,45 @@ li a {
     height: 38px;
     line-height: 38px;
     font-size: 1rem;
+}
+
+.nav-items > ul > li:hover {
+  color: var(--primary-item);
+  cursor: pointer;
+  font-weight: 700;
+  
+}
+
+.nav-items > ul > li:hover > a {
+  color: var(--primary-item);
+  background-color: var(--background-item);
+  width: 100%;
+  border-radius: 8px;
+}
+
+.nav-icons {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 20%;
+}
+.nav-icons > ul {
+  list-style: none;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: 1.2 rem;
+  width: 100%;
+}
+.nav-icons >ul > li {
+  height: 100%;
+  font-size: large;
+}
+.nav-icons > ul > li > a {
+  text-decoration: none;
+  color: var(--item-non-hover);
+  padding: 8px 20px;
+  height: 38px;
+  line-height: 38px;
+  font-size: 25px;;
 }
