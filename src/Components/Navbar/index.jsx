@@ -3,8 +3,12 @@ import style from "./navbar.module.scss";
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import {
+  faBars,
+  faCartShopping,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 
 const cx = classNames.bind(style);
 
@@ -87,6 +91,20 @@ function Navbar() {
             <li>
               <a href="/contact" title="Contact">
                 LIÊN HỆ
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <nav className={cx("nav-icons")}>
+          <ul>
+            <li>
+              <a href="/cart" title="Cart">
+                <FontAwesomeIcon icon={faCartShopping} />
+              </a>
+            </li>
+            <li>
+              <a href="/user" title="User">
+                <FontAwesomeIcon icon={faUser} />
               </a>
             </li>
           </ul>
