@@ -13,16 +13,16 @@ function ProductItem({ data, className }) {
       <div className="mb-22">
         <div className="col">
           <div className={cx("image-container")}>
-            <Image className={cx("product-image")} src={data.image} />
+            <Image className={cx("product-image")} src={data?.image || ""} />
           </div>
           <div className={cx("product-info")}>
             <div className={cx("info-inner")}>
               <div className={cx("name-product")}>
-                <Link>{data.name || ""}</Link>
+                <Link>{data?.name || "Tên sản phẩm"}</Link>
               </div>
 
               <div className={cx("price")}>
-                <span>{data.price}</span>
+                <span>{data?.price || "100.000đ"}</span>
               </div>
 
               <div className={cx(["pd_10_0", "actions"])}>

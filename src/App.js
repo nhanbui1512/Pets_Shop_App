@@ -8,6 +8,7 @@ import {
 import { DefaultLayout } from "./Layouts";
 import CollectionLayout from "./Layouts/CollectionLayout";
 import { Home, Blog, Cart } from "./Pages";
+import ListProduct from "./Pages/ListProduct";
 
 function App() {
   const router = createBrowserRouter(
@@ -23,7 +24,7 @@ function App() {
 
           {/* have sidebar */}
           <Route path="/collections" element={<CollectionLayout />}>
-            <Route index element={<div>List Product</div>}></Route>
+            <Route index element={<ListProduct />}></Route>
           </Route>
         </Route>
       </>

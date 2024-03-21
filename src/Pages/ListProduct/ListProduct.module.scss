@@ -1,0 +1,20 @@
+.wrapper {
+  padding: 0 16px;
+}
+.header {
+  margin: 34px 0;
+  font-size: 22px;
+  color: #333;
+}
+
+.tools-bar {
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.list-product {
+  display: grid;
+  gap: 24px 24px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
