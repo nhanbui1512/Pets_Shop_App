@@ -1,0 +1,59 @@
+.app {
+  display: flex;
+  width: 100%;
+  margin: 50px 0;
+}
+
+.content-blog {
+  width: 100%;
+  padding: 12px;
+}
+
+.content-blog_search {
+  display: flex;
+  margin: 4px 0;
+}
+
+.content-blog_input {
+  width: 100%;
+  padding: 8px 16px;
+  font-size: 16px;
+  background-color: #f1f2f3;
+}
+
+.btn_search {
+  font-size: 16px;
+  padding: 16px;
+  background-color: #69727d;
+  color: #fff;
+  cursor: pointer;
+}
+
+.content-blog_adding {
+  text-align: center;
+  margin: 40px;
+}
+
+.btn-add_blog {
+  text-decoration: none;
+  padding: 12px 24px;
+  background-color: #4f56dd;
+  color: #fff;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.6;
+  box-shadow: 4px 4px 12px #111;
+}
+
+.content-blog_intro {
+  margin: 60px 0;
+}
+
+.content-blog_desc {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #2c2c2c;
+  margin: 24px 0;
+}
