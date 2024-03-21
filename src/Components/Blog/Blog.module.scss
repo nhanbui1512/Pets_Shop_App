@@ -1,0 +1,45 @@
+.text-dec {
+  display: block;
+  color: #046bd2;
+}
+
+.blog-box {
+  display: flex;
+  margin: 24px 0;
+}
+
+.blog_img {
+  display: block;
+  width: 250px;
+  height: 100px;
+}
+
+.blog-content {
+  margin: 16px 8px;
+}
+
+.blog_header {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.blog_author {
+  font-size: 14px;
+  font-weight: 400;
+  color: #888;
+  margin-bottom: 12px;
+}
+
+.blog_desc {
+  font-size: 16px;
+  font-weight: 400;
+  color: #444;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.blog_next {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.5;
+}
