@@ -2,6 +2,8 @@ import classNames from "classnames/bind";
 import styles from "./ListProduct.module.scss";
 import ProductItem from "../../Components/ProductItem";
 import SortToolBox from "../../Components/SortToolBox";
+import data from "../../Components/SellerList/data";
+
 const cx = classNames.bind(styles);
 
 function ListProduct() {
@@ -15,31 +17,9 @@ function ListProduct() {
       </div>
 
       <div className={cx("list-product")}>
-        <ProductItem
-          data={{
-            image:
-              "https://bizweb.dktcdn.net/100/229/172/products/bow-wow-pho-mai-cuon-ga-1709195207055.jpg?v=1709440731433",
-          }}
-        />
-        <ProductItem
-          data={{
-            image:
-              "https://bizweb.dktcdn.net/100/229/172/products/bow-wow-pho-mai-cuon-ga-1709195207055.jpg?v=1709440731433",
-          }}
-        />
-        <ProductItem
-          data={{
-            image:
-              "https://bizweb.dktcdn.net/100/229/172/products/bow-wow-pho-mai-cuon-ga-1709195207055.jpg?v=1709440731433",
-          }}
-        />
-
-        <ProductItem
-          data={{
-            image:
-              "https://bizweb.dktcdn.net/100/229/172/products/bow-wow-pho-mai-cuon-ga-1709195207055.jpg?v=1709440731433",
-          }}
-        />
+        {data.map((item, index) => (
+          <ProductItem key={index} data={item} />
+        ))}
       </div>
     </div>
   );
