@@ -1,0 +1,13 @@
+.btn-active_product {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ddd;
+  user-select: none;
+}
+
+.btn-active_reduce,
+.btn-active_increase {
+  padding: 8px;
+  cursor: pointer;
+}
