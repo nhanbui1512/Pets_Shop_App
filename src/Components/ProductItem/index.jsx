@@ -28,11 +28,19 @@ function ProductItem({ data, className }) {
               <div className={cx(["pd_10_0", "actions"])}>
                 <CircleButton
                   className={cx("cart-btn")}
-                  icon={<FontAwesomeIcon color="#fff" icon={faCartShopping} />}
+                  icon={
+                    <FontAwesomeIcon
+                      color="#fff"
+                      fontSize={16}
+                      icon={faCartShopping}
+                    />
+                  }
                 />
                 <CircleButton
                   className={cx("view-btn")}
-                  icon={<FontAwesomeIcon color="#fff" icon={faEye} />}
+                  icon={
+                    <FontAwesomeIcon color="#fff" fontSize={16} icon={faEye} />
+                  }
                 />
               </div>
             </div>
