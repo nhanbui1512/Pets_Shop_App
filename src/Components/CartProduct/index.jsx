@@ -1,28 +1,14 @@
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan, faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
+import ActiveNumber from "../CountNumber";
 import styles from "./CartProduct.module.scss";
 import { Link } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
 function CartProduct() {
-  var [numberProduct, setNumberProduct] = useState(1);
-
-  const handleReduce = () => {
-    if (numberProduct <= 1) {
-      setNumberProduct(numberProduct);
-    } else {
-      setNumberProduct(--numberProduct);
-    }
-  };
-
-  const handleIncrease = () => {
-    setNumberProduct(++numberProduct);
-  };
-
   return (
     <tr className={cx("product")}>
       <td>
@@ -42,21 +28,7 @@ function CartProduct() {
       </td>
       <td className={cx("product_price")}>65.000₫</td>
       <td>
-        <div className={cx("btn-active_product")}>
-          <div
-            onClick={() => handleReduce()}
-            className={cx("btn-active_reduce")}
-          >
-            <FontAwesomeIcon className={cx("btn-active_icon")} icon={faMinus} />
-          </div>
-          <div className={cx("product_number")}>{numberProduct}</div>
-          <div
-            onClick={() => handleIncrease()}
-            className={cx("btn-active_increase")}
-          >
-            <FontAwesomeIcon className={cx("btn-active_icon")} icon={faPlus} />
-          </div>
-        </div>
+        <ActiveNumber />
       </td>
       <td className={cx("product_price")}>130.000₫</td>
       <td>
