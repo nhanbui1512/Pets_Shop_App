@@ -3,12 +3,14 @@ import styles from "./Sidebar.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGem } from "@fortawesome/free-regular-svg-icons";
 import { Link } from "react-router-dom";
+import PriceRange from "../PriceRange";
+
 const cx = classNames.bind(styles);
 
 function Sidebar() {
   return (
     <div className={cx("wrapper")}>
-      <div className={cx("container")}>
+      <div style={{ marginBottom: 30 }} className={cx("container")}>
         <div className={cx("header")}>
           <FontAwesomeIcon
             color="var(--blue-primary)"
@@ -49,6 +51,10 @@ function Sidebar() {
             </li>
           </ul>
         </div>
+      </div>
+
+      <div className={cx("container")}>
+        <PriceRange />
       </div>
     </div>
   );

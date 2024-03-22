@@ -7,7 +7,7 @@ import styles from "./CountNumber.module.scss";
 
 const cx = classNames.bind(styles);
 
-function ActiveNumber() {
+function ActiveNumber({ className }) {
   var [numberProduct, setNumberProduct] = useState(1);
 
   const handleReduce = () => {
@@ -22,7 +22,7 @@ function ActiveNumber() {
     setNumberProduct(++numberProduct);
   };
   return (
-    <div className={cx("btn-active_product")}>
+    <div className={cx("btn-active_product", { [className]: className })}>
       <div onClick={() => handleReduce()} className={cx("btn-active_reduce")}>
         <FontAwesomeIcon className={cx("btn-active_icon")} icon={faMinus} />
       </div>

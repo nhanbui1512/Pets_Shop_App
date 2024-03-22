@@ -9,6 +9,7 @@ import { DefaultLayout } from "./Layouts";
 import CollectionLayout from "./Layouts/CollectionLayout";
 import { Home, Blog, Cart } from "./Pages";
 import ListProduct from "./Pages/ListProduct";
+import ProductDetail from "./Pages/ProductDetail";
 
 function App() {
   const router = createBrowserRouter(
@@ -20,6 +21,7 @@ function App() {
             <Route index element={<Home />}></Route>
             <Route path="/cart" element={<Cart />}></Route>
             <Route path="/blog" element={<Blog />}></Route>
+            <Route path="/product" element={<ProductDetail />}></Route>
           </Route>
 
           {/* have sidebar */}
