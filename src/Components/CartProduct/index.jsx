@@ -32,12 +32,12 @@ function CartProduct() {
       </td>
       <td className={cx("product_price")}>130.000₫</td>
       <td>
-        <a className={cx("product-icon_link")} href="/cart" title="xóa">
+        <Link className={cx("product-icon_link")} to="/cart" title="xóa">
           <FontAwesomeIcon
             className={cx("product-icon_remove")}
             icon={faTrashCan}
           />
-        </a>
+        </Link>
       </td>
     </tr>
   );

@@ -9,7 +9,7 @@ const cx = classNames.bind(styles);
 
 function ProductItem({ data, className }) {
   return (
-    <Link to={"/product"} className={cx("wrapper", { [className]: className })}>
+    <div className={cx("wrapper", { [className]: className })}>
       <div className="mb-22">
         <div className="col">
           <div className={cx("image-container")}>
@@ -18,7 +18,7 @@ function ProductItem({ data, className }) {
           <div className={cx("product-info")}>
             <div className={cx("info-inner")}>
               <div className={cx("name-product")}>
-                <Link>{data?.name || "Tên sản phẩm"}</Link>
+                <Link to={"/product"}>{data?.name || "Tên sản phẩm"}</Link>
               </div>
 
               <div className={cx("price")}>
@@ -47,7 +47,7 @@ function ProductItem({ data, className }) {
           </div>
         </div>
       </div>
-    </Link>
+    </div>
   );
 }
 export default ProductItem;
