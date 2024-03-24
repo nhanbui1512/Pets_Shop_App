@@ -1,8 +1,15 @@
 import classNames from "classnames/bind";
 import styles from "./ProductDetail.module.scss";
 import Image from "../../Components/Image";
-import CountNumber from "../../Components/CountNumber";
+import Button from "../../Components/Button";
 
+import CountNumber from "../../Components/CountNumber";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faFacebook,
+  faGooglePlus,
+  faTwitter,
+} from "@fortawesome/free-brands-svg-icons";
 const cx = classNames.bind(styles);
 
 function ProductDetail() {
@@ -35,9 +42,25 @@ function ProductDetail() {
           </p>
           <div className={cx("slection-box")}>
             <div className={cx("name-selection")}>Hương vị</div>
+            <select className={cx("selected")}>
+              <option>Gà + bí đỏ</option>
+              <option>Gà + cà rốt</option>
+              <option>Cá nục</option>
+            </select>
           </div>
           <div className={cx("row")}>
             <CountNumber className={cx("count-box")} />
+            <Button rouded>MUA HÀNG</Button>
+          </div>
+
+          <div className={cx("social-box")}>
+            <span>Chia sẻ</span>
+            <FontAwesomeIcon className={cx("social-icon")} icon={faFacebook} />
+            <FontAwesomeIcon className={cx("social-icon")} icon={faTwitter} />
+            <FontAwesomeIcon
+              className={cx("social-icon")}
+              icon={faGooglePlus}
+            />
           </div>
         </div>
       </div>

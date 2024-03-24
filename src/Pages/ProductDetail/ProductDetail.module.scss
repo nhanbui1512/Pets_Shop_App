@@ -18,6 +18,7 @@
 .count-box {
   width: 112px;
   font-size: 14px;
+  margin-right: 28px;
 }
 .product-name {
   font-size: 18px;
@@ -50,4 +51,46 @@
   text-transform: uppercase;
   font-size: 12px;
   font-weight: bold;
+}
+.slection-box {
+  margin-bottom: 24px;
+}
+.selected {
+  display: flex;
+  align-items: center;
+  width: 200px;
+  height: 42px;
+  position: relative;
+  background: #fff;
+  padding: 0 10px;
+  border: solid 1px #ebebeb;
+  outline: none;
+  font-size: 14px;
+
+  option {
+    font-size: 14px;
+  }
+}
+.drop-down-menu {
+  width: 200px;
+}
+.social-box {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 20px;
+  span {
+    float: left;
+    color: #222;
+    font-weight: 700;
+    width: 68px;
+    text-transform: uppercase;
+    margin: 0;
+    font-size: 14px;
+  }
+}
+.social-icon {
+  font-size: 32px;
+  color: #c72e1c;
+  cursor: pointer;
 }
