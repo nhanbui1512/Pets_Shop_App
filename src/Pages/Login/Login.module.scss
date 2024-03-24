@@ -1,0 +1,79 @@
+.app {
+  display: flex;
+  flex-direction: column;
+}
+
+.app-box {
+  display: flex;
+  background-color: #f7f7f7;
+}
+
+.register,
+.login {
+  padding: 52px;
+  border: 1px solid #eaeaea;
+  width: 50%;
+}
+
+.register_title {
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.6;
+  text-transform: uppercase;
+  margin: 24px 0;
+}
+
+.register-contain_btn {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.6;
+  text-transform: uppercase;
+  padding: 8px 24px;
+  background-color: #eaeaea;
+  cursor: pointer;
+}
+
+.register-contain_btn:hover {
+  color: #ff5050;
+  transition: all linear 0.3s;
+}
+
+.regiter-contain_title {
+  font-size: 18px;
+  font-weight: 350;
+  line-height: 1.6;
+  margin-bottom: 4px;
+}
+
+.regiter-contain_title b {
+  font-size: 18px;
+  font-weight: 350;
+  line-height: 1.6;
+  color: #ff5050;
+}
+
+.regiter-contain_active {
+  display: flex;
+  align-items: end;
+  margin-top: 12px;
+}
+
+.register-contain_differ {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+  margin-left: 12px;
+}
+
+.register-contain_differ-active {
+  margin-left: 4px;
+}
+
+.register-contain_differ:hover .register-contain_differ-active {
+  color: #ff5050;
+}
+
+.app-btn_update {
+  display: block;
+  max-width: 50px;
+}

@@ -1,0 +1,20 @@
+.register-contain_btn {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.6;
+  text-transform: uppercase;
+  padding: 8px 24px;
+  background-color: #eaeaea;
+  cursor: pointer;
+}
+
+.register-contain_btn:hover {
+  color: #ff5050;
+  transition: all linear 0.3s;
+}
+
+.register_icon {
+  margin-right: 8px;
+}

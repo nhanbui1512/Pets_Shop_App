@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import style from "./header.module.scss";
 import classNames from "classnames/bind";
 const cx = classNames.bind(style);
@@ -7,7 +8,7 @@ function Header() {
       <div className={cx("header-content")}>
         <div className={cx("header-content_logo")}>
           <a href="/">
-          <img src="/images/logo.webp" alt="logo" />
+            <img src="/images/logo.webp" alt="logo" />
           </a>
         </div>
         <div className={cx(["header-content_search", "search-container"])}>
@@ -21,11 +22,11 @@ function Header() {
         </div>
         <div className={cx("header-content_auth")}>
           <div className={cx("header-content_auth_login")}>
-            <a href="/login">Login</a>
+            <Link to={"/login"}>Login</Link>
           </div>
           <span className={cx("divider")}></span>
           <div className={cx("header-content_auth_signup")}>
-            <a href="/signup">Signup</a>
+            <Link to={"/signup"}>Signup</Link>
           </div>
         </div>
       </div>
