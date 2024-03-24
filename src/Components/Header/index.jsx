@@ -6,7 +6,9 @@ function Header() {
     <header className={cx("header")}>
       <div className={cx("header-content")}>
         <div className={cx("header-content_logo")}>
+          <a href="/">
           <img src="/images/logo.webp" alt="logo" />
+          </a>
         </div>
         <div className={cx(["header-content_search", "search-container"])}>
           <input
