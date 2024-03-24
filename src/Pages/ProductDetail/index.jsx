@@ -1,7 +1,7 @@
 import classNames from "classnames/bind";
 import styles from "./ProductDetail.module.scss";
 import Image from "../../Components/Image";
-import Button from "../../Components/Button";
+import Button from "../../Components/PrimaryButton";
 
 import CountNumber from "../../Components/CountNumber";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
