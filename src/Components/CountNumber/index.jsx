@@ -7,7 +7,7 @@ import styles from "./CountNumber.module.scss";
 
 const cx = classNames.bind(styles);
 
-function ActiveNumber({ className }) {
+function CountNumber({ className }) {
   var [numberProduct, setNumberProduct] = useState(1);
 
   const handleReduce = () => {
@@ -37,4 +37,4 @@ function ActiveNumber({ className }) {
   );
 }
 
-export default ActiveNumber;
+export default CountNumber;
