@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import { DefaultLayout } from "./Layouts";
 import CollectionLayout from "./Layouts/CollectionLayout";
-import { Home, Blog, Cart } from "./Pages";
+import { Home, Blog, Cart, Login, Register, DetailBlog } from "./Pages";
 
 function App() {
   const router = createBrowserRouter(
@@ -19,6 +19,9 @@ function App() {
             <Route index element={<Home />}></Route>
             <Route path="/cart" element={<Cart />}></Route>
             <Route path="/blog" element={<Blog />}></Route>
+            <Route path="/blog/:id/*" element={<DetailBlog />}></Route>
+            <Route path="/login" element={<Login />}></Route>
+            <Route path="/signup" element={<Register />}></Route>
           </Route>
 
           {/* have sidebar */}
