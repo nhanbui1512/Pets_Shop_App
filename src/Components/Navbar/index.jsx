@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import style from "./navbar.module.scss";
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,8 +13,54 @@ import {
 const cx = classNames.bind(style);
 
 function Navbar() {
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const cartRef = useRef(null);
+
+  function useOutsideAlerter(ref, onClose) {
+    useEffect(() => {
+      function handleClickOutside(event) {
+        if (ref.current && !ref.current.contains(event.target)) {
+          onClose();
+        }
+      }
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }, [ref, onClose]);
+  }
+
+  // Hook to close cart when clicking outside
+  useOutsideAlerter(cartRef, () => setIsCartOpen(false));
+
   // Initialize a state variable to keep track of the toggle state
   const [isOpen, setIsOpen] = useState(false);
+  const cartItems = [
+    {
+      id: 1,
+      name: "Product 1",
+      price: 100,
+      quantity: 1,
+      image:
+        "https://cdn.vectorstock.com/i/1000x1000/79/10/product-icon-simple-element-vector-27077910.webp",
+    },
+    {
+      id: 2,
+      name: "Product 2",
+      price: 200,
+      quantity: 2,
+      image:
+        "https://cdn.vectorstock.com/i/1000x1000/79/10/product-icon-simple-element-vector-27077910.webp",
+    },
+    {
+      id: 3,
+      name: "Product 3",
+      price: 300,
+      quantity: 3,
+      image:
+        "https://cdn.vectorstock.com/i/1000x1000/79/10/product-icon-simple-element-vector-27077910.webp",
+    },
+  ];
 
   // Function to toggle the isOpen state
   const toggleOpen = () => setIsOpen(!isOpen);
@@ -37,30 +83,25 @@ function Navbar() {
               <li>
                 <div className={cx("line-vertical")}></div>
                 <div className={cx("line-horizontal")}></div>
-                <a href="#income" title="Income">
-                  Income
-                </a>
+                <Link to={"/income"}>Income</Link>
               </li>
               <li>
                 <div className={cx("line-vertical")}></div>
                 <div className={cx("line-horizontal")}></div>
-                <a href="#expenses" title="Expenses">
-                  Expenses
-                </a>
+                <Link to={"/expenses"}>Expenses</Link>
               </li>
               <li>
                 <div className={cx("line-vertical")}></div>
                 <div className={cx("line-horizontal")}></div>
-                <a href="#statements" title="Statements">
-                  Statements
-                </a>
+                <Link to={"/statements"}>Statements</Link>
               </li>
               <li>
                 <div className={cx("line-vertical")}></div>
                 <div className={cx("line-horizontal")}></div>
-                <a href="#payouts" title="Payouts">
+                {/* <a href="#payouts" title="Payouts">
                   Payouts
-                </a>
+                </a> */}
+                <Link to={"/payouts"}>Payouts</Link>
               </li>
             </ul>
           )}
@@ -79,37 +120,75 @@ function Navbar() {
               </Link>
             </li>
             <li>
-              <a href="/news" title="News">
+              {/* <a href="/news" title="News">
                 TIN TỨC
-              </a>
+              </a> */}
+              <Link to={"/news"}>TIN TỨC</Link>
             </li>
             <li>
-              <a href="/order" title="Order">
-                ĐƠN HÀNG
-              </a>
+              <Link to={"/order"}>ĐƠN HÀNG</Link>
             </li>
             <li>
-              <a href="/contact" title="Contact">
-                LIÊN HỆ
-              </a>
+              <Link to={"/contact"}>LIÊN HỆ</Link>
             </li>
           </ul>
         </nav>
         <nav className={cx("nav-icons")}>
           <ul>
             <li>
-              <a href="/cart" title="Cart">
+              <Link
+                to={"/cart"}
+                onMouseEnter={() => setIsCartOpen(true)}
+                ref={cartRef}
+              >
                 <FontAwesomeIcon icon={faCartShopping} />
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/user" title="User">
+              <Link to={"/user"}>
                 <FontAwesomeIcon icon={faUser} />
-              </a>
+              </Link>
             </li>
           </ul>
         </nav>
       </div>
+      {/* cart component */}
+      {isCartOpen && (
+        <div className={cx("cart-container")} ref={cartRef}>
+          <div>
+            {/* <div className={cx("cart-header-item")}>
+            <h4>Giỏ hàng</h4>
+          </div> */}
+            <div className={cx("cart-body-item")}>
+              {cartItems.map((item) => (
+                <div key={item.id} className={cx("cart-item")}>
+                  <div className={cx("cart-item-image")}>
+                    <img src={item.image} alt={item.name} />
+                  </div>
+                  <div className={cx("cart-item-details")}>
+                    <div className={cx("cart-item-name")}>{item.name}</div>
+                    <div className={cx("cart-item-quantity")}>
+                      Số lượng: {item.quantity}
+                    </div>
+                    <div className={cx("cart-item-price")}>
+                      {item.price.toLocaleString("vi-VN", { currency: "VND" })}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className={cx("cart-footer-item")}>
+              <div className={cx("cart-total-price")}>
+                Tổng cộng:{" "}
+                {cartItems
+                  .reduce((acc, curr) => acc + curr.price * curr.quantity, 0)
+                  .toLocaleString("vi-VN", { currency: "VND" })}
+              </div>
+              <button className={cx("cart-checkout-button")}>Thanh toán</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

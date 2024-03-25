@@ -4,3 +4,4 @@ export { default as Blog } from "./Blogs";
 export { default as DetailBlog } from "./DetailBlog";
 export { default as Login } from "./Login";
 export { default as Register } from "./Register";
+export { default as Checkout } from "./Checkout";

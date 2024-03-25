@@ -9,7 +9,15 @@ import { DefaultLayout } from "./Layouts";
 import CollectionLayout from "./Layouts/CollectionLayout";
 import ListProduct from "./Pages/ListProduct";
 import ProductDetail from "./Pages/ProductDetail";
-import { Home, Blog, Cart, Login, Register, DetailBlog } from "./Pages";
+import {
+  Home,
+  Blog,
+  Cart,
+  Login,
+  Register,
+  DetailBlog,
+  Checkout,
+} from "./Pages";
 
 function App() {
   const router = createBrowserRouter(
@@ -25,6 +33,7 @@ function App() {
             <Route path="/blog/:id/*" element={<DetailBlog />}></Route>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/signup" element={<Register />}></Route>
+            <Route path="/checkout" element={<Checkout />}></Route>
           </Route>
 
           {/* have sidebar */}
@@ -32,8 +41,8 @@ function App() {
             <Route index element={<ListProduct />}></Route>
           </Route>
         </Route>
-      </>
-    )
+      </>,
+    ),
   );
   return <RouterProvider router={router} />;
 }
