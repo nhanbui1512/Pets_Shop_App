@@ -1,6 +1,6 @@
-import classNames from 'classnames/bind';
-import styles from './CircleButton.module.scss';
-import { useEffect, useRef } from 'react';
+import classNames from "classnames/bind";
+import styles from "./CircleButton.module.scss";
+import { useEffect, useRef } from "react";
 const cx = classNames.bind(styles);
 
 export default function CircleButton({
@@ -12,7 +12,7 @@ export default function CircleButton({
   transparent = false,
 }) {
   const btnRef = useRef();
-  const classes = cx('wrapper', { [className]: className, transparent });
+  const classes = cx("wrapper", { [className]: className, transparent });
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -25,11 +25,11 @@ export default function CircleButton({
 
     // Lắng nghe sự kiện click ở mức độ component gốc
     if (onOutsideClick) {
-      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener("mousedown", handleClickOutside);
     }
     // Clean up sự kiện khi component unmount
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [onOutsideClick]);
 
