@@ -69,29 +69,33 @@ function Navbar() {
           {/* items : Trang Chu  */}
           <ul>
             <li>
-              <Link to={"/"} title="Home">
+              <Link className={cx("nav-item")} to={"/"} title="Home">
                 TRANG CHỦ
               </Link>
             </li>
             <li>
-              <Link to="/collections" title="Product">
+              <Link
+                className={cx("nav-item")}
+                to="/collections"
+                title="Product"
+              >
                 SẢN PHẨM
               </Link>
             </li>
             <li>
-              <a href="/news" title="News">
+              <Link className={cx("nav-item")} title="News">
                 TIN TỨC
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/order" title="Order">
+              <Link className={cx("nav-item")} title="Order">
                 ĐƠN HÀNG
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/contact" title="Contact">
+              <Link className={cx("nav-item")} title="Contact">
                 LIÊN HỆ
-              </a>
+              </Link>
             </li>
           </ul>
         </nav>
