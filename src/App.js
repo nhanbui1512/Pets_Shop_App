@@ -5,7 +5,7 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
-import { DefaultLayout } from "./Layouts";
+import { DefaultLayout, AdminLayout } from "./Layouts";
 import CollectionLayout from "./Layouts/CollectionLayout";
 import ListProduct from "./Pages/ListProduct";
 import ProductDetail from "./Pages/ProductDetail";
@@ -41,6 +41,7 @@ function App() {
             <Route index element={<ListProduct />}></Route>
           </Route>
         </Route>
+        <Route path="/admin" element={<AdminLayout />}></Route>
       </>
     )
   );
