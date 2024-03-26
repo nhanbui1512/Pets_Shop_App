@@ -41,8 +41,8 @@ function App() {
             <Route index element={<ListProduct />}></Route>
           </Route>
         </Route>
-      </>,
-    ),
+      </>
+    )
   );
   return <RouterProvider router={router} />;
 }
