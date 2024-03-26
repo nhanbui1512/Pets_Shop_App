@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import style from "./navbar.module.scss";
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,29 +9,14 @@ import {
   faCartShopping,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
+import CartItem from "../CartItem";
+
+import HeadlessTippy from "@tippyjs/react/headless";
 
 const cx = classNames.bind(style);
 
 function Navbar() {
-  const [isCartOpen, setIsCartOpen] = useState(false);
   const cartRef = useRef(null);
-
-  function useOutsideAlerter(ref, onClose) {
-    useEffect(() => {
-      function handleClickOutside(event) {
-        if (ref.current && !ref.current.contains(event.target)) {
-          onClose();
-        }
-      }
-      document.addEventListener("mousedown", handleClickOutside);
-      return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
-      };
-    }, [ref, onClose]);
-  }
-
-  // Hook to close cart when clicking outside
-  useOutsideAlerter(cartRef, () => setIsCartOpen(false));
 
   // Initialize a state variable to keep track of the toggle state
   const [isOpen, setIsOpen] = useState(false);
@@ -142,15 +127,46 @@ function Navbar() {
         </nav>
         <nav className={cx("nav-icons")}>
           <ul>
-            <li>
-              <Link
-                to={"/cart"}
-                onMouseEnter={() => setIsCartOpen(true)}
-                ref={cartRef}
-              >
-                <FontAwesomeIcon icon={faCartShopping} />
-              </Link>
-            </li>
+            <HeadlessTippy
+              delay={[0, 200]}
+              interactive
+              render={() => {
+                return (
+                  <div className={cx("cart-container")} ref={cartRef}>
+                    <div>
+                      {/* <div className={cx("cart-header-item")}>
+                  <h4>Giỏ hàng</h4>
+                </div> */}
+                      <div className={cx("cart-body-item")}>
+                        {cartItems.map((item, index) => (
+                          <CartItem key={index} />
+                        ))}
+                      </div>
+                      <div className={cx("cart-footer-item")}>
+                        <div className={cx("cart-total-price")}>
+                          Tổng cộng:{" "}
+                          {cartItems
+                            .reduce(
+                              (acc, curr) => acc + curr.price * curr.quantity,
+                              0
+                            )
+                            .toLocaleString("vi-VN", { currency: "VND" })}
+                        </div>
+                        <button className={cx("cart-checkout-button")}>
+                          Thanh toán
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                );
+              }}
+            >
+              <li>
+                <Link to={"/cart"} ref={cartRef}>
+                  <FontAwesomeIcon icon={faCartShopping} />
+                </Link>
+              </li>
+            </HeadlessTippy>
             <li>
               <Link to={"/user"}>
                 <FontAwesomeIcon icon={faUser} />
@@ -160,42 +176,6 @@ function Navbar() {
         </nav>
       </div>
       {/* cart component */}
-      {isCartOpen && (
-        <div className={cx("cart-container")} ref={cartRef}>
-          <div>
-            {/* <div className={cx("cart-header-item")}>
-            <h4>Giỏ hàng</h4>
-          </div> */}
-            <div className={cx("cart-body-item")}>
-              {cartItems.map((item) => (
-                <div key={item.id} className={cx("cart-item")}>
-                  <div className={cx("cart-item-image")}>
-                    <img src={item.image} alt={item.name} />
-                  </div>
-                  <div className={cx("cart-item-details")}>
-                    <div className={cx("cart-item-name")}>{item.name}</div>
-                    <div className={cx("cart-item-quantity")}>
-                      Số lượng: {item.quantity}
-                    </div>
-                    <div className={cx("cart-item-price")}>
-                      {item.price.toLocaleString("vi-VN", { currency: "VND" })}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className={cx("cart-footer-item")}>
-              <div className={cx("cart-total-price")}>
-                Tổng cộng:{" "}
-                {cartItems
-                  .reduce((acc, curr) => acc + curr.price * curr.quantity, 0)
-                  .toLocaleString("vi-VN", { currency: "VND" })}
-              </div>
-              <button className={cx("cart-checkout-button")}>Thanh toán</button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
