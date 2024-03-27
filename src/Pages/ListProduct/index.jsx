@@ -6,11 +6,11 @@ import data from "../../Components/SellerList/data";
 
 const cx = classNames.bind(styles);
 
-function ListProduct() {
+function ListProduct({ title = "Tất cả sản phẩm", breeds = [] }) {
   return (
     <div className={cx("wrapper")}>
       <div className={cx("header")}>
-        <h2>Tất cả sản phẩm</h2>
+        <h2>{title}</h2>
       </div>
       <div className={cx("tools-bar")}>
         <SortToolBox />

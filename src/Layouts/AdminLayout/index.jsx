@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 
-function AdminLayout() {
+function AdminLayout({ children }) {
   return (
     <div
       style={{
@@ -341,7 +341,9 @@ function AdminLayout() {
             </div>
           </div>
 
-          <div className="container-fluid"></div>
+          <div className="container-fluid">
+            <Outlet />
+          </div>
         </div>
         <div className="footer">
           <div className="copyright">

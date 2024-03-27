@@ -3,7 +3,7 @@ import style from "./navbar.module.scss";
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import {
   faBars,
   faCartShopping,
@@ -95,23 +95,48 @@ function Navbar() {
           {/* items : Trang Chu  */}
           <ul>
             <li>
-              <Link className={cx("nav-item")} to={"/"} title="Home">
+              <NavLink
+                to={"/"}
+                className={({ isActive }) =>
+                  cx("nav-item", { active: isActive })
+                }
+                title="News"
+              >
                 TRANG CHỦ
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link
-                className={cx("nav-item")}
-                to="/collections"
-                title="Product"
+              <NavLink
+                to={"/collections"}
+                className={({ isActive }) =>
+                  cx("nav-item", { active: isActive })
+                }
+                title="News"
               >
                 SẢN PHẨM
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link className={cx("nav-item")} title="News">
+              <NavLink
+                to={"/blog"}
+                className={({ isActive }) =>
+                  cx("nav-item", { active: isActive })
+                }
+                title="News"
+              >
                 TIN TỨC
-              </Link>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to={"/animals"}
+                className={({ isActive }) =>
+                  cx("nav-item", { active: isActive })
+                }
+                title="News"
+              >
+                CHÓ MÈO
+              </NavLink>
             </li>
             <li>
               <Link className={cx("nav-item")} title="Order">

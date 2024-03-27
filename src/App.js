@@ -17,7 +17,9 @@ import {
   Register,
   DetailBlog,
   Checkout,
+  Animal,
 } from "./Pages";
+import Editor from "./Components/Editor";
 
 function App() {
   const router = createBrowserRouter(
@@ -40,8 +42,15 @@ function App() {
           <Route path="/collections" element={<CollectionLayout />}>
             <Route index element={<ListProduct />}></Route>
           </Route>
+          <Route path="/animals" element={<CollectionLayout />}>
+            <Route index element={<Animal />}></Route>
+          </Route>
         </Route>
-        <Route path="/admin" element={<AdminLayout />}></Route>
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<div>Root</div>}></Route>
+          <Route path="/admin/profile" element={<div>Profile</div>}></Route>
+          <Route path="/admin/edit" element={<Editor />}></Route>
+        </Route>
       </>
     )
   );

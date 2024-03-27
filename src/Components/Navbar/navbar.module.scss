@@ -150,6 +150,14 @@
     align-items: center;
     justify-content: center;
   }
+
+  .active {
+    color: var(--primary-item);
+    background-color: var(--background-item);
+    width: 100%;
+    border-radius: 8px;
+    font-weight: 700;
+  }
   .nav-items > ul {
     list-style: none;
     display: flex;
