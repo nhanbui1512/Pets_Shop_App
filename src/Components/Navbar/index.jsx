@@ -188,13 +188,13 @@ function Navbar() {
             >
               <li>
                 <Link to={"/cart"} ref={cartRef}>
-                  <FontAwesomeIcon icon={faCartShopping} />
+                  <FontAwesomeIcon fontSize={20} icon={faCartShopping} />
                 </Link>
               </li>
             </HeadlessTippy>
             <li>
               <Link to={"/user"}>
-                <FontAwesomeIcon icon={faUser} />
+                <FontAwesomeIcon fontSize={20} icon={faUser} />
               </Link>
             </li>
           </ul>

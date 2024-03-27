@@ -1,7 +1,11 @@
 .cart-item {
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  position: relative;
+  padding: 14px 0px;
+  + .cart-item {
+    border-top: 1px solid #ccc;
+  }
 }
 
 .cart-item-image {
@@ -37,4 +41,13 @@
 .cart-item-price {
   font-size: 1.5 rem;
   font-weight: bold;
+}
+.close-btn {
+  position: absolute;
+  right: 12px;
+  top: 8px;
+  outline: none !important;
+  &:hover {
+    color: red;
+  }
 }

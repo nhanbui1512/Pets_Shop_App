@@ -1,5 +1,7 @@
 import classNames from "classnames/bind";
 import styles from "./CartItem.module.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const cx = classNames.bind(styles);
 
@@ -17,6 +19,10 @@ function CartItem() {
         <div className={cx("cart-item-quantity")}>Số lượng: 1</div>
         <div className={cx("cart-item-price")}>200.000đ</div>
       </div>
+
+      <button className={cx("close-btn")}>
+        <FontAwesomeIcon icon={faXmark} />
+      </button>
     </div>
   );
 }
