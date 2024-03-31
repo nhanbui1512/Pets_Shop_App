@@ -1,6 +1,9 @@
+import { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
+import DropdownMenu from "../../Components/DropdownMenu";
 
 function AdminLayout({ children }) {
+  const [openSidebar, setOpenSidebar] = useState(true);
   return (
     <div
       style={{
@@ -8,7 +11,10 @@ function AdminLayout({ children }) {
         height: "100%",
       }}
     >
-      <div id="main-wrapper">
+      <div
+        id="main-wrapper"
+        className={openSidebar ? "show" : "show menu-toggle"}
+      >
         <div className="nav-header">
           <div className="brand-logo">
             <Link href="/">
@@ -27,7 +33,12 @@ function AdminLayout({ children }) {
 
         <div className="header">
           <div className="header-content clearfix">
-            <div className="nav-control">
+            <div
+              onClick={() => {
+                setOpenSidebar(!openSidebar);
+              }}
+              className="nav-control"
+            >
               <div className="hamburger">
                 <span className="toggle-icon">
                   <i className="icon-menu"></i>
@@ -311,18 +322,22 @@ function AdminLayout({ children }) {
         <div className="nk-sidebar">
           <div className="nk-nav-scroll">
             <ul className="metismenu" id="menu">
-              <li className="nav-label">Dashboard</li>
-              <li>
-                <Link href="/" className="has-arrow">
-                  <i className="icon-speedometer menu-icon"></i>
-                  <span className="nav-text">Dashboard</span>
-                </Link>
-                <ul>
-                  <li>
-                    <Link href="/">Home 1</Link>
-                  </li>
-                </ul>
-              </li>
+              <DropdownMenu title={"Home"}>
+                <li>
+                  <Link href="./index.html">Home 1</Link>
+                </li>
+                <li>
+                  <Link href="./index-2.html">Home 2</Link>
+                </li>
+              </DropdownMenu>
+              <DropdownMenu title={"Home"}>
+                <li>
+                  <Link href="./index.html">Home 1</Link>
+                </li>
+                <li>
+                  <Link href="./index-2.html">Home 2</Link>
+                </li>
+              </DropdownMenu>
             </ul>
           </div>
         </div>

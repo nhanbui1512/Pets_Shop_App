@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const cx = classNames.bind(styles);
-
 function CartItem() {
   return (
     <div className={cx("cart-item")}>
