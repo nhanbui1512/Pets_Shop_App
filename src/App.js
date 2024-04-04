@@ -20,6 +20,7 @@ import {
   Animal,
 } from "./Pages";
 import Editor from "./Components/Editor";
+import BasicTable from "./Pages/Admin/Products";
 
 function App() {
   const router = createBrowserRouter(
@@ -50,6 +51,7 @@ function App() {
           <Route index element={<div>Root</div>}></Route>
           <Route path="/admin/profile" element={<div>Profile</div>}></Route>
           <Route path="/admin/edit" element={<Editor />}></Route>
+          <Route path="/admin/products" element={<BasicTable />}></Route>
         </Route>
       </>
     )

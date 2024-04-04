@@ -324,10 +324,10 @@ function AdminLayout({ children }) {
             <ul className="metismenu" id="menu">
               <DropdownMenu title={"Home"}>
                 <li>
-                  <Link href="./index.html">Home 1</Link>
+                  <Link to={"/admin/products"}>Products</Link>
                 </li>
                 <li>
-                  <Link href="./index-2.html">Home 2</Link>
+                  <Link to={"/admin/users"}>Products</Link>
                 </li>
               </DropdownMenu>
               <DropdownMenu title={"Home"}>
