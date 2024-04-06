@@ -247,13 +247,6 @@ function AdminLayout({ children }) {
                   </div>
                 </li>
                 <li className="icons dropdown d-none d-md-flex">
-                  <Link href="/" className="log-user" data-toggle="dropdown">
-                    <span>English</span>{" "}
-                    <i
-                      className="fa fa-angle-down f-s-14"
-                      aria-hidden="true"
-                    ></i>
-                  </Link>
                   <div className="drop-down dropdown-language animated fadeIn  dropdown-menu">
                     <div className="dropdown-content-body">
                       <ul>
@@ -284,7 +277,7 @@ function AdminLayout({ children }) {
                     <div className="dropdown-content-body">
                       <ul>
                         <li>
-                          <Link href="/">
+                          <Link to="/admin/profile">
                             <i className="icon-user"></i> <span>Profile</span>
                           </Link>
                         </li>
@@ -322,12 +315,12 @@ function AdminLayout({ children }) {
         <div className="nk-sidebar">
           <div className="nk-nav-scroll">
             <ul className="metismenu" id="menu">
-              <DropdownMenu title={"Home"}>
+              <DropdownMenu title={"List"}>
                 <li>
                   <Link to={"/admin/products"}>Products</Link>
                 </li>
                 <li>
-                  <Link to={"/admin/users"}>Products</Link>
+                  <Link to={"/admin/users"}>Users</Link>
                 </li>
               </DropdownMenu>
               <DropdownMenu title={"Home"}>

@@ -21,6 +21,31 @@ import {
 } from "./Pages";
 import Editor from "./Components/Editor";
 import BasicTable from "./Pages/Admin/Products";
+import AdminProfile from "./Pages/Admin/Profile";
+import UserList from "./Pages/Admin/Users";
+
+const adminPages = [
+  {
+    path: "/",
+    element: <div>Root</div>,
+  },
+  {
+    path: "/profile",
+    element: <AdminProfile />,
+  },
+  {
+    path: "/edit",
+    element: <Editor />,
+  },
+  {
+    path: "/products",
+    element: <BasicTable />,
+  },
+  {
+    path: "/users",
+    element: <UserList />,
+  },
+];
 
 function App() {
   const router = createBrowserRouter(
@@ -36,7 +61,7 @@ function App() {
             <Route path="/blog/:id/*" element={<DetailBlog />}></Route>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/signup" element={<Register />}></Route>
-            <Route path="/checkout" element={<Checkout />}></Route>
+            <Route path="/payment" element={<Checkout />}></Route>
           </Route>
 
           {/* have sidebar */}
@@ -48,10 +73,13 @@ function App() {
           </Route>
         </Route>
         <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<div>Root</div>}></Route>
-          <Route path="/admin/profile" element={<div>Profile</div>}></Route>
-          <Route path="/admin/edit" element={<Editor />}></Route>
-          <Route path="/admin/products" element={<BasicTable />}></Route>
+          {adminPages.map((data, index) => (
+            <Route
+              key={index}
+              path={`/admin${data.path}`}
+              element={data.element}
+            />
+          ))}
         </Route>
       </>
     )

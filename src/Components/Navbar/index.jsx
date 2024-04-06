@@ -160,9 +160,12 @@ function Navbar() {
                             .toLocaleString("vi-VN", { currency: "VND" })}
                           đ
                         </div>
-                        <button className={cx("cart-checkout-button")}>
+                        <Link
+                          to={"/payment"}
+                          className={cx("cart-checkout-button")}
+                        >
                           Thanh toán
-                        </button>
+                        </Link>
                       </div>
                     </div>
                   </div>
