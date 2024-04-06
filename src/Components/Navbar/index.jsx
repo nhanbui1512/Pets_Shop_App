@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import style from "./navbar.module.scss";
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,40 +12,17 @@ import {
 import CartItem from "../CartItem";
 
 import HeadlessTippy from "@tippyjs/react/headless";
+import { StorageContext } from "../../Contexts/StorageContext";
 
 const cx = classNames.bind(style);
 
 function Navbar() {
   const cartRef = useRef(null);
+  const storage = useContext(StorageContext);
 
   // Initialize a state variable to keep track of the toggle state
   const [isOpen, setIsOpen] = useState(false);
-  const cartItems = [
-    {
-      id: 1,
-      name: "Product 1",
-      price: 100,
-      quantity: 1,
-      image:
-        "https://cdn.vectorstock.com/i/1000x1000/79/10/product-icon-simple-element-vector-27077910.webp",
-    },
-    {
-      id: 2,
-      name: "Product 2",
-      price: 200,
-      quantity: 2,
-      image:
-        "https://cdn.vectorstock.com/i/1000x1000/79/10/product-icon-simple-element-vector-27077910.webp",
-    },
-    {
-      id: 3,
-      name: "Product 3",
-      price: 300,
-      quantity: 3,
-      image:
-        "https://cdn.vectorstock.com/i/1000x1000/79/10/product-icon-simple-element-vector-27077910.webp",
-    },
-  ];
+  const cartItems = storage.cartItems;
 
   // Function to toggle the isOpen state
   const toggleOpen = () => setIsOpen(!isOpen);
@@ -164,7 +141,12 @@ function Navbar() {
                 </div> */}
                       <div className={cx("cart-body-item")}>
                         {cartItems.map((item, index) => (
-                          <CartItem key={index} />
+                          <CartItem
+                            index={index}
+                            setCartItems={storage.setCartItems}
+                            data={item}
+                            key={index}
+                          />
                         ))}
                       </div>
                       <div className={cx("cart-footer-item")}>
@@ -176,6 +158,7 @@ function Navbar() {
                               0
                             )
                             .toLocaleString("vi-VN", { currency: "VND" })}
+                          đ
                         </div>
                         <button className={cx("cart-checkout-button")}>
                           Thanh toán
