@@ -4,7 +4,7 @@ import { createContext, useState } from "react";
 export const StorageContext = createContext();
 
 function GlobalStates({ children }) {
-  const [currentUser, setCurrentUser] = useState(false);
+  const [currentUser, setCurrentUser] = useState(true);
   const [userData, setUserData] = useState({});
   const [cartItems, setCartItems] = useState([
     {

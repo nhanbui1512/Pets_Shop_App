@@ -7,7 +7,6 @@ import {
 } from "react-router-dom";
 import { DefaultLayout, AdminLayout } from "./Layouts";
 import CollectionLayout from "./Layouts/CollectionLayout";
-import ListProduct from "./Pages/ListProduct";
 import ProductDetail from "./Pages/ProductDetail";
 import {
   Home,
@@ -23,6 +22,7 @@ import Editor from "./Components/Editor";
 import BasicTable from "./Pages/Admin/Products";
 import AdminProfile from "./Pages/Admin/Profile";
 import UserList from "./Pages/Admin/Users";
+import AllProducts from "./Pages/AllProducts";
 
 const adminPages = [
   {
@@ -66,7 +66,7 @@ function App() {
 
           {/* have sidebar */}
           <Route path="/collections" element={<CollectionLayout />}>
-            <Route index element={<ListProduct />}></Route>
+            <Route index element={<AllProducts />}></Route>
           </Route>
           <Route path="/animals" element={<CollectionLayout />}>
             <Route index element={<Animal />}></Route>

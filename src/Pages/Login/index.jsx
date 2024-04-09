@@ -3,10 +3,13 @@ import styles from "./Login.module.scss";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
+import Cookies from "js-cookie";
 
 import TitleInput from "../../Components/TitleInput";
 import Button from "../../Components/Button";
 import Input from "../../Components/Input";
+
+import { Login as LoginRequest } from "../../Services/API/authService";
 
 const cx = classNames.bind(styles);
 
@@ -26,9 +29,14 @@ function Login() {
   const handleLogin = () => {
     if (!email || !password) {
       setErr((preps) => ["Vui lòng nhập đầy đủ email và mật khẩu"]);
-      console.log("Vui lòng nhập đầy đủ email và mật khẩu");
     } else {
-      console.log("login thành công");
+      LoginRequest(email, password)
+        .then((res) => {
+          Cookies.set("token", res.accessToken, { expires: 7 }); // Lưu token trong 7 ngày
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
 

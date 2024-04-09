@@ -427,7 +427,9 @@
 .cart-checkout-button:hover {
   background-color: #0056b3;
 }
-
+.profile-menu {
+  min-width: 120px;
+}
 @media (max-width: 768px) {
   .cart-container {
     padding: 0;

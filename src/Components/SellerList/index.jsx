@@ -3,10 +3,24 @@ import styles from "./SellerList.module.scss";
 import ProductItem from "../ProductItem";
 import { Link } from "react-router-dom";
 import data from "./data";
+import { useEffect, useState } from "react";
+import { getAllCategories } from "../../Services/API/Category";
 
 const cx = classNames.bind(styles);
 
 function SellerList() {
+  const [categorise, setCategories] = useState([]);
+
+  useEffect(() => {
+    getAllCategories()
+      .then((res) => {
+        setCategories(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <div className={cx("wrapper")}>
       <div className={cx("col-left")}>
@@ -21,7 +35,14 @@ function SellerList() {
               flexDirection: "column",
             }}
           >
-            <div className={cx("link")}>
+            {categorise.map((item, index) => {
+              return (
+                <div key={index} className={cx("link")}>
+                  <Link>{item.name}</Link>
+                </div>
+              );
+            })}
+            {/* <div className={cx("link")}>
               <Link>Thức ăn khô cho chó</Link>
             </div>
             <div className={cx("link")}>
@@ -29,7 +50,7 @@ function SellerList() {
             </div>
             <div className={cx("link")}>
               <Link>Xương, bánh thưởng cho chó</Link>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

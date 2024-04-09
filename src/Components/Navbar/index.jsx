@@ -4,6 +4,10 @@ import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { Link, NavLink } from "react-router-dom";
+
+import { MenuList, Paper } from "@mui/material";
+import MenuItem from "@mui/material/MenuItem";
+
 import {
   faBars,
   faCartShopping,
@@ -178,11 +182,27 @@ function Navbar() {
                 </Link>
               </li>
             </HeadlessTippy>
-            <li>
-              <Link to={"/user"}>
-                <FontAwesomeIcon fontSize={20} icon={faUser} />
-              </Link>
-            </li>
+            {storage.currentUser && (
+              <HeadlessTippy
+                placement="bottom"
+                interactive
+                render={() => (
+                  <Paper className={cx("profile-menu")}>
+                    <MenuList>
+                      <MenuItem>Profile</MenuItem>
+                      <MenuItem>Orders</MenuItem>
+                      <MenuItem>Signout</MenuItem>
+                    </MenuList>
+                  </Paper>
+                )}
+              >
+                <li>
+                  <Link to={"/user"}>
+                    <FontAwesomeIcon fontSize={20} icon={faUser} />
+                  </Link>
+                </li>
+              </HeadlessTippy>
+            )}
           </ul>
         </nav>
       </div>
