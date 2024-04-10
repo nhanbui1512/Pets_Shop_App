@@ -10,9 +10,12 @@ import {
   faGooglePlus,
   faTwitter,
 } from "@fortawesome/free-brands-svg-icons";
+import { useParams } from "react-router-dom";
 const cx = classNames.bind(styles);
 
 function ProductDetail() {
+  const { id } = useParams();
+  console.log(id);
   return (
     <div className={cx("wrapper")}>
       <div

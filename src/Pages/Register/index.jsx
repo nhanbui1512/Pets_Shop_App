@@ -8,6 +8,10 @@ import Input from "../../Components/Input";
 import TitleInput from "../../Components/TitleInput";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 
+import { toast } from "react-toastify";
+
+import { Register as SignUp } from "../../Services/API/authService";
+
 const cx = classNames.bind(styles);
 
 function Register() {
@@ -37,7 +41,14 @@ function Register() {
     if (!email || !password || !firstName || !lastName) {
       setErr(["Vui lòng nhập đầy đủ email và mật khẩu"]);
     } else {
-      console.log("login thành công");
+      SignUp({ email, password, firstName, lastName })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error(err.response.data?.message[0].message);
+        });
     }
   };
 

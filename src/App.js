@@ -20,12 +20,14 @@ import {
   DetailBlog,
   Checkout,
   Animal,
+  Search,
 } from "./Pages";
 import Editor from "./Components/Editor";
 import BasicTable from "./Pages/Admin/Products";
 import AdminProfile from "./Pages/Admin/Profile";
 import UserList from "./Pages/Admin/Users";
 import AllProducts from "./Pages/AllProducts";
+import AddProduct from "./Pages/Admin/AddProduct";
 
 const adminPages = [
   {
@@ -48,6 +50,10 @@ const adminPages = [
     path: "/users",
     element: <UserList />,
   },
+  {
+    path: "/addproduct",
+    element: <AddProduct />,
+  },
 ];
 
 function App() {
@@ -60,11 +66,12 @@ function App() {
             <Route index element={<Home />}></Route>
             <Route path="/cart" element={<Cart />}></Route>
             <Route path="/blog" element={<Blog />}></Route>
-            <Route path="/product" element={<ProductDetail />}></Route>
+            <Route path="/product/:id" element={<ProductDetail />}></Route>
             <Route path="/blog/:id/*" element={<DetailBlog />}></Route>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/signup" element={<Register />}></Route>
             <Route path="/payment" element={<Checkout />}></Route>
+            <Route path="/search" element={<Search />}></Route>
           </Route>
 
           {/* have sidebar */}

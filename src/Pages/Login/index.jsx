@@ -23,6 +23,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [err, setErr] = useState([]);
+  const [fail, setFail] = useState(false);
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -44,7 +45,9 @@ function Login() {
           navigate("/");
         })
         .catch((err) => {
-          console.log(err);
+          setEmail("");
+          setPassword("");
+          setFail(true);
         });
     }
   };
@@ -71,10 +74,20 @@ function Login() {
             err={err}
           />
 
-          <Input handle={handleEmail} name="Email" typeOf="Email" />
-          <Input handle={handlePassword} name="Mật khẩu" typeOf="password" />
+          <Input
+            value={email}
+            handle={handleEmail}
+            name="Email"
+            typeOf="Email"
+          />
+          <Input
+            value={password}
+            handle={handlePassword}
+            name="Mật khẩu"
+            typeOf="password"
+          />
           <div className={cx("regiter-contain_title")}>
-            <b>* Bắt buộc</b>
+            {fail && <b>* Email hoặc mật khẩu không đúng</b>}
           </div>
           <div className={cx("regiter-contain_active")}>
             <Button

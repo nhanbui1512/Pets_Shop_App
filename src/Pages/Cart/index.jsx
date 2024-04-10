@@ -8,11 +8,14 @@ import { Link } from "react-router-dom";
 
 import CartProduct from "../../Components/CartProduct";
 import styles from "./Cart.module.scss";
+import { StorageContext } from "../../Contexts/StorageContext";
+import { useContext } from "react";
 
 const cx = classNames.bind(styles);
 
 function Cart() {
   const check = true;
+  const storage = useContext(StorageContext);
 
   return (
     <div className={cx("content-cart")}>
@@ -38,10 +41,14 @@ function Cart() {
                 </tr>
               </thead>
               <tbody>
-                <CartProduct />
-                <CartProduct />
-                <CartProduct />
-                <CartProduct />
+                {storage.cartItems.map((item, index) => (
+                  <CartProduct
+                    setCartItems={storage.setCartItems}
+                    index={index}
+                    data={item}
+                    key={index}
+                  />
+                ))}
               </tbody>
               <tfoot>
                 <tr>

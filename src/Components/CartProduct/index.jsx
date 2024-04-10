@@ -8,36 +8,61 @@ import { Link } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
-function CartProduct() {
+function CartProduct({ data, setCartItems, index }) {
+  const handleDeleteItem = (index) => {
+    setCartItems((prev) => {
+      const arr = [...prev];
+      arr.splice(index, 1);
+      return arr;
+    });
+  };
+
   return (
     <tr className={cx("product")}>
       <td>
         <Link className={cx("text-dec")}>
           <img
             className={cx("product_img")}
-            src="https://bizweb.dktcdn.net/thumb/small/100/229/172/products/bow-wow-ca-hoi-150g-1709195437957.jpg?v=1709473755860"
+            src={
+              data?.image ||
+              "https://bizweb.dktcdn.net/thumb/small/100/229/172/products/bow-wow-ca-hoi-150g-1709195437957.jpg?v=1709473755860"
+            }
             alt="anh"
           />
         </Link>
       </td>
       <td className={cx("product_name")}>
-        <Link className={cx("text-dec")}>Cá hồi que cho chó Bow wow 150g</Link>
+        <Link className={cx("text-dec")}>
+          {data?.name || "Cá hồi que cho chó Bow wow 150g"}
+        </Link>
       </td>
       <td className={cx("product_species")}>
         <Link className={cx("text-dec")}>chó cỏ</Link>
       </td>
-      <td className={cx("product_price")}>65.000₫</td>
-      <td>
-        <ActiveNumber />
+      <td className={cx("product_price")}>
+        {`${data?.price.toLocaleString("vi-VN", { currency: "VND" })}đ` ||
+          "65.000đ"}
       </td>
-      <td className={cx("product_price")}>130.000₫</td>
       <td>
-        <Link className={cx("product-icon_link")} to="/cart" title="xóa">
+        <ActiveNumber value={data?.quantity} />
+      </td>
+      <td
+        className={cx("product_price")}
+      >{`${(data?.price * data?.quantity).toLocaleString("vi-VN", { currency: "VND" })}`}</td>
+      <td>
+        <button
+          onClick={() => {
+            handleDeleteItem(index);
+          }}
+          className={cx("product-icon_link")}
+          to="/cart"
+          title="xóa"
+        >
           <FontAwesomeIcon
             className={cx("product-icon_remove")}
             icon={faTrashCan}
           />
-        </Link>
+        </button>
       </td>
     </tr>
   );

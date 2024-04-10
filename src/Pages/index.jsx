@@ -6,3 +6,4 @@ export { default as Login } from "./Login";
 export { default as Register } from "./Register";
 export { default as Checkout } from "./Checkout";
 export { default as Animal } from "./Animals";
+export { default as Search } from "./Search";

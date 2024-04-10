@@ -26,11 +26,15 @@ function ProductItem({ data, className }) {
           <div className={cx("product-info")}>
             <div className={cx("info-inner")}>
               <div className={cx("name-product")}>
-                <Link to={"/product"}>{data?.name || "Tên sản phẩm"}</Link>
+                <Link to={`/product/${data.id}`}>
+                  {data?.name || "Tên sản phẩm"}
+                </Link>
               </div>
 
               <div className={cx("price")}>
-                <span>{data?.price || "100.000đ"}</span>
+                <span>
+                  {data?.price.toLocaleString("vi-VN", { currency: "VND" })}đ
+                </span>
               </div>
 
               <div className={cx(["pd_10_0", "actions"])}>

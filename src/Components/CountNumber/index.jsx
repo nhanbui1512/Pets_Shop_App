@@ -7,8 +7,8 @@ import styles from "./CountNumber.module.scss";
 
 const cx = classNames.bind(styles);
 
-function CountNumber({ className }) {
-  var [numberProduct, setNumberProduct] = useState(1);
+function CountNumber({ value, className }) {
+  var [numberProduct, setNumberProduct] = useState(value || 1);
 
   const handleReduce = () => {
     if (numberProduct <= 1) {
