@@ -38,6 +38,9 @@ const OrderForm = () => {
     });
   };
 
+  var totalPrice = storage.cartItems.reduce((total, item) => {
+    return (total += item.price * item.quantity);
+  }, 0);
   return (
     <div className={cx("order-container")}>
       <div onSubmit={handleSubmit} className={cx("order-form")}>
@@ -139,7 +142,9 @@ const OrderForm = () => {
             className="row"
           >
             <div>Tạm tính</div>
-            <div>65.000₫</div>
+            <div>
+              {totalPrice.toLocaleString("vi-VN", { currency: "VND" })}đ
+            </div>
           </div>
         </div>
       </div>

@@ -10,30 +10,19 @@ function GlobalStates({ children }) {
   const [cartItems, setCartItems] = useState([
     {
       id: 1,
-      name: "Product 1",
-      price: 200000,
-      quantity: 1,
-      description: "",
+      name: "Cá hồi que cho chó Bow wow 150g",
+      price: 65000,
+      quantity: 3,
       image:
-        "https://cdn.vectorstock.com/i/1000x1000/79/10/product-icon-simple-element-vector-27077910.webp",
+        "https://bizweb.dktcdn.net/100/229/172/products/bow-wow-ca-hoi-150g-1709195437957.jpg?v=1709473755860",
     },
     {
       id: 2,
-      name: "Product 2",
-      price: 150000,
-      quantity: 2,
-      description: "",
-      image:
-        "https://cdn.vectorstock.com/i/1000x1000/79/10/product-icon-simple-element-vector-27077910.webp",
-    },
-    {
-      id: 3,
-      name: "Product 3",
-      price: 180000,
+      name: "Phô mai cuộn cho chó Bow wow cheese roll 120g",
+      price: 60000,
       quantity: 3,
-      description: "",
       image:
-        "https://cdn.vectorstock.com/i/1000x1000/79/10/product-icon-simple-element-vector-27077910.webp",
+        "https://bizweb.dktcdn.net/100/229/172/products/bow-wow-pho-mai-cuon-ga-1709195207055.jpg?v=1709440731433",
     },
   ]);
 

@@ -42,15 +42,6 @@ function SellerList() {
                 </div>
               );
             })}
-            {/* <div className={cx("link")}>
-              <Link>Thức ăn khô cho chó</Link>
-            </div>
-            <div className={cx("link")}>
-              <Link>Thức ăn mềm, pate cho chó</Link>
-            </div>
-            <div className={cx("link")}>
-              <Link>Xương, bánh thưởng cho chó</Link>
-            </div> */}
           </div>
         </div>
       </div>

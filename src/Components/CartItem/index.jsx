@@ -17,7 +17,10 @@ function CartItem({ data, setCartItems, index }) {
     <div className={cx("cart-item")}>
       <div className={cx("cart-item-image")}>
         <img
-          src={`https://bizweb.dktcdn.net/100/229/172/products/pate-thi-t-ha-m-cao-ca-p-bonbon.jpg?v=1711288065353`}
+          src={
+            data?.image ||
+            `https://bizweb.dktcdn.net/100/229/172/products/pate-thi-t-ha-m-cao-ca-p-bonbon.jpg?v=1711288065353`
+          }
           alt={"name"}
         />
       </div>

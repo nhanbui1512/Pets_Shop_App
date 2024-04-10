@@ -12,6 +12,8 @@ import { useNavigate } from "react-router-dom";
 import { Login as LoginRequest } from "../../Services/API/authService";
 import { StorageContext } from "../../Contexts/StorageContext";
 
+import { toast } from "react-toastify";
+
 const cx = classNames.bind(styles);
 
 function Login() {
@@ -38,6 +40,7 @@ function Login() {
         .then((res) => {
           Cookies.set("token", res.accessToken, { expires: 7 }); // Lưu token trong 7 ngày
           storage.setCurrentUser(true);
+          toast.success("Đăng nhập thành công");
           navigate("/");
         })
         .catch((err) => {

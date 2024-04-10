@@ -22,6 +22,8 @@ import CartItem from "../CartItem";
 import HeadlessTippy from "@tippyjs/react/headless";
 import { StorageContext } from "../../Contexts/StorageContext";
 
+import Cookies from "js-cookie";
+
 const cx = classNames.bind(style);
 
 function Navbar() {
@@ -208,12 +210,16 @@ function Navbar() {
                         />{" "}
                         Orders
                       </MenuItem>
-                      <MenuItem>
-                        {" "}
+                      <MenuItem
+                        onClick={() => {
+                          Cookies.remove("token");
+                          window.location.reload();
+                        }}
+                      >
                         <FontAwesomeIcon
                           className={cx("profile-menu-icon")}
                           icon={faRightFromBracket}
-                        />{" "}
+                        />
                         Signout
                       </MenuItem>
                     </MenuList>

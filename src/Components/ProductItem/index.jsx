@@ -5,13 +5,17 @@ import { Link } from "react-router-dom";
 import CircleButton from "../CircleButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faEye } from "@fortawesome/free-solid-svg-icons";
-import React from "react";
+import React, { useContext } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+import { StorageContext } from "../../Contexts/StorageContext";
 
 const cx = classNames.bind(styles);
 
 function ProductItem({ data, className }) {
+  const storage = useContext(StorageContext);
+
   return (
     <div className={cx("wrapper", { [className]: className })}>
       <div className="mb-22">
@@ -32,6 +36,17 @@ function ProductItem({ data, className }) {
               <div className={cx(["pd_10_0", "actions"])}>
                 <CircleButton
                   onClick={() => {
+                    storage.setCartItems((prev) => {
+                      const items = [...prev];
+                      const isExist = items.find((item) => item.id === data.id);
+                      if (isExist) {
+                        isExist.quantity++;
+                      } else {
+                        items.push({ ...data, quantity: 1 });
+                      }
+
+                      return items;
+                    });
                     toast.success("Thêm sản phẩm vào giỏ hàng thành công");
                   }}
                   className={cx("cart-btn")}

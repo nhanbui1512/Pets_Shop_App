@@ -31,6 +31,10 @@
   font-size: 1.9 rem;
   font-weight: bold;
   margin-bottom: 5px;
+  max-width: 120px;
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .cart-item-quantity {
