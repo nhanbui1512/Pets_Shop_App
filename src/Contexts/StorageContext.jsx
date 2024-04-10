@@ -1,10 +1,11 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+import { getMyProfile } from "../Services/API/authService";
 // import Cookies from "js-cookie";
 
 export const StorageContext = createContext();
 
 function GlobalStates({ children }) {
-  const [currentUser, setCurrentUser] = useState(true);
+  const [currentUser, setCurrentUser] = useState(false);
   const [userData, setUserData] = useState({});
   const [cartItems, setCartItems] = useState([
     {
@@ -44,6 +45,16 @@ function GlobalStates({ children }) {
     cartItems,
     setCartItems,
   };
+
+  useEffect(() => {
+    getMyProfile()
+      .then((res) => {
+        setCurrentUser(true);
+      })
+      .catch((err) => {
+        setCurrentUser(false);
+      });
+  }, []);
 
   return (
     <StorageContext.Provider value={states}>{children}</StorageContext.Provider>

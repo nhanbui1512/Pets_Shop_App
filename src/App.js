@@ -5,6 +5,9 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
+
+import { ToastContainer } from "react-toastify";
+
 import { DefaultLayout, AdminLayout } from "./Layouts";
 import CollectionLayout from "./Layouts/CollectionLayout";
 import ProductDetail from "./Pages/ProductDetail";
@@ -84,7 +87,22 @@ function App() {
       </>
     )
   );
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <RouterProvider router={router} />
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+    </>
+  );
 }
 
 export default App;

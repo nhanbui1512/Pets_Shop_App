@@ -1,19 +1,23 @@
 import classNames from "classnames/bind";
 import styles from "./Login.module.scss";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
 import Cookies from "js-cookie";
 
 import TitleInput from "../../Components/TitleInput";
 import Button from "../../Components/Button";
 import Input from "../../Components/Input";
-
+import { useNavigate } from "react-router-dom";
 import { Login as LoginRequest } from "../../Services/API/authService";
+import { StorageContext } from "../../Contexts/StorageContext";
 
 const cx = classNames.bind(styles);
 
 function Login() {
+  const storage = useContext(StorageContext);
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [err, setErr] = useState([]);
@@ -33,6 +37,8 @@ function Login() {
       LoginRequest(email, password)
         .then((res) => {
           Cookies.set("token", res.accessToken, { expires: 7 }); // Lưu token trong 7 ngày
+          storage.setCurrentUser(true);
+          navigate("/");
         })
         .catch((err) => {
           console.log(err);

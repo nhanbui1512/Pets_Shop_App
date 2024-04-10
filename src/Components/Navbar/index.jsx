@@ -2,7 +2,11 @@ import React, { useState, useRef, useContext } from "react";
 import style from "./navbar.module.scss";
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCaretDown,
+  faList,
+  faRightFromBracket,
+} from "@fortawesome/free-solid-svg-icons";
 import { Link, NavLink } from "react-router-dom";
 
 import { MenuList, Paper } from "@mui/material";
@@ -189,9 +193,29 @@ function Navbar() {
                 render={() => (
                   <Paper className={cx("profile-menu")}>
                     <MenuList>
-                      <MenuItem>Profile</MenuItem>
-                      <MenuItem>Orders</MenuItem>
-                      <MenuItem>Signout</MenuItem>
+                      <MenuItem>
+                        {" "}
+                        <FontAwesomeIcon
+                          className={cx("profile-menu-icon")}
+                          icon={faUser}
+                        />{" "}
+                        Profile
+                      </MenuItem>
+                      <MenuItem>
+                        <FontAwesomeIcon
+                          className={cx("profile-menu-icon")}
+                          icon={faList}
+                        />{" "}
+                        Orders
+                      </MenuItem>
+                      <MenuItem>
+                        {" "}
+                        <FontAwesomeIcon
+                          className={cx("profile-menu-icon")}
+                          icon={faRightFromBracket}
+                        />{" "}
+                        Signout
+                      </MenuItem>
                     </MenuList>
                   </Paper>
                 )}

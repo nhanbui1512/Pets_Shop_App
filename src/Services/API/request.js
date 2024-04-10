@@ -12,7 +12,7 @@ const request = axios.create({
 request.interceptors.request.use(
   function (config) {
     // Do something before request is sent
-    const accessToken = Cookies.get("authToken") || "";
+    const accessToken = Cookies.get("token") || "";
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     } else {

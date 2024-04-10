@@ -430,6 +430,12 @@
 .profile-menu {
   min-width: 120px;
 }
+.profile-menu-icon {
+  margin-right: 4px;
+  font-size: 12px;
+  line-height: inherit;
+  color: #92969a;
+}
 @media (max-width: 768px) {
   .cart-container {
     padding: 0;
