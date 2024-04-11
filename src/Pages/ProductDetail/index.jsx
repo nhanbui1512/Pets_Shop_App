@@ -50,18 +50,25 @@ function ProductDetail() {
         <div className={cx("right")}>
           <h1 className={cx("product-name")}>{product.name}</h1>
           <div className={cx("price")}>
-            <span>60.000₫</span>
+            <span>{`${product.variantOptions?.[0].price.toLocaleString("vi-VN", { currency: "VND" })}đ`}</span>
           </div>
           <p className={cx("description")}>
             Phô mai cuộn cho chó Bow wow cheese roll 120g là thức ăn thơm ngon
             bổ dưỡng cho chó và mèo, nhất là chó con và chó mẹ sau khi sinh.
           </p>
           <div className={cx("slection-box")}>
-            <div className={cx("name-selection")}>Hương vị</div>
-            <select className={cx("selected")}>
-              <option>Gà + bí đỏ</option>
-              <option>Gà + cà rốt</option>
-              <option>Cá nục</option>
+            <div className={cx("name-selection")}>Lựa chọn</div>
+            <select
+              onChange={(e) => {
+                console.log(e.target.value);
+              }}
+              className={cx("selected")}
+            >
+              {product.variantOptions?.map((item, index) => (
+                <option value={item.price} key={index}>
+                  {item.name || "Mặc định"}
+                </option>
+              ))}
             </select>
           </div>
           <div className={cx("row")}>

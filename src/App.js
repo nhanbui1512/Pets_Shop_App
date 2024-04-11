@@ -25,6 +25,7 @@ import {
 import { AdminRoutes } from "./Config/routes";
 
 import AllProducts from "./Pages/AllProducts";
+import Orders from "./Pages/Orders";
 
 function App() {
   const router = createBrowserRouter(
@@ -42,6 +43,7 @@ function App() {
             <Route path="/signup" element={<Register />}></Route>
             <Route path="/payment" element={<Checkout />}></Route>
             <Route path="/search" element={<Search />}></Route>
+            <Route path="/orders" element={<Orders />} />
           </Route>
 
           {/* have sidebar */}

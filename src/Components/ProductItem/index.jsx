@@ -73,12 +73,11 @@ function ProductItem({ data, className }) {
                     />
                   }
                 />
-                <CircleButton
-                  className={cx("view-btn")}
-                  icon={
+                <Link to={`/product/${data._id}`}>
+                  <CircleButton className={cx("view-btn")}>
                     <FontAwesomeIcon color="#fff" fontSize={16} icon={faEye} />
-                  }
-                />
+                  </CircleButton>
+                </Link>
               </div>
             </div>
           </div>

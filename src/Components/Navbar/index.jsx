@@ -126,9 +126,15 @@ function Navbar() {
               </NavLink>
             </li>
             <li>
-              <Link className={cx("nav-item")} title="Order">
+              <NavLink
+                to="/orders"
+                className={({ isActive }) =>
+                  cx("nav-item", { active: isActive })
+                }
+                title="Order"
+              >
                 ĐƠN HÀNG
-              </Link>
+              </NavLink>
             </li>
             <li>
               <Link className={cx("nav-item")} title="Contact">

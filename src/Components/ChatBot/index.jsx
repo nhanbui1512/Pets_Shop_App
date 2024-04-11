@@ -52,13 +52,14 @@ function ChatBot() {
         setChatBoxVisible(false);
       }
     },
-    [isChatBoxVisible],
+    [isChatBoxVisible]
   );
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (input.trim()) {
-      setMessages([...messages, { name: "User", message: input }]);
+      setMessages([...messages, { name: "Peter Parker", message: input }]);
+      scrollToBottom();
       setInput("");
     }
   };

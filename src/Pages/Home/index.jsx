@@ -4,6 +4,8 @@ import SellerList from "../../Components/SellerList";
 import { useEffect, useState } from "react";
 import { getProducts } from "../../Services/API/Products";
 import Loader from "../../Components/Loader";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
 
 const cx = classNames.bind(styles);
 
@@ -31,6 +33,21 @@ function Home() {
         </div>
       )}
       <SellerList items={products} />
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <Stack
+          sx={{
+            mt: 2,
+          }}
+          spacing={2}
+        >
+          <Pagination count={10} color="primary" />
+        </Stack>
+      </div>
     </div>
   );
 }
