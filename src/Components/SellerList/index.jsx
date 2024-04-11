@@ -2,13 +2,13 @@ import classNames from "classnames/bind";
 import styles from "./SellerList.module.scss";
 import ProductItem from "../ProductItem";
 import { Link } from "react-router-dom";
-import data from "./data";
+// import data from "./data";
 import { useEffect, useState } from "react";
 import { getAllCategories } from "../../Services/API/Category";
 
 const cx = classNames.bind(styles);
 
-function SellerList() {
+function SellerList({ items = [] }) {
   const [categorise, setCategories] = useState([]);
 
   useEffect(() => {
@@ -47,7 +47,7 @@ function SellerList() {
       </div>
       <div className={cx("product-container")}>
         <div className={cx("product-list")}>
-          {data.map((item, index) => (
+          {items.map((item, index) => (
             <ProductItem key={index} data={item} />
           ))}
         </div>

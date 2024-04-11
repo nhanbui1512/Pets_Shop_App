@@ -97,3 +97,10 @@
   width: 80%;
   z-index: 99;
 }
+.search-item {
+  max-width: 100%;
+  overflow: hidden;
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
+  padding-right: 8px;
+}

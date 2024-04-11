@@ -6,11 +6,29 @@ import MenuItem from "@mui/material/MenuItem";
 import { useState } from "react";
 
 import { MenuList, Paper } from "@mui/material";
+import { useDebounce } from "../../Hooks";
+import { searchProduct } from "../../Services/API/Products";
 
 const cx = classNames.bind(style);
 function Header() {
   const [searchValue, setSearchValue] = useState("");
-  const [searchPopup, setSearchPopup] = useState(false);
+  const [searchResult, setSearchResult] = useState([]);
+
+  const debounceValue = useDebounce(searchValue, 600);
+
+  React.useEffect(() => {
+    if (!debounceValue.trim()) {
+      setSearchResult([]);
+      return;
+    }
+
+    const fetchApi = async () => {
+      const result = await searchProduct({ value: debounceValue });
+      console.log(result.docs);
+      setSearchResult(result.docs);
+    };
+    fetchApi();
+  }, [debounceValue]);
 
   return (
     <header className={cx("header")}>
@@ -26,22 +44,24 @@ function Header() {
             onChange={(e) => {
               setSearchValue(e.target.value);
             }}
-            onFocus={() => {
-              setSearchPopup(true);
-            }}
-            onBlur={() => {
-              setSearchPopup(false);
-            }}
             className={cx("input-search_header")}
             id={cx("search-box")}
             type="text"
             placeholder="Search for products, brands and more"
           />
-          <Paper hidden={!searchPopup} className={cx("menu")}>
+          <Paper hidden={!searchResult.length > 0} className={cx("menu")}>
             <MenuList>
-              <MenuItem>Product 1</MenuItem>
+              {/* <MenuItem>Product 1</MenuItem>
               <MenuItem>Product 2</MenuItem>
-              <MenuItem>Product 3</MenuItem>
+              <MenuItem>Product 3</MenuItem> */}
+
+              {searchResult.map((item, index) => {
+                return (
+                  <MenuItem key={index}>
+                    <p className={cx("search-item")}>{item.name}</p>
+                  </MenuItem>
+                );
+              })}
             </MenuList>
           </Paper>
 

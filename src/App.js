@@ -22,39 +22,9 @@ import {
   Animal,
   Search,
 } from "./Pages";
-import Editor from "./Components/Editor";
-import BasicTable from "./Pages/Admin/Products";
-import AdminProfile from "./Pages/Admin/Profile";
-import UserList from "./Pages/Admin/Users";
-import AllProducts from "./Pages/AllProducts";
-import AddProduct from "./Pages/Admin/AddProduct";
+import { AdminRoutes } from "./Config/routes";
 
-const adminPages = [
-  {
-    path: "/",
-    element: <div>Root</div>,
-  },
-  {
-    path: "/profile",
-    element: <AdminProfile />,
-  },
-  {
-    path: "/edit",
-    element: <Editor />,
-  },
-  {
-    path: "/products",
-    element: <BasicTable />,
-  },
-  {
-    path: "/users",
-    element: <UserList />,
-  },
-  {
-    path: "/addproduct",
-    element: <AddProduct />,
-  },
-];
+import AllProducts from "./Pages/AllProducts";
 
 function App() {
   const router = createBrowserRouter(
@@ -83,7 +53,7 @@ function App() {
           </Route>
         </Route>
         <Route path="/admin" element={<AdminLayout />}>
-          {adminPages.map((data, index) => (
+          {AdminRoutes.map((data, index) => (
             <Route
               key={index}
               path={`/admin${data.path}`}

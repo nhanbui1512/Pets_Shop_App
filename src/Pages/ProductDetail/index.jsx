@@ -11,11 +11,23 @@ import {
   faTwitter,
 } from "@fortawesome/free-brands-svg-icons";
 import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getProductById } from "../../Services/API/Products";
 const cx = classNames.bind(styles);
 
 function ProductDetail() {
   const { id } = useParams();
-  console.log(id);
+  const [product, setProduct] = useState({});
+
+  useEffect(() => {
+    getProductById(id)
+      .then((res) => {
+        setProduct(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [id]);
   return (
     <div className={cx("wrapper")}>
       <div
@@ -27,15 +39,16 @@ function ProductDetail() {
         <div className={cx(["left"])}>
           <div className={cx("image-container")}>
             <Image
-              src="https://bizweb.dktcdn.net/100/229/172/products/bow-wow-pho-mai-cuon-ga-1709195207055.jpg?v=1709440731433"
+              src={
+                product.productImage?.[0] ||
+                "https://bizweb.dktcdn.net/100/229/172/products/bow-wow-pho-mai-cuon-ga-1709195207055.jpg?v=1709440731433"
+              }
               alt=""
             />
           </div>
         </div>
         <div className={cx("right")}>
-          <h1 className={cx("product-name")}>
-            Phô Mai Cuộn Cho Chó Bow Wow Cheese Roll 120g
-          </h1>
+          <h1 className={cx("product-name")}>{product.name}</h1>
           <div className={cx("price")}>
             <span>60.000₫</span>
           </div>

@@ -21,19 +21,25 @@ function ProductItem({ data, className }) {
       <div className="mb-22">
         <div className="col">
           <div className={cx("image-container")}>
-            <Image className={cx("product-image")} src={data?.image || ""} />
+            <Image
+              className={cx("product-image")}
+              src={data?.productImage[0] || ""}
+            />
           </div>
           <div className={cx("product-info")}>
             <div className={cx("info-inner")}>
               <div className={cx("name-product")}>
-                <Link to={`/product/${data.id}`}>
+                <Link to={`/product/${data._id}`}>
                   {data?.name || "Tên sản phẩm"}
                 </Link>
               </div>
 
               <div className={cx("price")}>
                 <span>
-                  {data?.price.toLocaleString("vi-VN", { currency: "VND" })}đ
+                  {data?.variantOptions[0].price.toLocaleString("vi-VN", {
+                    currency: "VND",
+                  })}
+                  đ
                 </span>
               </div>
 
