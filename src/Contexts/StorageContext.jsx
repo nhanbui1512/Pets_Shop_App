@@ -9,20 +9,53 @@ function GlobalStates({ children }) {
   const [userData, setUserData] = useState({});
   const [cartItems, setCartItems] = useState([
     {
-      id: 1,
-      name: "Cá hồi que cho chó Bow wow 150g",
-      price: 65000,
-      quantity: 3,
-      image:
-        "https://bizweb.dktcdn.net/100/229/172/products/bow-wow-ca-hoi-150g-1709195437957.jpg?v=1709473755860",
+      _id: "661686742b024bf2abe8fde1",
+      productImage: [
+        "https://i.pinimg.com/564x/9e/be/af/9ebeaf7aa7e3db7352df8346d0cbc9fa.jpg",
+      ],
+      name: "test1",
+      description: "Day la san pham test",
+      categoryID: [
+        {
+          _id: "660fb6da284e112c153c8c5d",
+          name: "Dụng cụ vệ sinh",
+        },
+      ],
+      variantOptions: {
+        _id: "661686742b024bf2abe8fddf",
+        name: "Màu",
+        value: "Đỏ",
+        price: 120000,
+      },
+
+      deleted: false,
+      createdAt: "2024-04-10T12:30:44.428Z",
+      updatedAt: "2024-04-10T12:30:44.428Z",
+      quantity: 1,
     },
     {
-      id: 2,
-      name: "Phô mai cuộn cho chó Bow wow cheese roll 120g",
-      price: 60000,
-      quantity: 3,
-      image:
-        "https://bizweb.dktcdn.net/100/229/172/products/bow-wow-pho-mai-cuon-ga-1709195207055.jpg?v=1709440731433",
+      _id: "66135c64e9f3a3c3401ba1ff",
+      productImage: [
+        "https://i.pinimg.com/564x/d4/4b/fe/d44bfe400509b1846d24c9f63adba3db.jpg",
+      ],
+      name: "Test",
+      description: "Đây là sản phẩm test",
+      categoryID: [
+        {
+          _id: "660fb6a1284e112c153c8c5b",
+          name: "Đồ chơi chó mèo",
+        },
+      ],
+      variantOptions: {
+        _id: "66135c64e9f3a3c3401ba1fd",
+        name: "Màu",
+        value: "đỏ",
+        price: 50000,
+      },
+      deleted: false,
+      createdAt: "2024-04-08T02:54:28.887Z",
+      updatedAt: "2024-04-08T02:54:28.887Z",
+      quantity: 1,
     },
   ]);
 

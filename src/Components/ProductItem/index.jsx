@@ -48,11 +48,16 @@ function ProductItem({ data, className }) {
                   onClick={() => {
                     storage.setCartItems((prev) => {
                       const items = [...prev];
-                      const isExist = items.find((item) => item.id === data.id);
+                      const isExist = items.find(
+                        (item) => item._id === data._id
+                      );
                       if (isExist) {
                         isExist.quantity++;
                       } else {
-                        items.push({ ...data, quantity: 1 });
+                        const newItem = { ...data };
+                        newItem.variantOptions = newItem.variantOptions[0];
+
+                        items.push({ ...newItem, quantity: 1 });
                       }
 
                       return items;

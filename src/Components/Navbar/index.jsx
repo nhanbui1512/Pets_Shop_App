@@ -164,7 +164,8 @@ function Navbar() {
                           Tổng cộng:{" "}
                           {cartItems
                             .reduce(
-                              (acc, curr) => acc + curr.price * curr.quantity,
+                              (acc, curr) =>
+                                acc + curr.variantOptions.price * curr.quantity,
                               0
                             )
                             .toLocaleString("vi-VN", { currency: "VND" })}

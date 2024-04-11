@@ -1,3 +1,8 @@
 .wrapper {
   display: flex;
+  flex-direction: column;
+}
+.loader-container {
+  display: flex;
+  justify-content: center;
 }
