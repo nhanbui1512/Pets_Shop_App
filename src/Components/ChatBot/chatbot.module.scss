@@ -76,10 +76,10 @@ html {
 .center {
   position: fixed;
   /* top: 50%; */
-  left: calc(50% + 48rem);
-  right: auto;
+  right:  -170px;
   bottom: -20%;
   transform: translate(-50%, -50%);
+  z-index: 10;
 }
 
 .pic {
