@@ -72,7 +72,11 @@ function ChatBot() {
   }, [handleClickOutside]);
 
   return (
-    <div>
+    <div
+      style={{
+        position: "relative",
+      }}
+    >
       <div className={cx("chatbot")} onClick={toggleChatBox}>
         <div className={cx("chatbot-icon")}>
           <img src="/images/chatbot.jpg" alt="chatbot" />

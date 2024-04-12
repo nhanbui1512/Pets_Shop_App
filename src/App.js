@@ -8,7 +8,7 @@ import {
 
 import { ToastContainer } from "react-toastify";
 
-import { DefaultLayout, AdminLayout } from "./Layouts";
+import { DefaultLayout, AdminLayout, UserLayout } from "./Layouts";
 import CollectionLayout from "./Layouts/CollectionLayout";
 import ProductDetail from "./Pages/ProductDetail";
 import {
@@ -22,7 +22,7 @@ import {
   Animal,
   Search,
 } from "./Pages";
-import { AdminRoutes } from "./Config/routes";
+import { adminRoutes, userRoutes } from "./Config/routes";
 
 import AllProducts from "./Pages/AllProducts";
 import Orders from "./Pages/Orders";
@@ -55,11 +55,20 @@ function App() {
           </Route>
         </Route>
         <Route path="/admin" element={<AdminLayout />}>
-          {AdminRoutes.map((data, index) => (
+          {adminRoutes.map((data, index) => (
             <Route
               key={index}
               path={`/admin${data.path}`}
               element={data.element}
+            />
+          ))}
+        </Route>
+        <Route path="/user" element={<UserLayout />}>
+          {userRoutes.map((item, index) => (
+            <Route
+              key={index}
+              path={`/user/{item.path}`}
+              element={item.element}
             />
           ))}
         </Route>

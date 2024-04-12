@@ -76,7 +76,7 @@ html {
 .center {
   position: fixed;
   /* top: 50%; */
-  right:  -170px;
+  right: -170px;
   bottom: -20%;
   transform: translate(-50%, -50%);
   z-index: 10;
@@ -187,7 +187,7 @@ html {
   justify-content: space-between;
 
   width: 24rem;
-  height: 38rem;
+  height: 30rem;
   z-index: 2;
   box-sizing: border-box;
   border-radius: 1rem;
@@ -205,6 +205,9 @@ html {
   }
 
   .messages {
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+
     padding: 1rem;
     background: $background;
     flex-shrink: 2;

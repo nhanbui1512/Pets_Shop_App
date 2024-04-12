@@ -37,7 +37,7 @@ function Home() {
           <Loader className={cx("loading")} />
         </div>
       )}
-      <SellerList items={products} />
+      <SellerList headerColor="#f24f5a" items={products} />
       <div
         style={{
           display: "flex",

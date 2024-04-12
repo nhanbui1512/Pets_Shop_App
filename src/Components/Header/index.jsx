@@ -24,7 +24,6 @@ function Header() {
 
     const fetchApi = async () => {
       const result = await searchProduct({ value: debounceValue });
-      console.log(result.docs);
       setSearchResult(result.docs);
     };
     fetchApi();
@@ -57,9 +56,16 @@ function Header() {
 
               {searchResult.map((item, index) => {
                 return (
-                  <MenuItem key={index}>
-                    <p className={cx("search-item")}>{item.name}</p>
-                  </MenuItem>
+                  <Link to={`/product/${item._id}`} key={index}>
+                    <MenuItem
+                      onClick={() => {
+                        setSearchResult([]);
+                        setSearchValue("");
+                      }}
+                    >
+                      <p className={cx("search-item")}>{item.name}</p>
+                    </MenuItem>
+                  </Link>
                 );
               })}
             </MenuList>

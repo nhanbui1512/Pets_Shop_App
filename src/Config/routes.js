@@ -5,7 +5,7 @@ import UserList from "../Pages/Admin/Users";
 import AddProduct from "../Pages/Admin/AddProduct";
 import AddBlog from "../Pages/Admin/AddBlog";
 
-export const AdminRoutes = [
+export const adminRoutes = [
   {
     path: "/",
     element: <div>Root</div>,
@@ -33,5 +33,12 @@ export const AdminRoutes = [
   {
     path: "/addblog",
     element: <AddBlog />,
+  },
+];
+
+export const userRoutes = [
+  {
+    path: "/",
+    element: <div>Root</div>,
   },
 ];

@@ -8,7 +8,7 @@ import { getAllCategories } from "../../Services/API/Category";
 
 const cx = classNames.bind(styles);
 
-function SellerList({ items = [] }) {
+function SellerList({ items = [], headerColor = "#064475" }) {
   const [categorise, setCategories] = useState([]);
 
   useEffect(() => {
@@ -22,10 +22,21 @@ function SellerList({ items = [] }) {
   }, []);
 
   return (
-    <div className={cx("wrapper")}>
+    <div
+      style={{
+        borderColor: headerColor,
+      }}
+      className={cx("wrapper")}
+    >
       <div className={cx("col-left")}>
         <div className={cx("title-container")}>
-          <h2>Sản phẩm mới nhất</h2>
+          <h2
+            style={{
+              backgroundColor: headerColor,
+            }}
+          >
+            Sản phẩm mới nhất
+          </h2>
         </div>
         <div>
           <div

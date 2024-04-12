@@ -16,7 +16,9 @@ function DropdownMenu({ children, title }) {
         <i className="icon-speedometer menu-icon"></i>
         <span className="nav-text">{title}</span>
       </Link>
-      <ul aria-expanded={open}>{open && children}</ul>
+      <ul role="listbox" aria-expanded={open}>
+        {open && children}
+      </ul>
     </li>
   );
 }
