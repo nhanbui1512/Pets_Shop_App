@@ -3,6 +3,7 @@ import BasicTable from "../Pages/Admin/Products";
 import AdminProfile from "../Pages/Admin/Profile";
 import UserList from "../Pages/Admin/Users";
 import AddProduct from "../Pages/Admin/AddProduct";
+import AddBlog from "../Pages/Admin/AddBlog";
 
 export const AdminRoutes = [
   {
@@ -28,5 +29,9 @@ export const AdminRoutes = [
   {
     path: "/addproduct",
     element: <AddProduct />,
+  },
+  {
+    path: "/addblog",
+    element: <AddBlog />,
   },
 ];

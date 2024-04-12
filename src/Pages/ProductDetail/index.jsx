@@ -20,6 +20,7 @@ function ProductDetail() {
   const [product, setProduct] = useState({});
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     getProductById(id)
       .then((res) => {
         setProduct(res);

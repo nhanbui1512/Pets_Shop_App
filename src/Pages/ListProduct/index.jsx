@@ -2,7 +2,6 @@ import classNames from "classnames/bind";
 import styles from "./ListProduct.module.scss";
 import ProductItem from "../../Components/ProductItem";
 import SortToolBox from "../../Components/SortToolBox";
-// import data from "../../Components/SellerList/data";
 
 const cx = classNames.bind(styles);
 

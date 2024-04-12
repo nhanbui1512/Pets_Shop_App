@@ -10,12 +10,17 @@ import Stack from "@mui/material/Stack";
 const cx = classNames.bind(styles);
 
 function Home() {
-  const [page] = useState(1);
+  const [page, setPage] = useState(1);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const handleChange = (event, number) => {
+    setPage(number);
+    window.scrollTo(0, 0);
+  };
+
   useEffect(() => {
-    getProducts({ page: page, perPage: 20 })
+    getProducts({ page: page, perPage: 21 })
       .then((res) => {
         setLoading(false);
         setProducts(res.docs);
@@ -45,7 +50,7 @@ function Home() {
           }}
           spacing={2}
         >
-          <Pagination count={10} color="primary" />
+          <Pagination onChange={handleChange} count={10} color="primary" />
         </Stack>
       </div>
     </div>

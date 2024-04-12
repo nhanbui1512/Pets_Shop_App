@@ -48,7 +48,7 @@ button,
 input,
 [tabindex] {
   border: none;
-  outline: none;
+  outline: none !important;
 }
 
 //custom tippy tooltip

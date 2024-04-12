@@ -2,7 +2,8 @@ import classNames from "classnames/bind";
 import styles from "./PriceRange.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight, faXmark } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useContext } from "react";
+import { CollectionContext } from "../../Layouts/CollectionLayout";
 const cx = classNames.bind(styles);
 
 const priceFilters = [
@@ -30,11 +31,11 @@ const priceFilters = [
 ];
 
 function PriceRange() {
-  const [fillters, setFillters] = useState([]);
+  const context = useContext(CollectionContext);
 
   return (
     <div className={cx("wrapper")}>
-      {fillters.length > 0 && (
+      {context.filterPrice.length > 0 && (
         <div style={{ paddingBottom: 8 }}>
           <div className={cx("choosed_header")}>
             <div
@@ -48,7 +49,7 @@ function PriceRange() {
             </div>
             <span
               onClick={() => {
-                setFillters([]);
+                context.setFilterPrice([]);
               }}
               className={cx("clear-btn")}
             >
@@ -56,11 +57,11 @@ function PriceRange() {
             </span>
           </div>
           <div>
-            {fillters.map((item) => (
+            {context.filterPrice.map((item) => (
               <div key={item.id} className={cx("filter")}>
                 <FontAwesomeIcon
                   onClick={() => {
-                    setFillters((prev) => {
+                    context.setFilterPrice((prev) => {
                       return prev.filter((element) => element.id !== item.id);
                     });
                   }}
@@ -81,14 +82,16 @@ function PriceRange() {
               <label className={cx("price")}>
                 <input
                   checked={
-                    fillters.find((element) => element.id === item.id) || false
+                    context.filterPrice.find(
+                      (element) => element.id === item.id
+                    ) || false
                   }
                   onChange={(e) => {
                     var isChecked = e.target.checked;
                     if (isChecked) {
-                      setFillters((prev) => [...prev, item]);
+                      context.setFilterPrice((prev) => [...prev, item]);
                     } else {
-                      setFillters((prev) => {
+                      context.setFilterPrice((prev) => {
                         return prev.filter((element) => element.id !== item.id);
                       });
                     }

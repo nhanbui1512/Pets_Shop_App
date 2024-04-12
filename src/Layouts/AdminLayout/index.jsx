@@ -329,14 +329,23 @@ function AdminLayout({ children }) {
                   <Link to={"/admin/users"}>List User</Link>
                 </li>
                 <li>
-                  <Link href="./index-2.html">Add User</Link>
+                  <Link>Add User</Link>
+                </li>
+              </DropdownMenu>
+
+              <DropdownMenu title={"Blogs"}>
+                <li>
+                  <Link to={"/admin/users"}>List Blog</Link>
+                </li>
+                <li>
+                  <Link to={"/admin/addblog"}>Add Blog</Link>
                 </li>
               </DropdownMenu>
             </ul>
           </div>
         </div>
 
-        <div style={{ height: 1000 }} className="content-body">
+        <div className="content-body">
           <div className="row page-titles mx-0">
             <div className="col p-md-0">
               <ol className="breadcrumb">
