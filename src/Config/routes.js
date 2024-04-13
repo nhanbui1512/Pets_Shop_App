@@ -4,6 +4,7 @@ import AdminProfile from "../Pages/Admin/Profile";
 import UserList from "../Pages/Admin/Users";
 import AddProduct from "../Pages/Admin/AddProduct";
 import AddBlog from "../Pages/Admin/AddBlog";
+import ListOrder from "../Pages/Admin/ListOrder";
 
 export const adminRoutes = [
   {
@@ -33,6 +34,10 @@ export const adminRoutes = [
   {
     path: "/addblog",
     element: <AddBlog />,
+  },
+  {
+    path: "/orders",
+    element: <ListOrder />,
   },
 ];
 

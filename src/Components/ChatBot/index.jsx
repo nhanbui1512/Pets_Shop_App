@@ -7,18 +7,14 @@ import {
   faLaughBeam,
   faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
+import scripQuestions from "./data";
+import { Fab } from "@mui/material";
+
 const cx = classNames.bind(style);
 
 function ChatBot() {
   const [isChatBoxVisible, setChatBoxVisible] = useState(false);
   const [messages, setMessages] = useState([
-    { name: "Peter Parker", message: "Hey, man! What's up, Mr Stark? 👋" },
-    { name: "Tony Stark", message: "Kid, where'd you come from? 🤔" },
-    { name: "Peter Parker", message: "Uh, field trip! 🤣" },
-    {
-      name: "Peter Parker",
-      message: "Uh, what is this guy's problem, Mr. Stark? 🤔",
-    },
     {
       name: "Tony Stark",
       message:
@@ -28,6 +24,10 @@ function ChatBot() {
   const [input, setInput] = useState("");
   const messagesEndRef = useRef(null); // Tham chiếu tới phần tử cuối cùng trong danh sách tin nhắn
 
+  const [awnswerOption, setAnswerOptions] = useState(
+    scripQuestions.answerOptions
+  );
+
   const scrollToBottom = () => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
@@ -36,7 +36,7 @@ function ChatBot() {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]); // Luôn cuộn xuống khi có tin nhắn mới được thêm vào
+  }, [messages, isChatBoxVisible]); // Luôn cuộn xuống khi có tin nhắn mới được thêm vào
 
   const toggleChatBox = useCallback((event) => {
     event.stopPropagation(); // Ngăn sự kiện lan ra ngoài
@@ -98,6 +98,40 @@ function ChatBot() {
                   <div className={cx("text")}>{message.message}</div>
                 </div>
               ))}
+
+              {awnswerOption.map((answ, index) => {
+                return (
+                  <Fab
+                    sx={{
+                      mb: 1,
+                    }}
+                    onClick={() => {
+                      if (answ.childrens) {
+                        setMessages((prev) => {
+                          return [
+                            ...prev,
+                            {
+                              name: "Peter Parker",
+                              message: answ.answersValue,
+                            },
+                            {
+                              name: "Tony Stark",
+                              message: answ.childrens.autoBot,
+                            },
+                          ];
+                        });
+                        setAnswerOptions(answ.childrens.answerOptions);
+                      }
+                    }}
+                    key={index}
+                    variant="extended"
+                    size="small"
+                    color="primary"
+                  >
+                    {answ.answersValue}
+                  </Fab>
+                );
+              })}
               {/* Tham chiếu tới phần tử cuối cùng để cuộn xuống */}
               <div ref={messagesEndRef} />
             </div>

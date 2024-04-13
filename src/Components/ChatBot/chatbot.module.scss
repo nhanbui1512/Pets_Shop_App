@@ -185,7 +185,7 @@ html {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
+  padding-top: 12px;
   width: 24rem;
   height: 30rem;
   z-index: 2;
@@ -205,9 +205,6 @@ html {
   }
 
   .messages {
-    border-top-left-radius: 1rem;
-    border-top-right-radius: 1rem;
-
     padding: 1rem;
     background: $background;
     flex-shrink: 2;

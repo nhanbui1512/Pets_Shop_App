@@ -315,6 +315,11 @@ function AdminLayout({ children }) {
         <div className="nk-sidebar">
           <div className="nk-nav-scroll">
             <ul className="metismenu" id="menu">
+              <DropdownMenu title={"Category"}>
+                <li>
+                  <Link to={"/admin/products"}>List Category</Link>
+                </li>
+              </DropdownMenu>
               <DropdownMenu title={"Product"}>
                 <li>
                   <Link to={"/admin/products"}>List Product</Link>
@@ -339,6 +344,12 @@ function AdminLayout({ children }) {
                 </li>
                 <li>
                   <Link to={"/admin/addblog"}>Add Blog</Link>
+                </li>
+              </DropdownMenu>
+
+              <DropdownMenu title={"Orders"}>
+                <li>
+                  <Link to={"/admin/orders"}>List Order</Link>
                 </li>
               </DropdownMenu>
             </ul>
