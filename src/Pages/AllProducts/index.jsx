@@ -2,17 +2,26 @@ import { useContext, useEffect, useState } from "react";
 import ListProduct from "../ListProduct";
 import { getProducts } from "../../Services/API/Products";
 import { CollectionContext } from "../../Layouts/CollectionLayout";
+import { Pagination, Stack } from "@mui/material";
+import Loader from "../../Components/Loader";
 
 function AllProducts() {
-  const [page] = useState(1);
+  const [page, setPage] = useState(1);
   const [products, setProducts] = useState([]);
 
   const collectionContext = useContext(CollectionContext);
+  const [loading, setLoading] = useState(true);
+  const handleChange = (event, number) => {
+    setPage(number);
+    window.scrollTo(0, 0);
+  };
 
   useEffect(() => {
+    setLoading(true);
     getProducts({ page: page, perPage: 21 })
       .then((res) => {
         setProducts(res.docs);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -45,7 +54,33 @@ function AllProducts() {
   }
   return (
     <div>
+      {loading && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <Loader />
+        </div>
+      )}
       <ListProduct products={filteredProducts} />
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <Stack
+          sx={{
+            mt: 2,
+          }}
+          spacing={2}
+        >
+          <Pagination onChange={handleChange} count={10} color="primary" />
+        </Stack>
+      </div>
     </div>
   );
 }

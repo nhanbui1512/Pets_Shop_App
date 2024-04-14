@@ -202,14 +202,16 @@ function Navbar() {
                 render={() => (
                   <Paper className={cx("profile-menu")}>
                     <MenuList>
-                      <MenuItem>
-                        {" "}
-                        <FontAwesomeIcon
-                          className={cx("profile-menu-icon")}
-                          icon={faUser}
-                        />{" "}
-                        Profile
-                      </MenuItem>
+                      <Link to={`/${storage.userData.UserRoles}`}>
+                        <MenuItem>
+                          {" "}
+                          <FontAwesomeIcon
+                            className={cx("profile-menu-icon")}
+                            icon={faUser}
+                          />{" "}
+                          Profile
+                        </MenuItem>
+                      </Link>
                       <MenuItem>
                         <FontAwesomeIcon
                           className={cx("profile-menu-icon")}

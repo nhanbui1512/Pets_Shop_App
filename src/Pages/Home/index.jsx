@@ -20,6 +20,7 @@ function Home() {
   };
 
   useEffect(() => {
+    setLoading(true);
     getProducts({ page: page, perPage: 21 })
       .then((res) => {
         setLoading(false);

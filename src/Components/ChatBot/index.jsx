@@ -104,6 +104,7 @@ function ChatBot() {
                   <Fab
                     sx={{
                       mb: 1,
+                      ml: 2,
                     }}
                     onClick={() => {
                       if (answ.childrens) {

@@ -26,6 +26,7 @@ const Demo = styled("div")(({ theme }) => ({
 export default function InteractiveList({ items = [], setItems }) {
   const [optionName, setOptionName] = useState("");
   const [price, setPrice] = useState(0);
+  const [quantity, setQuantity] = useState(0);
 
   return (
     <Box sx={{ flexGrow: 1, maxWidth: 752 }}>
@@ -68,11 +69,24 @@ export default function InteractiveList({ items = [], setItems }) {
                       primary={item.name}
                       secondary={`${item.price}đ`}
                     />
+                    <ListItemText primary={`${item.quantity} sản phẩm`} />
                   </ListItem>
                 );
               })}
             </List>
 
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginTop: 8,
+              }}
+            >
+              <p>Option Name</p>
+              <p>Price</p>
+              <p>Quantity</p>
+              <p></p>
+            </div>
             <div className={cx("add-form")}>
               <input
                 value={optionName}
@@ -91,9 +105,18 @@ export default function InteractiveList({ items = [], setItems }) {
                 placeholder="Price"
                 className="form-control"
               />
+              <input
+                type="number"
+                value={quantity}
+                onChange={(e) => {
+                  setQuantity(e.target.value);
+                }}
+                placeholder="Price"
+                className="form-control"
+              />
               <Button
                 onClick={() => {
-                  if (optionName.trim() !== "" && price > 0) {
+                  if (optionName.trim() !== "" && price > 0 && quantity > 0) {
                     setOptionName("");
                     setPrice(0);
                     setItems((prev) => {
@@ -104,10 +127,13 @@ export default function InteractiveList({ items = [], setItems }) {
                         toast.error("Name option is existed");
                         return prev;
                       }
-                      return [...prev, { name: optionName, price: price }];
+                      return [
+                        ...prev,
+                        { name: optionName, price: price, quantity: quantity },
+                      ];
                     });
                   } else {
-                    toast.error("Name and Price must be filled");
+                    toast.error("Name, Price and Quantity must be filled");
                   }
                 }}
                 style={{ outline: "none" }}

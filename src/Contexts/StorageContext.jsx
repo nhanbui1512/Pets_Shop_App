@@ -22,6 +22,7 @@ function GlobalStates({ children }) {
     getMyProfile()
       .then((res) => {
         setCurrentUser(true);
+        setUserData(res);
       })
       .catch((err) => {
         setCurrentUser(false);

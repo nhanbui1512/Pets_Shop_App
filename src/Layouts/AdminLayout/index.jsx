@@ -1,9 +1,16 @@
-import { useState } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, Navigate, Outlet } from "react-router-dom";
 import DropdownMenu from "../../Components/DropdownMenu";
+import { StorageContext } from "../../Contexts/StorageContext";
 
 function AdminLayout({ children }) {
   const [openSidebar, setOpenSidebar] = useState(true);
+  const storage = useContext(StorageContext);
+
+  if (!storage.userData || storage.userData.UserRoles !== "admin") {
+    return <Navigate to="/login" />;
+  }
+
   return (
     <div
       style={{
@@ -370,7 +377,12 @@ function AdminLayout({ children }) {
             </div>
           </div>
 
-          <div className="container-fluid">
+          <div
+            style={{
+              minHeight: 500,
+            }}
+            className="container-fluid"
+          >
             <Outlet />
           </div>
         </div>
