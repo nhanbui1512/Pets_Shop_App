@@ -41,6 +41,7 @@ function Login() {
         .then((res) => {
           Cookies.set("token", res.accessToken, { expires: 7 }); // Lưu token trong 7 ngày
           storage.setCurrentUser(true);
+          storage.setUserData(res.userData);
           toast.success("Đăng nhập thành công");
           navigate("/");
         })

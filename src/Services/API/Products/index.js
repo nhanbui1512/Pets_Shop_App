@@ -39,8 +39,17 @@ export async function createProduct({
   categoryId,
   descriptionDOM,
   options = [],
+  images = [],
 }) {
   try {
+    request.post("/products", {
+      name: name,
+      description: description,
+      categoryID: "string",
+      htmlDomDescription: descriptionDOM,
+      variantOptions: options,
+      productImage: images,
+    });
   } catch (error) {
     throw error;
   }

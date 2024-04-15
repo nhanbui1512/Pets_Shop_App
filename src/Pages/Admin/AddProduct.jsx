@@ -1,14 +1,40 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import InteractiveList from "../../Components/InteractiveList";
 import Button from "@mui/material/Button";
 import Editor from "../../Components/Editor";
+import { getAllCategories } from "../../Services/API/Category";
+import FilesManager from "../../Components/FilesManager";
+import uploadFiles from "../../Services/Cloudinary";
+
 function AddProduct() {
   const [options, setOptions] = useState([]);
+  const [productName, setProductName] = useState("");
+  const [description, setDescription] = useState("");
+  const [categories, setCategories] = useState([]);
+  const [imageFiles, setImageFiles] = useState([]);
+
   const contentRef = useRef();
 
   const handleAddProduct = (e) => {
-    console.log(contentRef.current.innerHTML);
+    // const descriptionDOM = contentRef.current.innerHTML;
+    uploadFiles(imageFiles)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
+
+  useEffect(() => {
+    getAllCategories()
+      .then((res) => {
+        setCategories(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
   return (
     <div className="container-fluid">
       <div className="col-lg-12">
@@ -25,6 +51,10 @@ function AddProduct() {
                   </label>
                   <div className="col-lg-6">
                     <input
+                      onChange={(e) => {
+                        setProductName(e.target.value);
+                      }}
+                      value={productName}
                       type="text"
                       className="form-control"
                       id="val-username"
@@ -41,6 +71,10 @@ function AddProduct() {
                   </label>
                   <div className="col-lg-6">
                     <input
+                      value={description}
+                      onChange={(e) => {
+                        setDescription(e.target.value);
+                      }}
                       type="text"
                       className="form-control"
                       id="val-confirm-password"
@@ -50,11 +84,50 @@ function AddProduct() {
                 </div>
 
                 <div className="form-group row">
+                  <label
+                    className="col-lg-4 col-form-label"
+                    htmlFor="val-confirm-password"
+                  >
+                    Category <span className="text-danger">*</span>
+                  </label>
+                  <div className="col-lg-6">
+                    <select
+                      onChange={(e) => {
+                        console.log(e.target.value);
+                      }}
+                    >
+                      {categories.map((item, index) => {
+                        return (
+                          <option value={item._id} key={index}>
+                            {item.name}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="form-group row">
                   <label className="col-lg-4 col-form-label">
                     Options <span className="text-danger">*</span>
                   </label>
                   <div className="col-lg-6">
                     <InteractiveList items={options} setItems={setOptions} />
+                  </div>
+                </div>
+
+                <div className="form-group row">
+                  <label
+                    className="col-lg-4 col-form-label"
+                    htmlFor="val-username"
+                  >
+                    Ảnh sản phẩm <span className="text-danger">*</span>
+                  </label>
+                  <div className="col-lg-6">
+                    <FilesManager
+                      imageFiles={imageFiles}
+                      setImageFiles={setImageFiles}
+                    />
                   </div>
                 </div>
 

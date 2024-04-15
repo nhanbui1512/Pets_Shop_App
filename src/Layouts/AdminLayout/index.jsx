@@ -284,7 +284,7 @@ function AdminLayout({ children }) {
                     <div className="dropdown-content-body">
                       <ul>
                         <li>
-                          <Link to="/admin/profile">
+                          <Link to={`/${storage.userData?.UserRoles}/profile`}>
                             <i className="icon-user"></i> <span>Profile</span>
                           </Link>
                         </li>
@@ -301,8 +301,7 @@ function AdminLayout({ children }) {
                         <hr className="my-2" />
                         <li>
                           <Link href="/">
-                            <i className="icon-lock"></i>{" "}
-                            <span>Lock Screen</span>
+                            <i className="icon-lock"></i> <span>Password</span>
                           </Link>
                         </li>
                         <li>
