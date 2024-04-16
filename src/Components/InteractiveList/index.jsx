@@ -129,7 +129,12 @@ export default function InteractiveList({ items = [], setItems }) {
                       }
                       return [
                         ...prev,
-                        { name: optionName, price: price, quantity: quantity },
+                        {
+                          name: optionName,
+                          price: price,
+                          quantity: quantity,
+                          value: optionName,
+                        },
                       ];
                     });
                   } else {

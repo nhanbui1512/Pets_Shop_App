@@ -28,17 +28,15 @@ function FilesManager({ imageFiles = [], setImageFiles = () => {} }) {
           <div key={index} className={cx("image-wrapper")}>
             <div
               style={{
-                backgroundImage: `url(${file.preview})`,
+                backgroundImage: `url(${file})`,
               }}
               className={cx("image")}
             ></div>
             <button
               onClick={() => {
                 setImageFiles((prev) => {
-                  const newState = prev.filter(
-                    (item) => item.preview !== file.preview
-                  );
-                  URL.revokeObjectURL(file.preview);
+                  const newState = prev.filter((item) => item !== file);
+
                   return newState;
                 });
               }}
@@ -62,8 +60,8 @@ function FilesManager({ imageFiles = [], setImageFiles = () => {} }) {
             const file = e.target.files[0];
 
             uploadFile(file).then((res) => {
-              file.preview = res.data.secure_url;
-              setImageFiles((prev) => [...prev, file]);
+              // file.preview = res.data.secure_url;
+              setImageFiles((prev) => [...prev, res.data.secure_url]);
               e.target.value = null;
             });
           }

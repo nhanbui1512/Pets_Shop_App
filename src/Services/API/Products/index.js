@@ -42,14 +42,15 @@ export async function createProduct({
   images = [],
 }) {
   try {
-    request.post("/products", {
+    const res = await request.post("/products", {
       name: name,
       description: description,
-      categoryID: "string",
+      categoryID: categoryId,
       htmlDomDescription: descriptionDOM,
       variantOptions: options,
       productImage: images,
     });
+    return res.data;
   } catch (error) {
     throw error;
   }

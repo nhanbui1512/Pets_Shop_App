@@ -4,7 +4,9 @@ import Button from "@mui/material/Button";
 import Editor from "../../Components/Editor";
 import { getAllCategories } from "../../Services/API/Category";
 import FilesManager from "../../Components/FilesManager";
-import uploadFiles from "../../Services/Cloudinary";
+import { createProduct } from "../../Services/API/Products";
+
+import { toast } from "react-toastify";
 
 function AddProduct() {
   const [options, setOptions] = useState([]);
@@ -14,12 +16,27 @@ function AddProduct() {
   const [imageFiles, setImageFiles] = useState([]);
 
   const contentRef = useRef();
+  const categoryRef = useRef();
 
   const handleAddProduct = (e) => {
-    // const descriptionDOM = contentRef.current.innerHTML;
-    uploadFiles(imageFiles)
+    const descriptionDOM = contentRef.current.innerHTML;
+    const categoryId = categoryRef.current.value;
+
+    createProduct({
+      name: productName,
+      images: imageFiles,
+      description,
+      categoryId,
+      descriptionDOM,
+      options,
+    })
       .then((res) => {
-        console.log(res);
+        toast.success("Thêm sản phẩm thành công");
+        setOptions([]);
+        setImageFiles([]);
+        setDescription("");
+        setProductName("");
+        contentRef.current.innerHTML = "Edit DOM";
       })
       .catch((err) => {
         console.log(err);
@@ -91,11 +108,7 @@ function AddProduct() {
                     Category <span className="text-danger">*</span>
                   </label>
                   <div className="col-lg-6">
-                    <select
-                      onChange={(e) => {
-                        console.log(e.target.value);
-                      }}
-                    >
+                    <select ref={categoryRef}>
                       {categories.map((item, index) => {
                         return (
                           <option value={item._id} key={index}>
