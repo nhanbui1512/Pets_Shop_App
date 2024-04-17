@@ -11,19 +11,49 @@ import {
   faTwitter,
 } from "@fortawesome/free-brands-svg-icons";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { getProductById } from "../../Services/API/Products";
+
+import { StorageContext } from "../../Contexts/StorageContext";
+
 const cx = classNames.bind(styles);
 
 function ProductDetail() {
   const { id } = useParams();
   const [product, setProduct] = useState({});
+  const [option, setOption] = useState({});
+  const [quantity, setQuantity] = useState(1);
+
+  const storage = useContext(StorageContext);
+  const selectRef = useRef();
+
+  const handleBuy = () => {
+    const cartItems = [...storage.cartItems];
+    const isExistProduct = cartItems.find(
+      (item) =>
+        item._id === product._id && item.variantOptions._id === option._id
+    );
+
+    const cartItem = { ...product };
+
+    if (!isExistProduct) {
+      cartItem.variantOptions = option;
+      cartItem.quantity = quantity;
+      delete cartItem.htmlDomDescription;
+      cartItems.push(cartItem);
+      storage.setCartItems(cartItems);
+    } else {
+      isExistProduct.quantity += quantity;
+      storage.setCartItems(cartItems);
+    }
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
     getProductById(id)
       .then((res) => {
         setProduct(res);
+        setOption(res.variantOptions[0]);
       })
       .catch((err) => {
         console.log(err);
@@ -51,7 +81,7 @@ function ProductDetail() {
         <div className={cx("right")}>
           <h1 className={cx("product-name")}>{product.name}</h1>
           <div className={cx("price")}>
-            <span>{`${product.variantOptions?.[0].price.toLocaleString("vi-VN", { currency: "VND" })}đ`}</span>
+            <span>{`${Number(option.price).toLocaleString("vi-VN", { currency: "VND" })}đ`}</span>
           </div>
           <p className={cx("description")}>
             Phô mai cuộn cho chó Bow wow cheese roll 120g là thức ăn thơm ngon
@@ -60,21 +90,32 @@ function ProductDetail() {
           <div className={cx("slection-box")}>
             <div className={cx("name-selection")}>Lựa chọn</div>
             <select
+              ref={selectRef}
               onChange={(e) => {
-                console.log(e.target.value);
+                const idOption = e.target.value;
+                const optionSelected = product.variantOptions.find(
+                  (option) => option._id === idOption
+                );
+                setOption(optionSelected);
               }}
               className={cx("selected")}
             >
               {product.variantOptions?.map((item, index) => (
-                <option value={item.price} key={index}>
+                <option value={item._id} key={index}>
                   {item.name || "Mặc định"}
                 </option>
               ))}
             </select>
           </div>
           <div className={cx("row")}>
-            <CountNumber className={cx("count-box")} />
-            <Button rouded>MUA HÀNG</Button>
+            <CountNumber
+              value={quantity}
+              setValue={setQuantity}
+              className={cx("count-box")}
+            />
+            <Button onClick={handleBuy} rouded>
+              MUA HÀNG
+            </Button>
           </div>
 
           <div className={cx("social-box")}>

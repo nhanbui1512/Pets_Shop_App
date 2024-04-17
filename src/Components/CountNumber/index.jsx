@@ -1,32 +1,29 @@
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
 
 import styles from "./CountNumber.module.scss";
 
 const cx = classNames.bind(styles);
 
-function CountNumber({ value, className }) {
-  var [numberProduct, setNumberProduct] = useState(value || 1);
-
+function CountNumber({ value = 0, setValue, className }) {
   const handleReduce = () => {
-    if (numberProduct <= 1) {
-      setNumberProduct(numberProduct);
+    if (value <= 1) {
+      setValue(value);
     } else {
-      setNumberProduct(--numberProduct);
+      setValue(--value);
     }
   };
 
   const handleIncrease = () => {
-    setNumberProduct(++numberProduct);
+    setValue(++value);
   };
   return (
     <div className={cx("btn-active_product", { [className]: className })}>
       <div onClick={() => handleReduce()} className={cx("btn-active_reduce")}>
         <FontAwesomeIcon className={cx("btn-active_icon")} icon={faMinus} />
       </div>
-      <div className={cx("product_number")}>{numberProduct}</div>
+      <div className={cx("product_number")}>{value}</div>
       <div
         onClick={() => handleIncrease()}
         className={cx("btn-active_increase")}

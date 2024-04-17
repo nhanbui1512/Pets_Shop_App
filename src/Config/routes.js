@@ -5,6 +5,7 @@ import UserList from "../Pages/Admin/Users";
 import AddProduct from "../Pages/Admin/AddProduct";
 import AddBlog from "../Pages/Admin/AddBlog";
 import ListOrder from "../Pages/Admin/ListOrder";
+import UpdateProduct from "../Pages/Admin/UpdateProduct";
 
 export const adminRoutes = [
   {
@@ -38,6 +39,10 @@ export const adminRoutes = [
   {
     path: "/orders",
     element: <ListOrder />,
+  },
+  {
+    path: "/products/:id",
+    element: <UpdateProduct />,
   },
 ];
 

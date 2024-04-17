@@ -8,6 +8,7 @@ import Paper from "@mui/material/Paper";
 import { useEffect, useState } from "react";
 import { getProducts } from "../../Services/API/Products";
 import { Pagination, Stack } from "@mui/material";
+import { Link } from "react-router-dom";
 
 // function createData(name, calories, fat, carbs, protein) {
 //   return { name, calories, fat, carbs, protein };
@@ -61,7 +62,7 @@ export default function BasicTable() {
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  {row.name}
+                  <Link to={`/admin/products/${row._id}`}>{row.name}</Link>
                 </TableCell>
                 <TableCell align="right">{row.calories}</TableCell>
                 <TableCell align="right">{row.fat}</TableCell>

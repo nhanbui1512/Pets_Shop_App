@@ -4,16 +4,20 @@ import Button from "@mui/material/Button";
 import Editor from "../../Components/Editor";
 import { getAllCategories } from "../../Services/API/Category";
 import FilesManager from "../../Components/FilesManager";
-import { createProduct } from "../../Services/API/Products";
+import { createProduct, getProductById } from "../../Services/API/Products";
 
 import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
 
-function AddProduct() {
+function UpdateProduct() {
+  const { id } = useParams();
+
   const [options, setOptions] = useState([]);
   const [productName, setProductName] = useState("");
   const [description, setDescription] = useState("");
   const [categories, setCategories] = useState([]);
   const [imageFiles, setImageFiles] = useState([]);
+  const [categoryId, setCategoryId] = useState("");
 
   const contentRef = useRef();
   const categoryRef = useRef();
@@ -44,6 +48,17 @@ function AddProduct() {
   };
 
   useEffect(() => {
+    getProductById(id).then((res) => {
+      setImageFiles(res.productImage);
+      setProductName(res.name);
+      setDescription(res.description);
+      setOptions(res.variantOptions);
+      setCategoryId(res.categoryID[0]);
+      contentRef.current.innerHTML =
+        res.htmlDomDescription ||
+        "Click on Edite button and change the text then save it.";
+    });
+
     getAllCategories()
       .then((res) => {
         setCategories(res);
@@ -51,7 +66,7 @@ function AddProduct() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [id]);
   return (
     <div className="container-fluid">
       <div className="col-lg-12">
@@ -87,7 +102,7 @@ function AddProduct() {
                     Descriptions <span className="text-danger">*</span>
                   </label>
                   <div className="col-lg-6">
-                    <input
+                    <textarea
                       value={description}
                       onChange={(e) => {
                         setDescription(e.target.value);
@@ -111,7 +126,11 @@ function AddProduct() {
                     <select ref={categoryRef}>
                       {categories.map((item, index) => {
                         return (
-                          <option value={item._id} key={index}>
+                          <option
+                            selected={item._id === categoryId}
+                            value={item._id}
+                            key={index}
+                          >
                             {item.name}
                           </option>
                         );
@@ -161,4 +180,4 @@ function AddProduct() {
     </div>
   );
 }
-export default AddProduct;
+export default UpdateProduct;
