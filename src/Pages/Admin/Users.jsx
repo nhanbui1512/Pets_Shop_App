@@ -7,7 +7,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Fragment, useEffect, useState } from "react";
 import { Pagination, Stack } from "@mui/material";
-import { deleteUser, getUsers } from "../../Services/API/Users";
+import { getUsers } from "../../Services/API/Users";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
