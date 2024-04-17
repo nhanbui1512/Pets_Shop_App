@@ -21,3 +21,12 @@ export async function getBlogs({ page, perPage }) {
     throw error;
   }
 }
+
+export async function getBlogById(id) {
+  try {
+    const res = await request.get(`/blogs/${id}`);
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+}

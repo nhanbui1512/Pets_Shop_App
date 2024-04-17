@@ -19,7 +19,7 @@ function Blog({ data }) {
         />
       </Link>
       <div className={cx("blog-content")}>
-        <Link className={cx("text-dec")}>
+        <Link to={`/blog/${data._id}`} className={cx("text-dec")}>
           <h3 className={cx("blog_header")}>{data?.title}</h3>
         </Link>
         <p className={cx("blog_author")}>{formatDay(data.createdAt)}</p>
