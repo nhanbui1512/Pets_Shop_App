@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { Link, Navigate, Outlet } from "react-router-dom";
 import DropdownMenu from "../../Components/DropdownMenu";
 import { StorageContext } from "../../Contexts/StorageContext";
+import Cookies from "js-cookie";
 
 function AdminLayout({ children }) {
   const [openSidebar, setOpenSidebar] = useState(true);
@@ -305,9 +306,14 @@ function AdminLayout({ children }) {
                           </Link>
                         </li>
                         <li>
-                          <Link href="/">
+                          <button
+                            onClick={() => {
+                              Cookies.remove("token");
+                              window.location.reload();
+                            }}
+                          >
                             <i className="icon-key"></i> <span>Logout</span>
-                          </Link>
+                          </button>
                         </li>
                       </ul>
                     </div>
@@ -346,7 +352,7 @@ function AdminLayout({ children }) {
 
               <DropdownMenu title={"Blogs"}>
                 <li>
-                  <Link to={"/admin/users"}>List Blog</Link>
+                  <Link to={"/admin/blogs"}>List Blog</Link>
                 </li>
                 <li>
                   <Link to={"/admin/addblog"}>Add Blog</Link>

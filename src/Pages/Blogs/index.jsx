@@ -4,10 +4,24 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 import styles from "./Blogs.module.scss";
 import Blog from "../../Components/Blog";
+import { useEffect, useState } from "react";
+import { getBlogs } from "../../Services/API/Blogs";
 
 const cx = classNames.bind(styles);
 
 function Blogs() {
+  const [blogs, setBlogs] = useState([]);
+
+  useEffect(() => {
+    getBlogs({ page: 1, perPage: 10 })
+      .then((res) => {
+        setBlogs(res.docs);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <div className={cx("app")}>
       <div className={cx("content-blog")}>
@@ -23,8 +37,9 @@ function Blogs() {
         </div>
 
         <div className={cx("content-blog_category")}>
-          <Blog />
-          <Blog />
+          {blogs.map((blog, index) => {
+            return <Blog key={index} data={blog} />;
+          })}
         </div>
 
         <div className={cx("content-blog_adding")}>

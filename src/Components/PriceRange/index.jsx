@@ -98,7 +98,7 @@ function PriceRange() {
                   }}
                   type="checkbox"
                 />
-                {`${item.from}đ - ${item.to}đ`}
+                {`${item.from.toLocaleString("vi-VN", { currency: "VND" })}đ - ${item.to.toLocaleString("vi-VN", { currency: "VND" })}đ`}
               </label>
             </li>
           ))}

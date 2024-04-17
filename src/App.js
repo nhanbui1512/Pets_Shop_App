@@ -44,14 +44,12 @@ function App() {
             <Route path="/payment" element={<Checkout />}></Route>
             <Route path="/search" element={<Search />}></Route>
             <Route path="/orders" element={<Orders />} />
+            <Route path="/animals" element={<Animal />}></Route>
           </Route>
 
           {/* have sidebar */}
           <Route path="/collections" element={<CollectionLayout />}>
             <Route index element={<AllProducts />}></Route>
-          </Route>
-          <Route path="/animals" element={<CollectionLayout />}>
-            <Route index element={<Animal />}></Route>
           </Route>
         </Route>
         <Route path="/admin" element={<AdminLayout />}>

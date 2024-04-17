@@ -1,11 +1,29 @@
 import { useRef, useState } from "react";
 import Editor from "../../Components/Editor";
 import Button from "@mui/material/Button";
+import { createBlog } from "../../Services/API/Blogs";
+import { toast } from "react-toastify";
+
 function AddBlog() {
   const contentRef = useRef();
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+
+  const handleAddBlog = () => {
+    const DOMContent = contentRef.current.innerHTML;
+
+    createBlog({ title, DOMContent, shortContent: description })
+      .then((res) => {
+        toast.success("Create Blog Successfully");
+        contentRef.current.innerHTML = "";
+        setDescription("");
+        setTitle("");
+      })
+      .catch((err) => {
+        toast.error("Create Blog Unsuccessfully");
+      });
+  };
 
   return (
     <div className="container-fluid">
@@ -55,12 +73,7 @@ function AddBlog() {
 
                 <div className="form-group row">
                   <div className="col-lg-8 ml-auto">
-                    <Button
-                      onClick={() => {
-                        console.log(contentRef.current.innerHTML);
-                      }}
-                      variant="contained"
-                    >
+                    <Button onClick={handleAddBlog} variant="contained">
                       Add News
                     </Button>
                   </div>
