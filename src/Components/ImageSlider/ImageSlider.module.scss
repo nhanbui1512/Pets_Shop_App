@@ -1,0 +1,11 @@
+.list-image {
+  display: flex;
+  flex-direction: row;
+  transition: transform 0.35s cubic-bezier(0.15, 0.3, 0.25, 1) 0s;
+  transform: translate(var(--percent), 0px);
+  width: fit-content;
+}
+
+.image-container {
+  width: 400px;
+}

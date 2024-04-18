@@ -1,6 +1,5 @@
 import classNames from "classnames/bind";
 import styles from "./ProductDetail.module.scss";
-import Image from "../../Components/Image";
 import Button from "../../Components/PrimaryButton";
 
 import CountNumber from "../../Components/CountNumber";
@@ -16,6 +15,7 @@ import { getProductById } from "../../Services/API/Products";
 import { toast } from "react-toastify";
 
 import { StorageContext } from "../../Contexts/StorageContext";
+import ImageSlider from "../../Components/ImageSlider";
 
 const cx = classNames.bind(styles);
 
@@ -74,13 +74,7 @@ function ProductDetail() {
         >
           <div className={cx(["left"])}>
             <div className={cx("image-container")}>
-              <Image
-                src={
-                  product.productImage?.[0] ||
-                  "https://bizweb.dktcdn.net/100/229/172/products/bow-wow-pho-mai-cuon-ga-1709195207055.jpg?v=1709440731433"
-                }
-                alt=""
-              />
+              <ImageSlider images={product.productImage} />
             </div>
           </div>
           <div className={cx("right")}>
