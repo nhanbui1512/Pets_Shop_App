@@ -3,27 +3,29 @@ import Editor from "../../Components/Editor";
 import Button from "@mui/material/Button";
 import { createBlog } from "../../Services/API/Blogs";
 import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
 
-function AddBlog() {
+function UpdateBlog() {
   const contentRef = useRef();
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [thumbnail, setThumbnail] = useState({});
+
+  const { id } = useParams();
 
   const handleAddBlog = () => {
     const DOMContent = contentRef.current.innerHTML;
 
-    createBlog({ title, DOMContent, shortContent: description })
-      .then((res) => {
-        toast.success("Create Blog Successfully");
-        contentRef.current.innerHTML = "";
-        setDescription("");
-        setTitle("");
-      })
-      .catch((err) => {
-        toast.error("Create Blog Unsuccessfully");
-      });
+    // createBlog({ title, DOMContent, shortContent: description })
+    //   .then((res) => {
+    //     toast.success("Create Blog Successfully");
+    //     contentRef.current.innerHTML = "";
+    //     setDescription("");
+    //     setTitle("");
+    //   })
+    //   .catch((err) => {
+    //     toast.error("Create Blog Unsuccessfully");
+    //   });
   };
 
   return (
@@ -70,29 +72,6 @@ function AddBlog() {
                   </div>
                 </div>
 
-                <div className="form-group row">
-                  <label className="col-lg-4 col-form-label" htmlFor="val-desc">
-                    Thumbnail <span className="text-danger">*</span>
-                  </label>
-                  <div className="col-lg-6">
-                    <input
-                      type="file"
-                      accept=".jpg, .jpeg, .png"
-                      onChange={(e) => {
-                        if (e.target.files.length > 0) {
-                          const file = e.target.files[0];
-                          const previewURL = URL.createObjectURL(file);
-                          file.preview = previewURL;
-                          setThumbnail(file);
-                        }
-                      }}
-                      className="form-control"
-                      id="val-desc"
-                    />
-                    {thumbnail && <img src={thumbnail.preview} alt=""></img>}
-                  </div>
-                </div>
-
                 <Editor contentRef={contentRef} />
 
                 <div className="form-group row">
@@ -110,4 +89,4 @@ function AddBlog() {
     </div>
   );
 }
-export default AddBlog;
+export default UpdateBlog;

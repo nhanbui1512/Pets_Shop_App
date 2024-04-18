@@ -7,6 +7,7 @@ import AddBlog from "../Pages/Admin/AddBlog";
 import ListOrder from "../Pages/Admin/ListOrder";
 import UpdateProduct from "../Pages/Admin/UpdateProduct";
 import ListBlog from "../Pages/Admin/ListBlog";
+import UpdateBlog from "../Pages/Admin/UpdateBlog";
 
 export const adminRoutes = [
   {
@@ -48,6 +49,10 @@ export const adminRoutes = [
   {
     path: "/blogs",
     element: <ListBlog />,
+  },
+  {
+    path: "/blogs/:id",
+    element: <UpdateBlog />,
   },
 ];
 

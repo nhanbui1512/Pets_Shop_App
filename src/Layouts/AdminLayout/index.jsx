@@ -99,7 +99,7 @@ function AdminLayout({ children }) {
                           <Link href="/">
                             <img
                               className="float-left mr-3 avatar-img"
-                              src="/template/images/avatar/1.jpg"
+                              src={storage.userData.profileImage}
                               alt=""
                             />
                             <div className="notification-content">
@@ -275,7 +275,7 @@ function AdminLayout({ children }) {
                   >
                     <span className="activity active"></span>
                     <img
-                      src="images/user/1.png"
+                      src={storage.userData.profileImage}
                       height="40"
                       width="40"
                       alt=""
