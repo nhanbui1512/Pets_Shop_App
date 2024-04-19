@@ -24,7 +24,7 @@ function Blog({ data }) {
         </Link>
         <p className={cx("blog_author")}>{formatDay(data.createdAt)}</p>
         <p className={cx("blog_desc")}>{data?.shortContent}</p>
-        <Link className={cx("text-dec")}>
+        <Link to={`/blog/${data._id}`} className={cx("text-dec")}>
           <div className={cx("blog_next")}>
             <span>Đọc tiếp</span>
             <FontAwesomeIcon icon={faAnglesRight} />
