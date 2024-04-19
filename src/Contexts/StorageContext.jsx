@@ -25,7 +25,8 @@ function GlobalStates({ children }) {
   useEffect(() => {
     getAllCategories()
       .then((res) => {
-        setCategories(res);
+        const filteredItems = res.filter((item) => item.name !== "Bài viết");
+        setCategories(filteredItems);
       })
       .catch((err) => {
         console.log(err);

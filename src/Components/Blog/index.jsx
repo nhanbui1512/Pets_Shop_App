@@ -12,11 +12,7 @@ function Blog({ data }) {
   return (
     <div className={cx("blog-box")}>
       <Link className={cx("text-dec")}>
-        <img
-          className={cx("blog_img")}
-          src="https://bizweb.dktcdn.net/thumb/small/100/229/172/products/bow-wow-ca-hoi-150g-1709195437957.jpg?v=1709473755860"
-          alt="ảnh"
-        />
+        <img className={cx("blog_img")} src={data.thumbnail} alt="ảnh" />
       </Link>
       <div className={cx("blog-content")}>
         <Link to={`/blog/${data._id}`} className={cx("text-dec")}>
