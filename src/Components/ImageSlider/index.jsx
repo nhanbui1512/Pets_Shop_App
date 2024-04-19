@@ -37,7 +37,7 @@ function ImageSlider({ images = [] }) {
           className={cx("list-image")}
         >
           {images.map((step, index) => (
-            <div className={cx("image-container")} key={step.label}>
+            <div className={cx("image-container")} key={index}>
               <Image
                 src={
                   step ||

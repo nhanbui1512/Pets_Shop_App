@@ -26,6 +26,7 @@ import { adminRoutes, userRoutes } from "./Config/routes";
 
 import AllProducts from "./Pages/AllProducts";
 import Orders from "./Pages/Orders";
+import Collection from "./Pages/Collection";
 
 function App() {
   const router = createBrowserRouter(
@@ -50,6 +51,7 @@ function App() {
           {/* have sidebar */}
           <Route path="/collections" element={<CollectionLayout />}>
             <Route index element={<AllProducts />}></Route>
+            <Route path="/collections/:id" element={<Collection />}></Route>
           </Route>
         </Route>
         <Route path="/admin" element={<AdminLayout />}>

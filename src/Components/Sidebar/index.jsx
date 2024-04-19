@@ -2,12 +2,16 @@ import classNames from "classnames/bind";
 import styles from "./Sidebar.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGem } from "@fortawesome/free-regular-svg-icons";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import PriceRange from "../PriceRange";
+import { useContext } from "react";
+import { StorageContext } from "../../Contexts/StorageContext";
 
 const cx = classNames.bind(styles);
 
 function Sidebar() {
+  const storage = useContext(StorageContext);
+
   return (
     <div className={cx("wrapper")}>
       <div style={{ marginBottom: 30 }} className={cx("container")}>
@@ -25,30 +29,18 @@ function Sidebar() {
               listStyleType: "none",
             }}
           >
-            <li>
-              <Link className={cx("item")}>Thức ăn cho chó</Link>
-            </li>
-            <li>
-              <Link className={cx("item")}>Thức ăn cho mèo</Link>
-            </li>
-            <li>
-              <Link className={cx("item")}>Sản phẩm dinh dưỡng</Link>
-            </li>
-            <li>
-              <Link className={cx("item")}>Sữa tắm</Link>
-            </li>
-
-            <li>
-              <Link className={cx("item")}>Đồ chơi chó mèo</Link>
-            </li>
-
-            <li>
-              <Link className={cx("item")}>Quần áo chó mèo</Link>
-            </li>
-
-            <li>
-              <Link className={cx("item")}>Dụng cụ vệ sinh</Link>
-            </li>
+            {storage.categories.map((item, index) => (
+              <li key={index}>
+                <NavLink
+                  to={`/collections/${item._id}`}
+                  className={({ isActive }) =>
+                    cx("item", { isActive: isActive })
+                  }
+                >
+                  {item.name}
+                </NavLink>
+              </li>
+            ))}
           </ul>
         </div>
       </div>

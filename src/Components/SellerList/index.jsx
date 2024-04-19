@@ -2,24 +2,13 @@ import classNames from "classnames/bind";
 import styles from "./SellerList.module.scss";
 import ProductItem from "../ProductItem";
 import { Link } from "react-router-dom";
-// import data from "./data";
-import { useEffect, useState } from "react";
-import { getAllCategories } from "../../Services/API/Category";
+import { useContext } from "react";
+import { StorageContext } from "../../Contexts/StorageContext";
 
 const cx = classNames.bind(styles);
 
 function SellerList({ items = [], headerColor = "#064475" }) {
-  const [categorise, setCategories] = useState([]);
-
-  useEffect(() => {
-    getAllCategories()
-      .then((res) => {
-        setCategories(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  const storage = useContext(StorageContext);
 
   return (
     <div
@@ -46,10 +35,10 @@ function SellerList({ items = [], headerColor = "#064475" }) {
               flexDirection: "column",
             }}
           >
-            {categorise.map((item, index) => {
+            {storage.categories.map((item, index) => {
               return (
                 <div key={index} className={cx("link")}>
-                  <Link>{item.name}</Link>
+                  <Link to={`/collections/${item._id}`}>{item.name}</Link>
                 </div>
               );
             })}
