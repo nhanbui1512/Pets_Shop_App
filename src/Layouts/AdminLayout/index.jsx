@@ -301,7 +301,7 @@ function AdminLayout({ children }) {
 
                         <hr className="my-2" />
                         <li>
-                          <Link href="/">
+                          <Link to="/admin/password">
                             <i className="icon-lock"></i> <span>Password</span>
                           </Link>
                         </li>
@@ -384,7 +384,7 @@ function AdminLayout({ children }) {
 
           <div
             style={{
-              minHeight: 500,
+              minHeight: "100vh",
             }}
             className="container-fluid"
           >

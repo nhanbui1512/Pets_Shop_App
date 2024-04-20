@@ -18,9 +18,10 @@ function Collection() {
   const [loading, setLoading] = useState(true);
 
   const handleChange = (event, number) => {
+    console.log(number);
     setPage(number);
     setLoading(true);
-    getCategoryById({ id, number, perPage: 20 })
+    getCategoryById({ id, page: number, perPage: 20 })
       .then((res) => {
         setProducts(res.docs);
         setLoading(false);

@@ -1,8 +1,8 @@
 const scripQuestions = {
-  autoBot: "Are you currently exploring new job opportunities?",
+  autoBot: "Tìm kiếm bằng hình ảnh ?",
   answerOptions: [
     {
-      answersValue: "i'd like to learn more!",
+      answersValue: "Tìm kiếm ngay!",
       childrens: {
         autoBot: "Great, what would you like to do first?",
         answerOptions: [
@@ -45,9 +45,9 @@ const scripQuestions = {
       },
     },
     {
-      answersValue: "Not right now",
+      answersValue: "Không phải bây giờ",
       childrens: {
-        autoBot: "Ok thanks",
+        autoBot: "Cảm ơn, bạn có thể chat trực tiếp với shop để được hỗ trợ",
         answerOptions: [],
       },
     },

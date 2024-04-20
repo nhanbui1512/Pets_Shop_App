@@ -8,6 +8,7 @@ import ListOrder from "../Pages/Admin/ListOrder";
 import UpdateProduct from "../Pages/Admin/UpdateProduct";
 import ListBlog from "../Pages/Admin/ListBlog";
 import UpdateBlog from "../Pages/Admin/UpdateBlog";
+import Password from "../Pages/Admin/Password";
 
 export const adminRoutes = [
   {
@@ -53,6 +54,10 @@ export const adminRoutes = [
   {
     path: "/blogs/:id",
     element: <UpdateBlog />,
+  },
+  {
+    path: "/password",
+    element: <Password />,
   },
 ];
 

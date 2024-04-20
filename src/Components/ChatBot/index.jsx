@@ -17,8 +17,7 @@ function ChatBot() {
   const [messages, setMessages] = useState([
     {
       name: "Tony Stark",
-      message:
-        "Uh, he's from space, he came here to steal a necklace from a wizard.",
+      message: "Tìm kiếm chó mèo bằng hình ảnh ?",
     },
   ]);
   const [input, setInput] = useState("");
