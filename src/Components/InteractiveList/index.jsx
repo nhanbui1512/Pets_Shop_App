@@ -13,9 +13,11 @@ import AddIcon from "@mui/icons-material/Add";
 import classNames from "classnames/bind";
 import styles from "./InteractiveList.module.scss";
 import Button from "@mui/material/Button";
+import EditIcon from "@mui/icons-material/Edit";
 import { useState } from "react";
 
 import { toast } from "react-toastify";
+import { Dialog, Paper, TextField } from "@mui/material";
 
 const cx = classNames.bind(styles);
 
@@ -27,6 +29,8 @@ export default function InteractiveList({ items = [], setItems }) {
   const [optionName, setOptionName] = useState("");
   const [price, setPrice] = useState(0);
   const [quantity, setQuantity] = useState(0);
+
+  const [edit, setEdit] = useState(undefined);
 
   return (
     <Box sx={{ flexGrow: 1, maxWidth: 752 }}>
@@ -45,19 +49,31 @@ export default function InteractiveList({ items = [], setItems }) {
                   <ListItem
                     key={index}
                     secondaryAction={
-                      <IconButton
-                        onClick={() => {
-                          setItems((prev) => {
-                            const newState = [...prev];
-                            newState.splice(index, 1);
-                            return newState;
-                          });
-                        }}
-                        edge="end"
-                        aria-label="delete"
-                      >
-                        <DeleteIcon />
-                      </IconButton>
+                      <>
+                        <IconButton
+                          onClick={() => {
+                            setEdit(item);
+                          }}
+                          edge="end"
+                          aria-label="delete"
+                        >
+                          <EditIcon />
+                        </IconButton>
+
+                        <IconButton
+                          onClick={() => {
+                            setItems((prev) => {
+                              const newState = [...prev];
+                              newState.splice(index, 1);
+                              return newState;
+                            });
+                          }}
+                          edge="end"
+                          aria-label="delete"
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </>
                     }
                   >
                     <ListItemAvatar>
@@ -73,6 +89,67 @@ export default function InteractiveList({ items = [], setItems }) {
                   </ListItem>
                 );
               })}
+
+              <Dialog open={edit ? true : false}>
+                <Paper sx={{ padding: 2 }} elevation={20}>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: 16,
+                      width: 300,
+                      height: 300,
+                    }}
+                  >
+                    <TextField
+                      value={edit?.name}
+                      sx={{
+                        width: "100%",
+                      }}
+                      className={cx("text-input")}
+                      variant="outlined"
+                      inputProps={{
+                        style: {
+                          padding: "20px 16px",
+                        },
+                      }}
+                    />
+
+                    <TextField
+                      value={edit?.price}
+                      sx={{
+                        width: "100%",
+                      }}
+                      className={cx("text-input")}
+                      variant="outlined"
+                      inputProps={{
+                        type: "number",
+                      }}
+                    />
+                    <TextField
+                      value={edit?.quantity}
+                      sx={{
+                        width: "100%",
+                      }}
+                      className={cx("text-input")}
+                      variant="outlined"
+                      inputProps={{
+                        type: "number",
+                      }}
+                    />
+                  </div>
+
+                  <Button
+                    onClick={() => {
+                      setEdit(undefined);
+                    }}
+                    variant="text"
+                  >
+                    Close
+                  </Button>
+                  <Button variant="text">Save</Button>
+                </Paper>
+              </Dialog>
             </List>
 
             <div
