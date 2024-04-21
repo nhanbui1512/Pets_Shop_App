@@ -30,3 +30,23 @@ export async function getBlogById(id) {
     throw error;
   }
 }
+
+export async function updateBlog({
+  id,
+  title,
+  content,
+  thumbnail,
+  shortContent,
+}) {
+  try {
+    const res = await request.patch(`/blogs/${id}`, {
+      title: title,
+      content: content,
+      shortContent: shortContent,
+      thumbnail: thumbnail,
+    });
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+}

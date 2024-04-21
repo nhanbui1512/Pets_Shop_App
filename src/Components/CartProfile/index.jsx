@@ -1,39 +1,49 @@
+import { useContext, useRef, useState } from "react";
+import { StorageContext } from "../../Contexts/StorageContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
+
+import classNames from "classnames/bind";
+import styles from "./CartProfile.module.scss";
+
+const cx = classNames.bind(styles);
+
 function CartProfile() {
+  const storage = useContext(StorageContext);
+  const inputFileRef = useRef();
+  const [avatar, setAvatar] = useState("");
+
+  const handleChangeAvatar = (e) => {
+    if (e.target.files.length > 0 && e.target.files[0].type.includes("image")) {
+      const file = e.target.files[0];
+      const fileURL = URL.createObjectURL(file);
+      setAvatar(fileURL);
+    }
+  };
   return (
     <div className="card">
       <div className="card-body">
         <div className="media align-items-center mb-4">
-          <img
-            className="mr-3"
-            src="https://www.svgrepo.com/show/382097/female-avatar-girl-face-woman-user-9.svg"
-            width="80"
-            height="80"
-            alt=""
-          />
+          <div style={{ position: "relative" }}>
+            <img
+              className={cx(["mr-3", "avatar"])}
+              src={avatar || storage.userData.profileImage}
+              width="80"
+              height="80"
+              alt=""
+            />
+            <button
+              onClick={() => {
+                inputFileRef.current.click();
+              }}
+              className={cx("edit-btn")}
+            >
+              <FontAwesomeIcon icon={faPenToSquare} />
+            </button>
+          </div>
           <div className="media-body">
             <h3 className="mb-0">Pikamy Cha</h3>
             <p className="text-muted mb-0">Canada</p>
-          </div>
-        </div>
-
-        <div className="row mb-5">
-          <div className="col">
-            <div className="card card-profile text-center">
-              <span className="mb-1 text-primary">
-                <i className="icon-people"></i>
-              </span>
-              <h3 className="mb-0">263</h3>
-              <p className="text-muted px-4">Following</p>
-            </div>
-          </div>
-          <div className="col">
-            <div className="card card-profile text-center">
-              <span className="mb-1 text-warning">
-                <i className="icon-user-follow"></i>
-              </span>
-              <h3 className="mb-0">263</h3>
-              <p className="text-muted">Followers</p>
-            </div>
           </div>
         </div>
 
@@ -49,7 +59,7 @@ function CartProfile() {
           </li>
           <li>
             <strong className="text-dark mr-4">Email</strong>{" "}
-            <span>name@domain.com</span>
+            <span>{storage.userData.email}</span>
           </li>
         </ul>
         <div className="col-12 text-center">
@@ -58,6 +68,16 @@ function CartProfile() {
           </button>
         </div>
       </div>
+
+      <input
+        style={{ display: "none" }}
+        max={1}
+        accept=".jpg, .jpeg, .png"
+        onChange={handleChangeAvatar}
+        ref={inputFileRef}
+        type="file"
+        className="disappear"
+      />
     </div>
   );
 }

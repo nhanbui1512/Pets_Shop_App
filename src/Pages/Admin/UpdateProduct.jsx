@@ -8,6 +8,7 @@ import {
   createOption as CreateOption,
   deleteOption as deleteOptionAPI,
   getProductById,
+  updateProduct,
 } from "../../Services/API/Products";
 
 import { useParams } from "react-router-dom";
@@ -32,6 +33,8 @@ function UpdateProduct() {
 
   const [deleteOption, setDeleteOption] = useState(-1);
 
+  const contentRef = useRef();
+
   const handleDelete = () => {
     deleteOptionAPI(options[deleteOption]._id)
       .then((res) => {
@@ -51,7 +54,24 @@ function UpdateProduct() {
     setDeleteOption(-1);
   };
 
-  const contentRef = useRef();
+  const handleUpdate = (e) => {
+    const DOMcontent = contentRef.current.innerHTML;
+    updateProduct({
+      id,
+      name: productName,
+      description: description,
+      categoryID: categoryId,
+      htmlDomDescription: DOMcontent,
+      productImages: imageFiles,
+    })
+      .then((res) => {
+        toast.success("Cập nhật sản phẩm thành công");
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Cập nhật sản phẩm thất bại");
+      });
+  };
 
   useEffect(() => {
     getProductById(id).then((res) => {
@@ -196,7 +216,9 @@ function UpdateProduct() {
 
                 <div className="form-group row">
                   <div className="col-lg-8 ml-auto">
-                    <Button variant="contained">Update</Button>
+                    <Button onClick={handleUpdate} variant="contained">
+                      Update
+                    </Button>
                   </div>
                 </div>
               </div>

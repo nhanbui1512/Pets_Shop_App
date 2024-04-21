@@ -17,3 +17,15 @@ export async function deleteUser(id) {
     throw error;
   }
 }
+
+export async function changePassword(currentPass, newPass) {
+  try {
+    const res = await request.put("/users/changepass", {
+      currentPass: currentPass,
+      newPass: newPass,
+    });
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+}

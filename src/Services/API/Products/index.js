@@ -56,9 +56,26 @@ export async function createProduct({
   }
 }
 
-export async function UpdateProduct() {
+export async function updateProduct({
+  id,
+  name,
+  description,
+  categoryID,
+  htmlDomDescription,
+  productImages = [],
+}) {
   try {
-  } catch (error) {}
+    const res = await request.patch(`products/${id}`, {
+      name: name,
+      description: description,
+      categoryID: categoryID,
+      htmlDomDescription: htmlDomDescription,
+      productImage: productImages,
+    });
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
 }
 
 export async function updateOption({ id, name, value, price, quantity }) {

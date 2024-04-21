@@ -1,5 +1,7 @@
 import Button from "@mui/material/Button";
 import { useState } from "react";
+import { changePassword } from "../../Services/API/Users";
+import { toast } from "react-toastify";
 
 // import { toast } from "react-toastify";
 
@@ -7,6 +9,30 @@ function Password() {
   const [currentPass, setCurrentPass] = useState("");
   const [newPass, setNewPass] = useState("");
   const [confirmPass, setConfirmPass] = useState("");
+
+  const handleChangeChangePass = () => {
+    if (newPass !== confirmPass)
+      return toast.error("Mật khẩu không trùng khớp");
+
+    if (
+      currentPass.trim() === "" ||
+      newPass.trim() === "" ||
+      confirmPass.trim() === ""
+    )
+      return toast.error("Bắt buộc điền đầy đủ thông tin");
+    changePassword(currentPass, newPass)
+      .then((res) => {
+        toast.success("Thay đổi mật khẩu thành công");
+        setConfirmPass("");
+        setNewPass("");
+        setCurrentPass("");
+      })
+      .catch((err) => {
+        toast.error("Mật khẩu cũ không đúng");
+        setConfirmPass("");
+        setNewPass("");
+      });
+  };
 
   return (
     <div className="container-fluid">
@@ -77,7 +103,12 @@ function Password() {
                 </div>
                 <div className="form-group row">
                   <div className="col-lg-8 ml-auto">
-                    <Button variant="contained">Change Password</Button>
+                    <Button
+                      onClick={handleChangeChangePass}
+                      variant="contained"
+                    >
+                      Change Password
+                    </Button>
                   </div>
                 </div>
               </div>
