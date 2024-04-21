@@ -18,6 +18,7 @@ import { useState } from "react";
 
 import { toast } from "react-toastify";
 import { Dialog, Paper, TextField } from "@mui/material";
+import { updateOption } from "../../Services/API/Products";
 
 const cx = classNames.bind(styles);
 
@@ -25,12 +26,27 @@ const Demo = styled("div")(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
 }));
 
-export default function InteractiveList({ items = [], setItems }) {
+export default function InteractiveList({
+  items = [],
+  setItems,
+  onDeleteOption,
+  onAddItem,
+  canUpdate = false,
+}) {
   const [optionName, setOptionName] = useState("");
   const [price, setPrice] = useState(0);
   const [quantity, setQuantity] = useState(0);
+  const [edit, setEdit] = useState(-1);
 
-  const [edit, setEdit] = useState(undefined);
+  // Hàm xử lý khi nút xóa được nhấn
+  const handleDelete = (optionId) => {
+    // Gọi callback từ component cha và truyền ID của option
+    if (onDeleteOption) onDeleteOption(optionId);
+  };
+
+  const handleAddItem = () => {
+    if (onAddItem) onAddItem({ optionName, price, quantity });
+  };
 
   return (
     <Box sx={{ flexGrow: 1, maxWidth: 752 }}>
@@ -50,24 +66,20 @@ export default function InteractiveList({ items = [], setItems }) {
                     key={index}
                     secondaryAction={
                       <>
-                        <IconButton
-                          onClick={() => {
-                            setEdit(item);
-                          }}
-                          edge="end"
-                          aria-label="delete"
-                        >
-                          <EditIcon />
-                        </IconButton>
+                        {canUpdate && (
+                          <IconButton
+                            onClick={() => {
+                              setEdit(item);
+                            }}
+                            edge="end"
+                            aria-label="delete"
+                          >
+                            <EditIcon />
+                          </IconButton>
+                        )}
 
                         <IconButton
-                          onClick={() => {
-                            setItems((prev) => {
-                              const newState = [...prev];
-                              newState.splice(index, 1);
-                              return newState;
-                            });
-                          }}
+                          onClick={() => handleDelete(index)}
                           edge="end"
                           aria-label="delete"
                         >
@@ -90,66 +102,122 @@ export default function InteractiveList({ items = [], setItems }) {
                 );
               })}
 
-              <Dialog open={edit ? true : false}>
-                <Paper sx={{ padding: 2 }} elevation={20}>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: 16,
-                      width: 300,
-                      height: 300,
-                    }}
-                  >
-                    <TextField
-                      value={edit?.name}
-                      sx={{
-                        width: "100%",
+              {canUpdate && (
+                <Dialog open={edit !== -1 ? true : false}>
+                  <Paper sx={{ padding: 2 }} elevation={20}>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 16,
+                        width: 300,
+                        height: 300,
                       }}
-                      className={cx("text-input")}
-                      variant="outlined"
-                      inputProps={{
-                        style: {
-                          padding: "20px 16px",
-                        },
-                      }}
-                    />
+                    >
+                      <TextField
+                        value={edit?.name}
+                        onChange={(e) => {
+                          setEdit((prev) => {
+                            const newSate = { ...prev };
+                            newSate.name = e.target.value;
+                            return newSate;
+                          });
+                        }}
+                        sx={{
+                          width: "100%",
+                        }}
+                        className={cx("text-input")}
+                        variant="outlined"
+                        inputProps={{
+                          style: {
+                            padding: "20px 16px",
+                          },
+                        }}
+                      />
 
-                    <TextField
-                      value={edit?.price}
-                      sx={{
-                        width: "100%",
-                      }}
-                      className={cx("text-input")}
-                      variant="outlined"
-                      inputProps={{
-                        type: "number",
-                      }}
-                    />
-                    <TextField
-                      value={edit?.quantity}
-                      sx={{
-                        width: "100%",
-                      }}
-                      className={cx("text-input")}
-                      variant="outlined"
-                      inputProps={{
-                        type: "number",
-                      }}
-                    />
-                  </div>
+                      <TextField
+                        onChange={(e) => {
+                          setEdit((prev) => {
+                            const newSate = { ...prev };
+                            newSate.price = e.target.value;
+                            return newSate;
+                          });
+                        }}
+                        value={edit?.price}
+                        sx={{
+                          width: "100%",
+                        }}
+                        className={cx("text-input")}
+                        variant="outlined"
+                        inputProps={{
+                          type: "number",
+                        }}
+                      />
+                      <TextField
+                        value={edit?.quantity}
+                        onChange={(e) => {
+                          setEdit((prev) => {
+                            const newSate = { ...prev };
+                            newSate.quantity = e.target.value;
+                            return newSate;
+                          });
+                        }}
+                        sx={{
+                          width: "100%",
+                        }}
+                        className={cx("text-input")}
+                        variant="outlined"
+                        inputProps={{
+                          type: "number",
+                        }}
+                      />
+                    </div>
 
-                  <Button
-                    onClick={() => {
-                      setEdit(undefined);
-                    }}
-                    variant="text"
-                  >
-                    Close
-                  </Button>
-                  <Button variant="text">Save</Button>
-                </Paper>
-              </Dialog>
+                    <Button
+                      onClick={() => {
+                        setEdit(-1);
+                      }}
+                      variant="text"
+                    >
+                      Close
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        updateOption({
+                          id: edit._id,
+                          name: edit.name,
+                          value: "",
+                          quantity: edit.quantity,
+                          price: edit.price,
+                        })
+                          .then((res) => {
+                            toast.success("Cập nhật option thành công");
+                          })
+                          .catch((err) => {
+                            toast.error("Cập nhật option thất bại");
+                            console.log(err);
+                          });
+
+                        setItems((prev) => {
+                          const options = [...prev];
+
+                          const item = options.find(
+                            (option) => option._id === edit._id
+                          );
+                          item.name = edit.name;
+                          item.price = edit.price;
+                          item.quantity = edit.quantity;
+                          return options;
+                        });
+                        setEdit(undefined);
+                      }}
+                      variant="text"
+                    >
+                      Save
+                    </Button>
+                  </Paper>
+                </Dialog>
+              )}
             </List>
 
             <div
@@ -194,26 +262,10 @@ export default function InteractiveList({ items = [], setItems }) {
               <Button
                 onClick={() => {
                   if (optionName.trim() !== "" && price > 0 && quantity > 0) {
+                    handleAddItem({ quantity, price, optionName });
                     setOptionName("");
                     setPrice(0);
-                    setItems((prev) => {
-                      const isExist = prev.find(
-                        (item) => item.name === optionName
-                      );
-                      if (isExist) {
-                        toast.error("Name option is existed");
-                        return prev;
-                      }
-                      return [
-                        ...prev,
-                        {
-                          name: optionName,
-                          price: price,
-                          quantity: quantity,
-                          value: optionName,
-                        },
-                      ];
-                    });
+                    setQuantity(0);
                   } else {
                     toast.error("Name, Price and Quantity must be filled");
                   }

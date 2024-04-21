@@ -1,13 +1,24 @@
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import InteractiveList from "../../Components/InteractiveList";
 import Button from "@mui/material/Button";
 import Editor from "../../Components/Editor";
 import { getAllCategories } from "../../Services/API/Category";
 import FilesManager from "../../Components/FilesManager";
-import { createProduct, getProductById } from "../../Services/API/Products";
+import {
+  createOption as CreateOption,
+  deleteOption as deleteOptionAPI,
+  getProductById,
+} from "../../Services/API/Products";
 
-import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material";
+import { toast } from "react-toastify";
 
 function UpdateProduct() {
   const { id } = useParams();
@@ -19,33 +30,28 @@ function UpdateProduct() {
   const [imageFiles, setImageFiles] = useState([]);
   const [categoryId, setCategoryId] = useState("");
 
-  const contentRef = useRef();
-  const categoryRef = useRef();
+  const [deleteOption, setDeleteOption] = useState(-1);
 
-  const handleAddProduct = (e) => {
-    const descriptionDOM = contentRef.current.innerHTML;
-    const categoryId = categoryRef.current.value;
-
-    createProduct({
-      name: productName,
-      images: imageFiles,
-      description,
-      categoryId,
-      descriptionDOM,
-      options,
-    })
+  const handleDelete = () => {
+    deleteOptionAPI(options[deleteOption]._id)
       .then((res) => {
-        toast.success("Thêm sản phẩm thành công");
-        setOptions([]);
-        setImageFiles([]);
-        setDescription("");
-        setProductName("");
-        contentRef.current.innerHTML = "Edit DOM";
+        toast.success("Xóa lựa chọn thành công");
+        setOptions((prev) => {
+          const newState = [...prev];
+          newState.splice(deleteOption, 1);
+          return newState;
+        });
+        setDeleteOption(-1);
       })
       .catch((err) => {
-        console.log(err);
+        toast.error("Xóa lựa chọn thất bại");
       });
   };
+  const handleClose = () => {
+    setDeleteOption(-1);
+  };
+
+  const contentRef = useRef();
 
   useEffect(() => {
     getProductById(id).then((res) => {
@@ -123,14 +129,15 @@ function UpdateProduct() {
                     Category <span className="text-danger">*</span>
                   </label>
                   <div className="col-lg-6">
-                    <select ref={categoryRef}>
+                    <select
+                      onChange={(e) => {
+                        setCategoryId(e.target.value);
+                      }}
+                      value={categoryId}
+                    >
                       {categories.map((item, index) => {
                         return (
-                          <option
-                            selected={item._id === categoryId}
-                            value={item._id}
-                            key={index}
-                          >
+                          <option value={item._id} key={index}>
                             {item.name}
                           </option>
                         );
@@ -144,7 +151,29 @@ function UpdateProduct() {
                     Options <span className="text-danger">*</span>
                   </label>
                   <div className="col-lg-6">
-                    <InteractiveList items={options} setItems={setOptions} />
+                    <InteractiveList
+                      canUpdate
+                      items={options}
+                      setItems={setOptions}
+                      onDeleteOption={(index) => {
+                        setDeleteOption(index);
+                      }}
+                      onAddItem={(option) => {
+                        CreateOption({
+                          idProduct: id,
+                          name: option.optionName,
+                          value: option.optionName,
+                          price: option.price,
+                          quantity: option.quantity,
+                        })
+                          .then((res) => {
+                            setOptions(res.variantOptions);
+                          })
+                          .catch((err) => {
+                            console.log(err);
+                          });
+                      }}
+                    />
                   </div>
                 </div>
 
@@ -167,9 +196,7 @@ function UpdateProduct() {
 
                 <div className="form-group row">
                   <div className="col-lg-8 ml-auto">
-                    <Button onClick={handleAddProduct} variant="contained">
-                      Add Product
-                    </Button>
+                    <Button variant="contained">Update</Button>
                   </div>
                 </div>
               </div>
@@ -177,6 +204,30 @@ function UpdateProduct() {
           </div>
         </div>
       </div>
+
+      <Fragment>
+        <Dialog
+          open={deleteOption !== -1}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Do you want delete this option?"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              The data will be deleted and cannot be restored.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Disagree</Button>
+            <Button onClick={handleDelete} autoFocus>
+              Agree
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </Fragment>
     </div>
   );
 }

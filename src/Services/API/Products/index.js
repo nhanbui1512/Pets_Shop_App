@@ -55,3 +55,56 @@ export async function createProduct({
     throw error;
   }
 }
+
+export async function UpdateProduct() {
+  try {
+  } catch (error) {}
+}
+
+export async function updateOption({ id, name, value, price, quantity }) {
+  try {
+    const res = await request.put(`/variant-options/${id}`, {
+      variantOptions: [
+        {
+          name: name,
+          value: value,
+          price: price,
+          quantity: quantity,
+        },
+      ],
+    });
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function createOption({
+  idProduct,
+  name,
+  value,
+  price,
+  quantity,
+}) {
+  try {
+    const res = await request.post(`/products/${idProduct}/variant-options`, {
+      name: name,
+      value: value,
+      price: price,
+      quantity: quantity,
+    });
+
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function deleteOption(id) {
+  try {
+    const res = await request.delete(`/variant-options/${id}`);
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+}

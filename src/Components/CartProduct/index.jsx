@@ -24,7 +24,7 @@ function CartProduct({ data, setCartItems, index }) {
           <img
             className={cx("product_img")}
             src={
-              data?.image ||
+              data?.productImage[0] ||
               "https://bizweb.dktcdn.net/thumb/small/100/229/172/products/bow-wow-ca-hoi-150g-1709195437957.jpg?v=1709473755860"
             }
             alt="anh"
@@ -40,7 +40,7 @@ function CartProduct({ data, setCartItems, index }) {
         <Link className={cx("text-dec")}>chó cỏ</Link>
       </td>
       <td className={cx("product_price")}>
-        {`${data?.price.toLocaleString("vi-VN", { currency: "VND" })}đ` ||
+        {`${data?.variantOptions.price.toLocaleString("vi-VN", { currency: "VND" })}đ` ||
           "65.000đ"}
       </td>
       <td>
@@ -48,7 +48,7 @@ function CartProduct({ data, setCartItems, index }) {
       </td>
       <td
         className={cx("product_price")}
-      >{`${(data?.price * data?.quantity).toLocaleString("vi-VN", { currency: "VND" })}`}</td>
+      >{`${(data?.variantOptions.price * data?.quantity).toLocaleString("vi-VN", { currency: "VND" })}`}</td>
       <td>
         <button
           onClick={() => {

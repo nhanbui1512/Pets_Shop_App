@@ -36,7 +36,6 @@ function FilesManager({ imageFiles = [], setImageFiles = () => {} }) {
               onClick={() => {
                 setImageFiles((prev) => {
                   const newState = prev.filter((item) => item !== file);
-
                   return newState;
                 });
               }}

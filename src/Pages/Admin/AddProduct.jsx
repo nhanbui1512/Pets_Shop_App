@@ -125,7 +125,27 @@ function AddProduct() {
                     Options <span className="text-danger">*</span>
                   </label>
                   <div className="col-lg-6">
-                    <InteractiveList items={options} setItems={setOptions} />
+                    <InteractiveList
+                      items={options}
+                      setItems={setOptions}
+                      onAddItem={(option) => {
+                        setOptions((prev) => [
+                          ...prev,
+                          {
+                            name: option.optionName,
+                            price: option.price,
+                            quantity: option.quantity,
+                          },
+                        ]);
+                      }}
+                      onDeleteOption={(index) => {
+                        setOptions((prev) => {
+                          const newState = [...prev];
+                          newState.splice(index, 1);
+                          return newState;
+                        });
+                      }}
+                    />
                   </div>
                 </div>
 

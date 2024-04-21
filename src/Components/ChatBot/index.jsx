@@ -8,24 +8,29 @@ import {
   faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
 import scripQuestions from "./data";
-import { Fab } from "@mui/material";
+import { Button, Dialog, Fab, Paper, TextField } from "@mui/material";
 
 const cx = classNames.bind(style);
 
 function ChatBot() {
   const [isChatBoxVisible, setChatBoxVisible] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const [answerOptions, setAnswerOptions] = useState(
+    scripQuestions.answerOptions
+  );
   const [messages, setMessages] = useState([
     {
       name: "Tony Stark",
-      message: "Tìm kiếm chó mèo bằng hình ảnh ?",
+      message: "Tìm kiếm và gợi ý bằng hình ảnh ?",
     },
   ]);
-  const [input, setInput] = useState("");
-  const messagesEndRef = useRef(null); // Tham chiếu tới phần tử cuối cùng trong danh sách tin nhắn
 
-  const [awnswerOption, setAnswerOptions] = useState(
-    scripQuestions.answerOptions
-  );
+  const messagesEndRef = useRef(null); // Tham chiếu tới phần tử cuối cùng trong danh sách tin nhắn
+  const inputFileRef = useRef();
+
+  const [input, setInput] = useState("");
+  const [urlPredict, setUrlPredict] = useState("");
 
   const scrollToBottom = () => {
     if (messagesEndRef.current) {
@@ -76,6 +81,64 @@ function ChatBot() {
         position: "relative",
       }}
     >
+      <Dialog open={openDialog}>
+        <Paper sx={{ padding: 2 }} elevation={20}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 16,
+              width: 300,
+            }}
+          >
+            <TextField
+              value={urlPredict}
+              onChange={(e) => {
+                setUrlPredict(e.target.value);
+              }}
+              sx={{
+                width: "100%",
+              }}
+              className={cx("text-input")}
+              variant="outlined"
+              inputProps={{
+                style: {
+                  padding: "20px 16px",
+                },
+              }}
+            />
+          </div>
+
+          <Button
+            onClick={() => {
+              setOpenDialog(false);
+            }}
+            variant="text"
+          >
+            Close
+          </Button>
+          <Button
+            onClick={() => {
+              setMessages((prev) => {
+                return [
+                  ...prev,
+                  {
+                    name: "Peter Parker",
+                    message: `Liên kết ảnh : ${urlPredict}`,
+                  },
+                ];
+              });
+              setOpenDialog(false);
+              setAnswerOptions([]);
+              setUrlPredict("");
+              setChatBoxVisible(true);
+            }}
+            variant="text"
+          >
+            Send
+          </Button>
+        </Paper>
+      </Dialog>
       <div className={cx("chatbot")} onClick={toggleChatBox}>
         <div className={cx("chatbot-icon")}>
           <img src="/images/chatbot.jpg" alt="chatbot" />
@@ -95,10 +158,15 @@ function ChatBot() {
                 >
                   <div className={cx("time")}>Today at 11:41</div>
                   <div className={cx("text")}>{message.message}</div>
+                  {message.image && (
+                    <div className={cx("image-message")}>
+                      <img src={message.image} alt="" />
+                    </div>
+                  )}
                 </div>
               ))}
 
-              {awnswerOption.map((answ, index) => {
+              {answerOptions.map((answ, index) => {
                 return (
                   <Fab
                     sx={{
@@ -121,6 +189,12 @@ function ChatBot() {
                           ];
                         });
                         setAnswerOptions(answ.childrens.answerOptions);
+                      }
+                      if (answ.onClick) {
+                        answ.onClick(inputFileRef);
+                      }
+                      if (answ.openDialog) {
+                        setOpenDialog(true);
                       }
                     }}
                     key={index}
@@ -161,6 +235,34 @@ function ChatBot() {
           </div>
         </div>
       )}
+
+      <input
+        style={{ display: "none" }}
+        max={5}
+        accept=".jpg, .jpeg, .png"
+        onChange={(e) => {
+          if (
+            e.target.files.length > 0 &&
+            e.target.files[0].type.includes("image")
+          ) {
+            const file = e.target.files[0];
+            const fileURL = URL.createObjectURL(file);
+            setAnswerOptions([]);
+            setMessages((prev) => {
+              return [
+                ...prev,
+                {
+                  name: "Peter Parker",
+                  image: fileURL,
+                },
+              ];
+            });
+          }
+        }}
+        ref={inputFileRef}
+        type="file"
+        className="disappear"
+      />
     </div>
   );
 }
