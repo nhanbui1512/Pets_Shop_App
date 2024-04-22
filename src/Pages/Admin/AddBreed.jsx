@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import Editor from "../../Components/Editor";
 import Button from "@mui/material/Button";
-import { createBlog } from "../../Services/API/Blogs";
 import { toast } from "react-toastify";
 import classNames from "classnames/bind";
 import styles from "./Admin.module.scss";
@@ -11,6 +10,7 @@ import { MenuList, Paper } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import { useDebounce } from "../../Hooks";
 import { searchProduct } from "../../Services/API/Products";
+import { addBreed } from "../../Services/API/Breeds";
 
 const cx = classNames.bind(styles);
 
@@ -19,26 +19,43 @@ function AddBreed() {
 
   const [recommends, setRecommends] = useState([]);
 
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [breedName, setBreedName] = useState("");
+  const [appearance, setAppearance] = useState("");
+  const [behavior, setBehavior] = useState("");
+  const [issue, setIssue] = useState("");
+
   const [thumbnail, setThumbnail] = useState({});
 
   const [searchValue, setSearchValue] = useState("");
   const [searchResult, setSearchResult] = useState([]);
 
   const debounceValue = useDebounce(searchValue, 600);
-  const handleAddBlog = () => {
-    const DOMContent = contentRef.current.innerHTML;
 
-    createBlog({ title, DOMContent, shortContent: description })
+  const handleSubmit = () => {
+    const DOMContent = contentRef.current.innerHTML;
+    const idProducts = recommends.map((product) => product._id);
+
+    addBreed({
+      breed_name: breedName,
+      appearance,
+      behavior,
+      htmlDomDescription: DOMContent,
+      common_health_issues: issue,
+      diet: idProducts,
+      description: "No Description",
+    })
       .then((res) => {
-        toast.success("Create Blog Successfully");
-        contentRef.current.innerHTML = "";
-        setDescription("");
-        setTitle("");
+        toast.success("Thêm động vật thành công");
+        setAppearance("");
+        setBreedName("");
+        setBehavior("");
+        setIssue("");
+        setThumbnail({});
+        contentRef.current.innerHTML = "Edit Here !";
       })
       .catch((err) => {
-        toast.error("Create Blog Unsuccessfully");
+        console.log(err);
+        toast.error("Thêm động vật không thành công");
       });
   };
 
@@ -72,10 +89,10 @@ function AddBreed() {
                   </label>
                   <div className="col-lg-6">
                     <input
+                      value={breedName}
                       onChange={(e) => {
-                        setTitle(e.target.value);
+                        setBreedName(e.target.value);
                       }}
-                      value={title}
                       type="text"
                       className="form-control"
                       id="val-username"
@@ -89,9 +106,9 @@ function AddBreed() {
                   </label>
                   <div className="col-lg-6">
                     <textarea
-                      value={description}
+                      value={appearance}
                       onChange={(e) => {
-                        setDescription(e.target.value);
+                        setAppearance(e.target.value);
                       }}
                       type="text"
                       className="form-control"
@@ -109,6 +126,8 @@ function AddBreed() {
                   </label>
                   <div className="col-lg-6">
                     <textarea
+                      value={behavior}
+                      onChange={(e) => setBehavior(e.target.value)}
                       type="text"
                       className="form-control"
                       id="val-username"
@@ -125,6 +144,8 @@ function AddBreed() {
                   </label>
                   <div className="col-lg-6">
                     <textarea
+                      value={issue}
+                      onChange={(e) => setIssue(e.target.value)}
                       type="text"
                       className="form-control"
                       id="val-username"
@@ -225,8 +246,8 @@ function AddBreed() {
 
                 <div className="form-group row">
                   <div className="col-lg-8 ml-auto">
-                    <Button onClick={handleAddBlog} variant="contained">
-                      Add News
+                    <Button onClick={handleSubmit} variant="contained">
+                      Add Breed
                     </Button>
                   </div>
                 </div>

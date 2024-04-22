@@ -236,7 +236,7 @@ function Navbar() {
                 )}
               >
                 <li>
-                  <Link to={"/user"}>
+                  <Link>
                     <FontAwesomeIcon fontSize={20} icon={faUser} />
                   </Link>
                 </li>
