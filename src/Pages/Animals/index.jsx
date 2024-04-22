@@ -35,7 +35,7 @@ function Animal() {
                         alt=""
                       />
                       <div className="card-body">
-                        <Link>
+                        <Link to={`/animals/${breed._id}`}>
                           {" "}
                           <h5 className="card-title">{breed.breed_name}</h5>
                         </Link>

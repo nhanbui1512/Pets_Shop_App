@@ -27,6 +27,7 @@ import { adminRoutes, userRoutes } from "./Config/routes";
 import AllProducts from "./Pages/AllProducts";
 import Orders from "./Pages/Orders";
 import Collection from "./Pages/Collection";
+import BreedDetail from "./Pages/BreedDetail";
 
 function App() {
   const router = createBrowserRouter(
@@ -46,6 +47,7 @@ function App() {
             <Route path="/search" element={<Search />}></Route>
             <Route path="/orders" element={<Orders />} />
             <Route path="/animals" element={<Animal />}></Route>
+            <Route path="/animals/:id" element={<BreedDetail />}></Route>
           </Route>
 
           {/* have sidebar */}
