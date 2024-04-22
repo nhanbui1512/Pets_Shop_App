@@ -332,6 +332,14 @@ function AdminLayout({ children }) {
                   <Link to={"/admin/products"}>List Category</Link>
                 </li>
               </DropdownMenu>
+              <DropdownMenu title={"Breeds"}>
+                <li>
+                  <Link to={"/admin/breeds"}>List Breed</Link>
+                </li>
+                <li>
+                  <Link to={"/admin/addbreed"}>Add Breed</Link>
+                </li>
+              </DropdownMenu>
               <DropdownMenu title={"Product"}>
                 <li>
                   <Link to={"/admin/products"}>List Product</Link>

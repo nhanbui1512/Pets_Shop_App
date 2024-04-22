@@ -1,14 +1,17 @@
-import Editor from "../Components/Editor";
-import BasicTable from "../Pages/Admin/Products";
-import AdminProfile from "../Pages/Admin/Profile";
-import UserList from "../Pages/Admin/Users";
-import AddProduct from "../Pages/Admin/AddProduct";
-import AddBlog from "../Pages/Admin/AddBlog";
-import ListOrder from "../Pages/Admin/ListOrder";
-import UpdateProduct from "../Pages/Admin/UpdateProduct";
-import ListBlog from "../Pages/Admin/ListBlog";
-import UpdateBlog from "../Pages/Admin/UpdateBlog";
-import Password from "../Pages/Admin/Password";
+import {
+  BasicTable,
+  AdminProfile,
+  UserList,
+  AddProduct,
+  AddBlog,
+  ListOrder,
+  UpdateProduct,
+  ListBlog,
+  UpdateBlog,
+  Password,
+  ListBreed,
+  AddBreed,
+} from "../Pages/Admin";
 
 export const adminRoutes = [
   {
@@ -18,10 +21,6 @@ export const adminRoutes = [
   {
     path: "/profile",
     element: <AdminProfile />,
-  },
-  {
-    path: "/edit",
-    element: <Editor />,
   },
   {
     path: "/products",
@@ -58,6 +57,14 @@ export const adminRoutes = [
   {
     path: "/password",
     element: <Password />,
+  },
+  {
+    path: "/breeds",
+    element: <ListBreed />,
+  },
+  {
+    path: "/addbreed",
+    element: <AddBreed />,
   },
 ];
 
