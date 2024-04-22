@@ -82,10 +82,7 @@ function ProductDetail() {
             <div className={cx("price")}>
               <span>{`${Number(option.price).toLocaleString("vi-VN", { currency: "VND" })}đ`}</span>
             </div>
-            <p className={cx("description")}>
-              Phô mai cuộn cho chó Bow wow cheese roll 120g là thức ăn thơm ngon
-              bổ dưỡng cho chó và mèo, nhất là chó con và chó mẹ sau khi sinh.
-            </p>
+            <p className={cx("description")}>{product.description}</p>
             <div className={cx("slection-box")}>
               <div className={cx("name-selection")}>Lựa chọn</div>
               <select
