@@ -1,12 +1,18 @@
-import { useContext, useRef, useState } from "react";
-import { StorageContext } from "../../Contexts/StorageContext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
-import Button from "@mui/material/Button";
 import classNames from "classnames/bind";
 import styles from "./CartProfile.module.scss";
+import { useContext, useRef, useState } from "react";
+
+import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import { Dialog, Paper, TextField } from "@mui/material";
+import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import { toast } from "react-toastify";
+
+import { StorageContext } from "../../Contexts/StorageContext";
+import { changeAvatar, updateProfile } from "../../Services/API/Users";
+import uploadFile from "../../Services/Cloudinary";
 
 const cx = classNames.bind(styles);
 
@@ -17,13 +23,48 @@ function CartProfile() {
 
   const [openDialog, setOpenDialog] = useState(false);
 
+  const [firstName, setFirstName] = useState(storage.userData.firstName);
+  const [lastName, setLastName] = useState(storage.userData.lastName);
+
   const handleChangeAvatar = (e) => {
     if (e.target.files.length > 0 && e.target.files[0].type.includes("image")) {
       const file = e.target.files[0];
-      const fileURL = URL.createObjectURL(file);
-      setAvatar(fileURL);
+      uploadFile(file).then((res) => {
+        const userId = storage.userData._id;
+        const path = res.data.secure_url;
+        setAvatar(path);
+
+        changeAvatar(userId, path)
+          .then((result) => {
+            toast.success("Cập nhật thành công");
+            storage.setUserData((prev) => {
+              const newState = { ...prev };
+              newState.profileImage = path;
+              return newState;
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      });
     }
   };
+
+  const handleUpdate = () => {
+    const userId = storage.userData._id;
+    updateProfile({ id: userId, firstName, lastName })
+      .then((res) => {
+        toast.success("Cập nhật thành công");
+        delete res.password;
+        storage.setUserData(res);
+
+        setOpenDialog(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className="card">
       <div className="card-body">
@@ -46,8 +87,8 @@ function CartProfile() {
             </button>
           </div>
           <div className="media-body">
-            <h3 className="mb-0">Pikamy Cha</h3>
-            <p className="text-muted mb-0">Canada</p>
+            <h3 className="mb-0">{`${lastName} ${firstName}`}</h3>
+            <p className="text-muted mb-0">{storage.userData.addresses[0]}</p>
           </div>
         </div>
 
@@ -98,11 +139,14 @@ function CartProfile() {
               }}
             >
               <TextField
+                onChange={(e) => {
+                  setFirstName(e.target.value);
+                }}
                 required
                 id="outlined-required"
                 label="First Name"
                 type="text"
-                defaultValue={storage.userData.firstName}
+                value={firstName}
                 inputProps={{
                   style: {
                     padding: `16.5px 14px`,
@@ -116,7 +160,10 @@ function CartProfile() {
                 id="outlined-required"
                 label="Last Name"
                 type="text"
-                defaultValue={storage.userData.lastName}
+                onChange={(e) => {
+                  setLastName(e.target.value);
+                }}
+                value={lastName}
                 inputProps={{
                   style: {
                     padding: `16.5px 14px`,
@@ -134,7 +181,9 @@ function CartProfile() {
           >
             Close
           </Button>
-          <Button variant="text">Save</Button>
+          <Button onClick={handleUpdate} variant="text">
+            Save
+          </Button>
         </Paper>
       </Dialog>
 

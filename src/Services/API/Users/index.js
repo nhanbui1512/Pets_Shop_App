@@ -41,3 +41,14 @@ export async function updateProfile({ id, firstName, lastName }) {
     throw error;
   }
 }
+
+export async function changeAvatar(id, fileUrl) {
+  try {
+    const res = await request.patch(`/users/${id}`, {
+      profileImage: fileUrl,
+    });
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+}

@@ -290,7 +290,7 @@ function AdminLayout({ children }) {
                           </Link>
                         </li>
                         <li>
-                          <Link href="/">
+                          <Link to="/admin/inbox">
                             <i className="icon-envelope-open"></i>{" "}
                             <span>Inbox</span>{" "}
                             <div className="badge gradient-3 badge-pill badge-primary">

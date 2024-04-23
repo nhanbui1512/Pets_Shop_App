@@ -12,6 +12,7 @@ import {
   ListBreed,
   AddBreed,
 } from "../Pages/Admin";
+import Inbox from "../Pages/Admin/Inbox";
 import UpdateBreed from "../Pages/Admin/UpdateBreed";
 
 export const adminRoutes = [
@@ -70,6 +71,10 @@ export const adminRoutes = [
   {
     path: "/addbreed",
     element: <AddBreed />,
+  },
+  {
+    path: "/inbox",
+    element: <Inbox />,
   },
 ];
 
