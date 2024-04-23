@@ -29,3 +29,15 @@ export async function changePassword(currentPass, newPass) {
     throw error;
   }
 }
+
+export async function updateProfile({ id, firstName, lastName }) {
+  try {
+    const res = await request.patch(`/users/${id}`, {
+      firstName: firstName,
+      lastName: lastName,
+    });
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+}

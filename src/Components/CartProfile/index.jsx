@@ -2,9 +2,11 @@ import { useContext, useRef, useState } from "react";
 import { StorageContext } from "../../Contexts/StorageContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
-
+import Button from "@mui/material/Button";
 import classNames from "classnames/bind";
 import styles from "./CartProfile.module.scss";
+import { Dialog, Paper, TextField } from "@mui/material";
+import Box from "@mui/material/Box";
 
 const cx = classNames.bind(styles);
 
@@ -12,6 +14,8 @@ function CartProfile() {
   const storage = useContext(StorageContext);
   const inputFileRef = useRef();
   const [avatar, setAvatar] = useState("");
+
+  const [openDialog, setOpenDialog] = useState(false);
 
   const handleChangeAvatar = (e) => {
     if (e.target.files.length > 0 && e.target.files[0].type.includes("image")) {
@@ -63,11 +67,76 @@ function CartProfile() {
           </li>
         </ul>
         <div className="col-12 text-center">
-          <button className="btn mb-1 btn-flat btn-secondary">
+          <button
+            onClick={() => {
+              setOpenDialog(true);
+            }}
+            className="btn mb-1 btn-flat btn-secondary"
+          >
             Edit Profile
           </button>
         </div>
       </div>
+
+      <Dialog open={openDialog}>
+        <Paper sx={{ padding: 2 }} elevation={20}>
+          <Box
+            component="form"
+            sx={{
+              "& .MuiTextField-root": { m: 1, width: "100%" },
+            }}
+            noValidate
+            autoComplete="off"
+          >
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 16,
+                width: 300,
+                height: 300,
+              }}
+            >
+              <TextField
+                required
+                id="outlined-required"
+                label="First Name"
+                type="text"
+                defaultValue={storage.userData.firstName}
+                inputProps={{
+                  style: {
+                    padding: `16.5px 14px`,
+                    height: `56px`,
+                  },
+                }}
+              />
+
+              <TextField
+                required
+                id="outlined-required"
+                label="Last Name"
+                type="text"
+                defaultValue={storage.userData.lastName}
+                inputProps={{
+                  style: {
+                    padding: `16.5px 14px`,
+                    height: `56px`,
+                  },
+                }}
+              />
+            </div>
+          </Box>
+          <Button
+            onClick={() => {
+              setOpenDialog(false);
+            }}
+            variant="text"
+          >
+            Close
+          </Button>
+          <Button variant="text">Save</Button>
+        </Paper>
+      </Dialog>
 
       <input
         style={{ display: "none" }}
