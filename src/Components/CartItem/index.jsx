@@ -18,7 +18,7 @@ function CartItem({ data, setCartItems, index }) {
       <div className={cx("cart-item-image")}>
         <img
           src={
-            data?.productImage[0] ||
+            data?.productImage ||
             `https://bizweb.dktcdn.net/100/229/172/products/pate-thi-t-ha-m-cao-ca-p-bonbon.jpg?v=1711288065353`
           }
           alt={"name"}
@@ -30,7 +30,7 @@ function CartItem({ data, setCartItems, index }) {
           className={cx("cart-item-quantity")}
         >{`Số lượng: ${data.quantity}`}</div>
         <div className={cx("cart-item-price")}>
-          {`${data.variantOptions.price.toLocaleString("vi-VN", { currency: "VND" })}đ`}
+          {`${data.price.toLocaleString("vi-VN", { currency: "VND" })}đ`}
         </div>
       </div>
 

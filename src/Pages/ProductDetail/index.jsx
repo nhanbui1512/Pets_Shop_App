@@ -33,21 +33,28 @@ function ProductDetail() {
     const cartItems = [...storage.cartItems];
     const isExistProduct = cartItems.find(
       (item) =>
-        item._id === product._id && item.variantOptions._id === option._id
+        item._id === product._id && item.variantOption._id === option._id
     );
 
-    const cartItem = { ...product };
-
-    if (!isExistProduct) {
-      cartItem.variantOptions = option;
-      cartItem.quantity = quantity;
-      delete cartItem.htmlDomDescription;
-      cartItems.push(cartItem);
-      storage.setCartItems(cartItems);
-    } else {
+    if (isExistProduct) {
       isExistProduct.quantity += quantity;
-      storage.setCartItems(cartItems);
+    } else {
+      const newItem = {
+        _id: product._id,
+        name: product.name,
+        productImage: product.productImage[0],
+        price: option.price,
+        quantity: 1,
+        category: product.categoryID,
+        variantOption: {
+          _id: option._id,
+          name: option.name,
+        },
+      };
+
+      cartItems.push(newItem);
     }
+    storage.setCartItems(cartItems);
     toast.success("Thêm sản phẩm vào giỏ hàng thành công");
   };
 

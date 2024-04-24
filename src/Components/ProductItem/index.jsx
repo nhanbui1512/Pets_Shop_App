@@ -16,6 +16,39 @@ const cx = classNames.bind(styles);
 function ProductItem({ data, className }) {
   const storage = useContext(StorageContext);
 
+  const handleAddItem = () => {
+    storage.setCartItems((prev) => {
+      const items = [...prev];
+      const isExist = items.find(
+        (item) =>
+          item._id === data._id &&
+          item.variantOption._id === data.variantOptions[0]._id
+      );
+      if (isExist) {
+        isExist.quantity++;
+      } else {
+        const newItem = {
+          _id: data._id,
+          name: data.name,
+          productImage: data.productImage[0],
+          price: data.variantOptions?.[0].price,
+          quantity: 1,
+          category: data.categoryID,
+          variantOption: {
+            _id: data.variantOptions[0]._id,
+            name: data.variantOptions[0].name,
+          },
+        };
+        items.push(newItem);
+      }
+      console.log(items);
+
+      return items;
+    });
+
+    toast.success("Thêm sản phẩm vào giỏ hàng thành công");
+  };
+
   return (
     <div className={cx("wrapper", { [className]: className })}>
       <div className="mb-22">
@@ -45,25 +78,7 @@ function ProductItem({ data, className }) {
 
               <div className={cx(["pd_10_0", "actions"])}>
                 <CircleButton
-                  onClick={() => {
-                    storage.setCartItems((prev) => {
-                      const items = [...prev];
-                      const isExist = items.find(
-                        (item) => item._id === data._id
-                      );
-                      if (isExist) {
-                        isExist.quantity++;
-                      } else {
-                        const newItem = { ...data };
-                        newItem.variantOptions = newItem.variantOptions[0];
-
-                        items.push({ ...newItem, quantity: 1 });
-                      }
-
-                      return items;
-                    });
-                    toast.success("Thêm sản phẩm vào giỏ hàng thành công");
-                  }}
+                  onClick={handleAddItem}
                   className={cx("cart-btn")}
                   icon={
                     <FontAwesomeIcon
