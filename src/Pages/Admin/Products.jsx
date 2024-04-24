@@ -9,6 +9,9 @@ import { useEffect, useState } from "react";
 import { getProducts } from "../../Services/API/Products";
 import { Pagination, Stack } from "@mui/material";
 import { Link } from "react-router-dom";
+import { formatDay } from "../../Utils/time";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 
 export default function BasicTable() {
   const [products, setProducts] = useState([]);
@@ -36,26 +39,45 @@ export default function BasicTable() {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
+              <TableCell align="left">Select</TableCell>
               <TableCell>Product Name</TableCell>
-              <TableCell align="right">Calories</TableCell>
-              <TableCell align="right">Fat&nbsp;(g)</TableCell>
-              <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-              <TableCell align="right">Protein&nbsp;(g)</TableCell>
+              <TableCell align="right">Category</TableCell>
+              <TableCell align="right">Options</TableCell>
+              <TableCell align="right">Create At</TableCell>
+              <TableCell align="right">Delete</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {products.map((row, index) => (
+            {products.map((product, index) => (
               <TableRow
                 key={index}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell component="th" scope="row">
-                  <Link to={`/admin/products/${row._id}`}>{row.name}</Link>
+                <TableCell align="left">
+                  <span>
+                    <input type="checkbox" />
+                  </span>
                 </TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.fat}</TableCell>
-                <TableCell align="right">{row.carbs}</TableCell>
-                <TableCell align="right">{row.protein}</TableCell>
+                <TableCell component="th" scope="row">
+                  <Link to={`/admin/products/${product._id}`}>
+                    {product.name}
+                  </Link>
+                </TableCell>
+                <TableCell align="right">
+                  {product.categoryID[0]?.name}
+                </TableCell>
+                <TableCell align="right">
+                  {product.variantOptions.length}
+                </TableCell>
+                <TableCell align="right">
+                  {formatDay(product.createdAt)}
+                </TableCell>
+
+                <TableCell align="right">
+                  <span style={{ cursor: "pointer" }}>
+                    <FontAwesomeIcon icon={faTrashCan} />
+                  </span>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

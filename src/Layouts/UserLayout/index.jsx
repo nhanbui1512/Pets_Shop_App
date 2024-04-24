@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import DropdownMenu from "../../Components/DropdownMenu";
+import { StorageContext } from "../../Contexts/StorageContext";
 
-function UserLayout({ children }) {
+function UserLayout() {
+  const storage = useContext(StorageContext);
   const [openSidebar, setOpenSidebar] = useState(true);
   return (
     <div>
@@ -268,7 +270,7 @@ function UserLayout({ children }) {
                     >
                       <span className="activity active"></span>
                       <img
-                        src="images/user/1.png"
+                        src={storage.userData.profileImage}
                         height="40"
                         width="40"
                         alt=""
@@ -278,7 +280,7 @@ function UserLayout({ children }) {
                       <div className="dropdown-content-body">
                         <ul>
                           <li>
-                            <Link to="/admin/profile">
+                            <Link to="/user/profile">
                               <i className="icon-user"></i> <span>Profile</span>
                             </Link>
                           </li>
@@ -294,9 +296,9 @@ function UserLayout({ children }) {
 
                           <hr className="my-2" />
                           <li>
-                            <Link href="/">
+                            <Link to="/user/password">
                               <i className="icon-lock"></i>{" "}
-                              <span>Lock Screen</span>
+                              <span>Password</span>
                             </Link>
                           </li>
                           <li>
@@ -316,30 +318,16 @@ function UserLayout({ children }) {
           <div className="nk-sidebar">
             <div className="nk-nav-scroll">
               <ul className="metismenu" id="menu">
-                <DropdownMenu title={"Product"}>
+                <DropdownMenu title={"Orders"}>
                   <li>
-                    <Link to={"/admin/products"}>List Product</Link>
+                    <Link to={"/user/orders"}>List Orders</Link>
                   </li>
-                  <li>
-                    <Link to={"/admin/addproduct"}>Add Product</Link>
-                  </li>
+                  <li></li>
                 </DropdownMenu>
 
-                <DropdownMenu title={"Users"}>
+                <DropdownMenu title={"Bills"}>
                   <li>
-                    <Link to={"/admin/users"}>List User</Link>
-                  </li>
-                  <li>
-                    <Link>Add User</Link>
-                  </li>
-                </DropdownMenu>
-
-                <DropdownMenu title={"Blogs"}>
-                  <li>
-                    <Link to={"/admin/users"}>List Blog</Link>
-                  </li>
-                  <li>
-                    <Link to={"/admin/addblog"}>Add Blog</Link>
+                    <Link to={"/user/bills"}>List Bills</Link>
                   </li>
                 </DropdownMenu>
               </ul>
@@ -360,7 +348,7 @@ function UserLayout({ children }) {
               </div>
             </div>
 
-            <div className="container-fluid">
+            <div style={{ minHeight: "100vh" }} className="container-fluid">
               <Outlet />
             </div>
           </div>

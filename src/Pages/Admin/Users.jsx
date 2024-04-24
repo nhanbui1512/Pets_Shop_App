@@ -62,6 +62,8 @@ export default function UserList() {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
+              <TableCell align="left">Select</TableCell>
+
               <TableCell>Email</TableCell>
               <TableCell align="right">First Name</TableCell>
               <TableCell align="right">Last Name</TableCell>
@@ -75,6 +77,11 @@ export default function UserList() {
                 key={index}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
+                <TableCell align="left">
+                  <span>
+                    <input type="checkbox" />
+                  </span>
+                </TableCell>
                 <TableCell component="th" scope="row">
                   {user.email}
                 </TableCell>

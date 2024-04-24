@@ -88,7 +88,7 @@ function CartProfile() {
           </div>
           <div className="media-body">
             <h3 className="mb-0">{`${lastName} ${firstName}`}</h3>
-            <p className="text-muted mb-0">{storage.userData.addresses[0]}</p>
+            <p className="text-muted mb-0">{storage.userData.email}</p>
           </div>
         </div>
 

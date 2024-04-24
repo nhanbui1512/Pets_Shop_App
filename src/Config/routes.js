@@ -13,6 +13,7 @@ import {
   AddBreed,
 } from "../Pages/Admin";
 import Inbox from "../Pages/Admin/Inbox";
+import Profile from "../Pages/Admin/Profile";
 import UpdateBreed from "../Pages/Admin/UpdateBreed";
 
 export const adminRoutes = [
@@ -82,5 +83,21 @@ export const userRoutes = [
   {
     path: "/",
     element: <div>Root</div>,
+  },
+  {
+    path: "/profile",
+    element: <Profile />,
+  },
+  {
+    path: "/password",
+    element: <Password />,
+  },
+  {
+    path: "/orders",
+    element: <div>orders</div>,
+  },
+  {
+    path: "/bills",
+    element: <div>bills</div>,
   },
 ];

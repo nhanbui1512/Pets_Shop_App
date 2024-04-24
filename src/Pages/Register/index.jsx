@@ -43,11 +43,15 @@ function Register() {
     } else {
       SignUp({ email, password, firstName, lastName })
         .then((res) => {
-          console.log(res);
+          setEmail("");
+          setFirstName("");
+          setLastName("");
+          setPassword("");
+          toast.success("Đăng ký tài khoản thành công");
         })
         .catch((err) => {
           console.log(err);
-          toast.error(err.response.data?.message[0].message);
+          toast.error("Đăng ký tài khoản thất bại");
         });
     }
   };

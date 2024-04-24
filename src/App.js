@@ -65,11 +65,12 @@ function App() {
             />
           ))}
         </Route>
+
         <Route path="/user" element={<UserLayout />}>
           {userRoutes.map((item, index) => (
             <Route
               key={index}
-              path={`/user/{item.path}`}
+              path={`/user${item.path}`}
               element={item.element}
             />
           ))}
