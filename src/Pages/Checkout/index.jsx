@@ -1,13 +1,28 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./Checkout.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { StorageContext } from "../../Contexts/StorageContext";
+import {
+  getDistricts,
+  getProvinces,
+  getWards,
+} from "../../Services/API/Address";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 const cx = classNames.bind(styles);
 
 const OrderForm = () => {
   const storage = useContext(StorageContext);
+
+  const [provinces, setProvinces] = useState([]);
+  const [province, setProvince] = useState("");
+
+  const [districts, setDistricts] = useState([]);
+  const [district, setDistrict] = useState("");
+
+  const [wards, setWards] = useState([]);
+  const [ward, setWard] = useState("");
 
   const [form, setForm] = useState({
     email: "",
@@ -41,6 +56,34 @@ const OrderForm = () => {
   var totalPrice = storage.cartItems.reduce((total, item) => {
     return (total += item.price * item.quantity);
   }, 0);
+
+  useEffect(() => {
+    getProvinces()
+      .then((res) => {
+        setProvinces(res.results);
+        setProvince(res.results[0].province_id);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (province !== "") {
+      getDistricts(province).then((res) => {
+        setDistricts(res.results);
+      });
+    }
+  }, [province]);
+
+  useEffect(() => {
+    if (district !== "") {
+      getWards(district).then((res) => {
+        setWards(res.results);
+      });
+    }
+  }, [district]);
+
   return (
     <div className={cx("order-container")}>
       <div onSubmit={handleSubmit} className={cx("order-form")}>
@@ -76,6 +119,66 @@ const OrderForm = () => {
         </div>
         <div className={cx("form-group")}>
           <label htmlFor="address">Địa chỉ</label>
+
+          <FormControl sx={{ m: 1, minWidth: 120 }}>
+            <InputLabel id="demo-simple-select-helper-label">Tỉnh</InputLabel>
+            <Select
+              defaultValue={""}
+              value={province}
+              labelId="demo-simple-select-helper-label"
+              id="demo-simple-select-helper"
+              onChange={(e) => {
+                setProvince(e.target.value);
+              }}
+            >
+              {provinces.map((item, index) => (
+                <MenuItem key={index} value={item.province_id}>
+                  {item.province_name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          <FormControl sx={{ m: 1, minWidth: 120 }}>
+            <InputLabel id="demo-simple-select-helper-label">
+              Huyện/Thành Phố
+            </InputLabel>
+            <Select
+              defaultValue={""}
+              value={district}
+              labelId="demo-simple-select-helper-label"
+              id="demo-simple-select-helper"
+              onChange={(e) => {
+                setDistrict(e.target.value);
+              }}
+            >
+              {districts.map((item, index) => (
+                <MenuItem key={index} value={item.district_id}>
+                  {item.district_name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          <FormControl sx={{ m: 1, minWidth: 120 }}>
+            <InputLabel id="demo-simple-select-helper-label">
+              Phường/Xã
+            </InputLabel>
+            <Select
+              defaultValue={""}
+              value={ward}
+              onChange={(e) => setWard(e.target.value)}
+              labelId="demo-simple-select-helper-label"
+              id="demo-simple-select-helper"
+            >
+              {wards.map((item, index) => (
+                <MenuItem key={index} value={item.ward_id}>
+                  {item.ward_name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
           <input
             type="text"
             name="address"
@@ -111,17 +214,19 @@ const OrderForm = () => {
       </div>
       <div className={cx("order-detail")}>
         <h3>Order Details:</h3>
-        <ul>
+        <div>
           {storage.cartItems.map((item, index) => (
-            <li key={index} className={cx("order-item")}>
+            <div key={index} className={cx("order-item")}>
               <div className={cx("image-container")}>
-                <img src={item.image} alt={item.name} />
+                <img src={item.productImage} alt="" />
               </div>
               <div className={cx("info-container")}>
-                <p>{item.name}</p>
-                <p>Giá: {item.price}</p>
+                <p className={cx("name-product")}>{item.name}</p>
+                <p>
+                  Giá:{" "}
+                  {`${item.price.toLocaleString("vi-VN", { currency: "VND" })} VNĐ`}
+                </p>
                 <p>Số lượng: {item.quantity}</p>
-                <p>Mô tả: {item.description}</p>
               </div>
               <div
                 onClick={() => {
@@ -131,9 +236,9 @@ const OrderForm = () => {
               >
                 <FontAwesomeIcon icon={faTrashCan} />
               </div>
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
         <div className={cx("cal-box")}>
           <div
             style={{

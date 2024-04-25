@@ -5,10 +5,13 @@ import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import ActiveNumber from "../CountNumber";
 import styles from "./CartProduct.module.scss";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const cx = classNames.bind(styles);
 
 function CartProduct({ data, setCartItems, index }) {
+  const [quantity, setQuantity] = useState(data.quantity);
+
   const handleDeleteItem = (index) => {
     setCartItems((prev) => {
       const arr = [...prev];
@@ -44,11 +47,11 @@ function CartProduct({ data, setCartItems, index }) {
           "65.000đ"}
       </td>
       <td>
-        <ActiveNumber value={data?.quantity} />
+        <ActiveNumber value={quantity} setValue={setQuantity} />
       </td>
       <td
         className={cx("product_price")}
-      >{`${(data?.price * data?.quantity).toLocaleString("vi-VN", { currency: "VND" })}`}</td>
+      >{`${(data?.price * quantity).toLocaleString("vi-VN", { currency: "VND" })}`}</td>
       <td>
         <button
           onClick={() => {
