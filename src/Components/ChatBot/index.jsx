@@ -125,6 +125,7 @@ function ChatBot() {
                   {
                     name: "Peter Parker",
                     message: `Liên kết ảnh : ${urlPredict}`,
+                    image: urlPredict,
                   },
                 ];
               });
@@ -157,7 +158,9 @@ function ChatBot() {
                   })}
                 >
                   <div className={cx("time")}>Today at 11:41</div>
-                  <div className={cx("text")}>{message.message}</div>
+                  <div className={cx("text")}>
+                    <p>{message.message}</p>
+                  </div>
                   {message.image && (
                     <div className={cx("image-message")}>
                       <img src={message.image} alt="" />
