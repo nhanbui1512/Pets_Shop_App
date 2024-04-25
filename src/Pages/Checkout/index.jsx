@@ -10,6 +10,8 @@ import {
   getWards,
 } from "../../Services/API/Address";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { toast } from "react-toastify";
+import { OrderItems } from "../../Services/API/Ordes";
 const cx = classNames.bind(styles);
 
 const OrderForm = () => {
@@ -25,7 +27,6 @@ const OrderForm = () => {
   const [ward, setWard] = useState("");
 
   const [form, setForm] = useState({
-    email: "",
     name: "",
     phone: "",
     address: "",
@@ -33,16 +34,80 @@ const OrderForm = () => {
     payment: "COD",
   });
 
-  const handleChange = (e) => {
+  const handleChangeInfo = (e) => {
     setForm({
       ...form,
       [e.target.name]: e.target.value,
     });
   };
 
+  const calculatePayment = () => {
+    let total = 0;
+    const items = storage.cartItems;
+    const filteredItems = items.map((item) => {
+      total += item.quantity * item.price;
+      return {
+        productId: item._id,
+        quantity: item.quantity,
+        variantOptions: item.variantOption._id,
+        price: item.price,
+      };
+    });
+    return {
+      total,
+      filteredItems,
+    };
+  };
+
   const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(form);
+    let provinceSlected = provinces.find(
+      (item) => item.province_id === province
+    );
+
+    let districtSelected = districts.find(
+      (item) => item.district_id === district
+    );
+
+    let wardSelected = wards.find((item) => item.ward_id === ward);
+
+    if (
+      !provinceSlected ||
+      !districtSelected ||
+      !wardSelected ||
+      !form.address ||
+      !form.name ||
+      !form.phone
+    ) {
+      return toast.error("Vui lòng nhập đủ thông tin");
+    }
+    const addressStr = `${form.address}, ${wardSelected.ward_name}, ${districtSelected.district_name}, ${provinceSlected.province_name}`;
+    const resultPayment = calculatePayment();
+
+    OrderItems({
+      items: resultPayment.filteredItems,
+      total: resultPayment.total,
+      phoneNumber: form.phone,
+      email: form.email,
+      address: addressStr,
+    })
+      .then((res) => {
+        toast.success("Đặt hàng thành công");
+
+        setForm({
+          name: "",
+          phone: "",
+          address: "",
+          note: "",
+          payment: "COD",
+        });
+        setProvince("");
+        storage.setCartItems([]);
+        const cartJSON = JSON.stringify([]);
+        localStorage.setItem("cart", cartJSON);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleDeleteItem = (index) => {
@@ -53,15 +118,10 @@ const OrderForm = () => {
     });
   };
 
-  var totalPrice = storage.cartItems.reduce((total, item) => {
-    return (total += item.price * item.quantity);
-  }, 0);
-
   useEffect(() => {
     getProvinces()
       .then((res) => {
         setProvinces(res.results);
-        setProvince(res.results[0].province_id);
       })
       .catch((err) => {
         console.log(err);
@@ -84,26 +144,21 @@ const OrderForm = () => {
     }
   }, [district]);
 
+  // Calculate bill of orders
+  var totalPrice = storage.cartItems.reduce((total, item) => {
+    return (total += item.price * item.quantity);
+  }, 0);
+
   return (
     <div className={cx("order-container")}>
-      <div onSubmit={handleSubmit} className={cx("order-form")}>
-        <div className={cx("form-group")}>
-          <label htmlFor="email">Email (tùy chọn)</label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            onChange={handleChange}
-            value={form.email}
-          />
-        </div>
+      <div className={cx("order-form")}>
         <div className={cx("form-group")}>
           <label htmlFor="name">Họ và tên</label>
           <input
             type="text"
             name="name"
             id="name"
-            onChange={handleChange}
+            onChange={handleChangeInfo}
             value={form.name}
           />
         </div>
@@ -113,77 +168,77 @@ const OrderForm = () => {
             type="tel"
             name="phone"
             id="phone"
-            onChange={handleChange}
+            onChange={handleChangeInfo}
             value={form.phone}
           />
         </div>
         <div className={cx("form-group")}>
           <label htmlFor="address">Địa chỉ</label>
 
-          <FormControl sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel id="demo-simple-select-helper-label">Tỉnh</InputLabel>
-            <Select
-              defaultValue={""}
-              value={province}
-              labelId="demo-simple-select-helper-label"
-              id="demo-simple-select-helper"
-              onChange={(e) => {
-                setProvince(e.target.value);
-              }}
-            >
-              {provinces.map((item, index) => (
-                <MenuItem key={index} value={item.province_id}>
-                  {item.province_name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <div className={cx("address-form")}>
+            {/* Tỉnh */}
+            <FormControl sx={{ m: 1, minWidth: 120 }}>
+              <InputLabel id="demo-simple-select-helper-label">Tỉnh</InputLabel>
+              <Select
+                value={province}
+                onChange={(e) => {
+                  setDistrict("");
+                  setWard("");
+                  setWards([]);
+                  setDistricts([]);
+                  setProvince(e.target.value);
+                }}
+              >
+                {provinces.map((item, index) => (
+                  <MenuItem key={index} value={item.province_id}>
+                    {item.province_name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
 
-          <FormControl sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel id="demo-simple-select-helper-label">
-              Huyện/Thành Phố
-            </InputLabel>
-            <Select
-              defaultValue={""}
-              value={district}
-              labelId="demo-simple-select-helper-label"
-              id="demo-simple-select-helper"
-              onChange={(e) => {
-                setDistrict(e.target.value);
-              }}
-            >
-              {districts.map((item, index) => (
-                <MenuItem key={index} value={item.district_id}>
-                  {item.district_name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+            {/* Huyện */}
+            <FormControl sx={{ m: 1, minWidth: 120 }}>
+              <InputLabel id="demo-simple-select-helper-label">
+                Huyện/Thành Phố
+              </InputLabel>
+              <Select
+                value={district}
+                onChange={(e) => {
+                  setDistrict(e.target.value);
 
-          <FormControl sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel id="demo-simple-select-helper-label">
-              Phường/Xã
-            </InputLabel>
-            <Select
-              defaultValue={""}
-              value={ward}
-              onChange={(e) => setWard(e.target.value)}
-              labelId="demo-simple-select-helper-label"
-              id="demo-simple-select-helper"
-            >
-              {wards.map((item, index) => (
-                <MenuItem key={index} value={item.ward_id}>
-                  {item.ward_name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+                  setWard("");
+                  setWards([]);
+                }}
+              >
+                {districts.map((item, index) => (
+                  <MenuItem key={index} value={item.district_id}>
+                    {item.district_name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
 
+            {/* Phường */}
+            <FormControl sx={{ m: 1, minWidth: 120 }}>
+              <InputLabel id="demo-simple-select-helper-label">
+                Phường/Xã
+              </InputLabel>
+              <Select value={ward} onChange={(e) => setWard(e.target.value)}>
+                {wards.map((item, index) => (
+                  <MenuItem key={index} value={item.ward_id}>
+                    {item.ward_name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </div>
           <input
+            placeholder="số nhà, tên đường ..."
             type="text"
             name="address"
             id="address"
-            onChange={handleChange}
+            onChange={handleChangeInfo}
             value={form.address}
           />
         </div>
@@ -192,7 +247,7 @@ const OrderForm = () => {
           <textarea
             name="note"
             id="note"
-            onChange={handleChange}
+            onChange={handleChangeInfo}
             value={form.note}
           ></textarea>
         </div>
@@ -201,14 +256,18 @@ const OrderForm = () => {
           <select
             name="payment"
             id="payment"
-            onChange={handleChange}
+            onChange={handleChangeInfo}
             value={form.payment}
           >
             <option value="COD">COD - Thanh toán khi giao hàng</option>
             <option value="bank">Chuyển khoản qua ngân hàng</option>
           </select>
         </div>
-        <button type="submit" className={cx("button-submit")}>
+        <button
+          onClick={handleSubmit}
+          type="submit"
+          className={cx("button-submit")}
+        >
           Đặt hàng
         </button>
       </div>
