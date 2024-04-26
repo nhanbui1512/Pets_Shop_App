@@ -19,7 +19,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
 export default function UserList() {
-  const [open, setOpen] = useState(""); // nếu có userId thì bật và -1 sẽ tắt
+  const [open, setOpen] = useState("");
   const [users, setUsers] = useState([]);
 
   const [page, setPage] = useState(1);
