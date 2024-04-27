@@ -17,7 +17,6 @@ import {
 } from "@mui/material";
 import DialogContentText from "@mui/material/DialogContentText";
 import { Link } from "react-router-dom";
-import { formatDay } from "../../Utils/time";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import { deleteOrder, getOrders } from "../../Services/API/Ordes";
@@ -73,7 +72,6 @@ function ListOrder() {
               <TableCell align="right">Name</TableCell>
               <TableCell align="right">PhoneNumber</TableCell>
               <TableCell align="right">Total</TableCell>
-              <TableCell align="right">Create At</TableCell>
               <TableCell align="right">Status</TableCell>
               <TableCell align="right">Delete</TableCell>
             </TableRow>
@@ -91,7 +89,7 @@ function ListOrder() {
                 </TableCell>
                 <TableCell component="th" scope="row">
                   <Link to={`/admin/orders/${order._id}`}>
-                    {order.items.map((item, index) => (
+                    {order.items?.map((item, index) => (
                       <p
                         key={index}
                       >{`${item.productId?.name} : ${item.quantity} cái`}</p>
@@ -104,9 +102,7 @@ function ListOrder() {
                 <TableCell align="right">
                   {`${order.total.toLocaleString("vi-VN", { currency: "VND" })}đ`}
                 </TableCell>
-                <TableCell align="right">
-                  {formatDay(order.createdAt)}
-                </TableCell>
+
                 <TableCell
                   style={{
                     color: order.status === "PENDING" ? "orange" : "green",

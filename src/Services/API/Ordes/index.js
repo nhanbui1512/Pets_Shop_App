@@ -31,3 +31,12 @@ export async function deleteOrder(id) {
     throw error;
   }
 }
+
+export async function getOrderById(id) {
+  try {
+    const res = await request.get(`/orders/${id}`);
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+}

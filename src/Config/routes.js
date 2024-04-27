@@ -13,6 +13,7 @@ import {
   AddBreed,
 } from "../Pages/Admin";
 import Inbox from "../Pages/Admin/Inbox";
+import OrderDetail from "../Pages/Admin/OrderDetail";
 import Profile from "../Pages/Admin/Profile";
 import UpdateBreed from "../Pages/Admin/UpdateBreed";
 
@@ -44,6 +45,10 @@ export const adminRoutes = [
   {
     path: "/orders",
     element: <ListOrder />,
+  },
+  {
+    path: "/orders/:id",
+    element: <OrderDetail />,
   },
   {
     path: "/products/:id",
