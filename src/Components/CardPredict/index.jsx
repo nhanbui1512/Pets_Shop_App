@@ -1,8 +1,12 @@
 import classNames from "classnames/bind";
 import styles from "./CartPredict.module.scss";
+import { Dialog } from "@mui/material";
+import { useState } from "react";
 const cx = classNames.bind(styles);
 
-function CartPredict() {
+function CardPredict() {
+  const [dialog, setDialog] = useState(false);
+
   return (
     <div
       style={{
@@ -30,34 +34,30 @@ function CartPredict() {
 
       <div>
         <button
+          onClick={() => {
+            setDialog(true);
+          }}
           style={{
             float: "right",
             backgroundColor: "#7571f9",
           }}
           type="button"
           className="btn btn-primary"
-          data-toggle="modal"
-          data-target="#exampleModal"
-          data-whatever="@mdo"
         >
           Feedback
         </button>
-
-        <div
-          className="modal fade"
-          id="exampleModal"
-          tabIndex="-1"
-          role="dialog"
-          aria-labelledby="exampleModalLabel"
-          aria-hidden="true"
-        >
-          <div className="modal-dialog" role="document">
+        <Dialog open={dialog}>
+          <div>
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title" id="exampleModalLabel">
                   Feedback Prediction
                 </h5>
                 <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setDialog(false);
+                  }}
                   type="button"
                   className="close"
                   data-dismiss="modal"
@@ -105,6 +105,10 @@ function CartPredict() {
               </div>
               <div className="modal-footer">
                 <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setDialog(false);
+                  }}
                   type="button"
                   className="btn btn-secondary"
                   data-dismiss="modal"
@@ -117,9 +121,9 @@ function CartPredict() {
               </div>
             </div>
           </div>
-        </div>
+        </Dialog>
       </div>
     </div>
   );
 }
-export default CartPredict;
+export default CardPredict;

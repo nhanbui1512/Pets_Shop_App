@@ -9,6 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import scripQuestions from "./data";
 import { Button, Dialog, Fab, Paper, TextField } from "@mui/material";
+import CardPredict from "../CardPredict";
 
 const cx = classNames.bind(style);
 
@@ -52,9 +53,9 @@ function ChatBot() {
       if (event.target.id === "chatbot-icon" || !isChatBoxVisible) {
         return;
       }
-      if (!document.getElementById("chatbox").contains(event.target)) {
-        setChatBoxVisible(false);
-      }
+      // if (!document.getElementById("chatbox").contains(event.target)) {
+      //   setChatBoxVisible(false);
+      // }
     },
     [isChatBoxVisible]
   );
@@ -168,6 +169,8 @@ function ChatBot() {
                   )}
                 </div>
               ))}
+
+              <CardPredict />
 
               {answerOptions.map((answ, index) => {
                 return (

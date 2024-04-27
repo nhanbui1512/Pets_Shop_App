@@ -1,3 +1,4 @@
+import CardPredict from "../Components/CardPredict";
 import {
   BasicTable,
   AdminProfile,
@@ -20,7 +21,11 @@ import UpdateBreed from "../Pages/Admin/UpdateBreed";
 export const adminRoutes = [
   {
     path: "/",
-    element: <div>Root</div>,
+    element: (
+      <div>
+        <CardPredict />
+      </div>
+    ),
   },
   {
     path: "/profile",
