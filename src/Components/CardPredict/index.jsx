@@ -1,6 +1,6 @@
 import classNames from "classnames/bind";
 import styles from "./CartPredict.module.scss";
-import { Dialog } from "@mui/material";
+import { Button, Dialog } from "@mui/material";
 import { useState } from "react";
 const cx = classNames.bind(styles);
 
@@ -33,19 +33,15 @@ function CardPredict() {
       </div>
 
       <div>
-        <button
+        <Button
           onClick={() => {
             setDialog(true);
           }}
-          style={{
-            float: "right",
-            backgroundColor: "#7571f9",
-          }}
-          type="button"
-          className="btn btn-primary"
+          variant="contained"
+          sx={{ float: "right" }}
         >
           Feedback
-        </button>
+        </Button>
         <Dialog open={dialog}>
           <div>
             <div className="modal-content">
@@ -104,20 +100,16 @@ function CardPredict() {
                 </form>
               </div>
               <div className="modal-footer">
-                <button
+                <Button
                   onClick={(e) => {
                     e.stopPropagation();
                     setDialog(false);
                   }}
-                  type="button"
-                  className="btn btn-secondary"
-                  data-dismiss="modal"
+                  variant="contained"
                 >
                   Close
-                </button>
-                <button type="button" className="btn btn-primary">
-                  Send message
-                </button>
+                </Button>
+                <Button variant="outlined">Send Feedback</Button>
               </div>
             </div>
           </div>

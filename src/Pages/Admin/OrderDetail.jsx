@@ -1,18 +1,20 @@
 import { useParams } from "react-router-dom";
 import classNames from "classnames/bind";
 import styles from "./OrderDetail.module.scss";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getOrderById } from "../../Services/API/Ordes";
+import { formatDay } from "../../Utils/time";
 
 const cx = classNames.bind(styles);
 
 function OrderDetail() {
   const { id } = useParams();
+  const [orderData, setOrderData] = useState({});
 
   useEffect(() => {
     getOrderById(id)
       .then((res) => {
-        console.log(res);
+        setOrderData(res);
       })
       .catch((err) => {
         console.log(err);
@@ -64,19 +66,20 @@ function OrderDetail() {
                   <div className={cx("receipt-right")}>
                     <h5>Customer Name </h5>
                     <p>
-                      <b>Mobile :</b> +1 12345-4569
+                      <b>Mobile : </b>
+                      {orderData.phone}
                     </p>
                     <p>
                       <b>Email :</b> customer@gmail.com
                     </p>
                     <p>
-                      <b>Address :</b> New York, USA
+                      <b>Address :</b> {orderData.address}
                     </p>
                   </div>
                 </div>
                 <div className={cx("col-xs-4", "col-sm-4", "col-md-4")}>
                   <div className={cx("receipt-left")}>
-                    <h3>INVOICE # 102</h3>
+                    <h3>INVOICE # {id}</h3>
                   </div>
                 </div>
               </div>
@@ -86,64 +89,55 @@ function OrderDetail() {
               <table className={cx("table", "table-bordered")}>
                 <thead>
                   <tr>
-                    <th>Description</th>
+                    <th>Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
                     <th>Amount</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td className="col-md-9">Payment for August 2016</td>
-                    <td className="col-md-3">
-                      <i className="fa fa-inr"></i> 15,000/-
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="col-md-9">Payment for June 2016</td>
-                    <td className="col-md-3">
-                      <i className="fa fa-inr"></i> 6,00/-
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="col-md-9">Payment for May 2016</td>
-                    <td className="col-md-3">
-                      <i className="fa fa-inr"></i> 35,00/-
-                    </td>
-                  </tr>
+                  {orderData.items?.map((item, index) => {
+                    return (
+                      <tr>
+                        <td className="col-md-9">{`${item.productId?.name}, ${item.variantOptions?.name}`}</td>
+                        <td className="col-md-9">{item.quantity}</td>
+                        <td className="col-md-9">
+                          {item.price?.toLocaleString("vi", {
+                            currency: "VND",
+                          })}
+                        </td>
+                        <td className="col-md-3">
+                          {`${(item.price * item.quantity)?.toLocaleString("vi", { currency: "VND" })}`}
+                        </td>
+                      </tr>
+                    );
+                  })}
+
                   <tr>
                     <td className="text-right">
                       <p>
                         <strong>Total Amount: </strong>
                       </p>
                       <p>
-                        <strong>Late Fees: </strong>
+                        <strong>Discount: </strong>
                       </p>
                       <p>
-                        <strong>Payable Amount: </strong>
-                      </p>
-                      <p>
-                        <strong>Balance Due: </strong>
+                        <strong>Tax: </strong>
                       </p>
                     </td>
                     <td>
                       <p>
                         <strong>
-                          <i className="fa fa-inr"></i> 65,500/-
+                          {orderData.total?.toLocaleString("vi", {
+                            currency: "VND",
+                          })}
                         </strong>
                       </p>
                       <p>
-                        <strong>
-                          <i className="fa fa-inr"></i> 500/-
-                        </strong>
+                        <strong>0</strong>
                       </p>
                       <p>
-                        <strong>
-                          <i className="fa fa-inr"></i> 1300/-
-                        </strong>
-                      </p>
-                      <p>
-                        <strong>
-                          <i className="fa fa-inr"></i> 9500/-
-                        </strong>
+                        <strong>0</strong>
                       </p>
                     </td>
                   </tr>
@@ -156,7 +150,9 @@ function OrderDetail() {
                     <td className="text-left text-danger">
                       <h2>
                         <strong>
-                          <i className="fa fa-inr"></i> 31.566/-
+                          {`${orderData.total?.toLocaleString("vi-VN", {
+                            currency: "VND",
+                          })} VNĐ`}
                         </strong>
                       </h2>
                     </td>
@@ -170,7 +166,7 @@ function OrderDetail() {
                 <div className="col-xs-8 col-sm-8 col-md-8 text-left">
                   <div className="receipt-right">
                     <p>
-                      <b>Date :</b> 15 Aug 2016
+                      <b>Date :</b> <p>{formatDay(orderData.createdAt)}</p>
                     </p>
                     <h5
                       style={{
