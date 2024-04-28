@@ -98,7 +98,7 @@ function OrderDetail() {
                 <tbody>
                   {orderData.items?.map((item, index) => {
                     return (
-                      <tr>
+                      <tr key={index}>
                         <td className="col-md-9">{`${item.productId?.name}, ${item.variantOptions?.name}`}</td>
                         <td className="col-md-9">{item.quantity}</td>
                         <td className="col-md-9">

@@ -25,7 +25,7 @@ function AdminLayout({ children }) {
       >
         <div className="nav-header">
           <div className="brand-logo">
-            <Link href="/">
+            <Link to="/">
               <b className="logo-abbr">
                 <img src="/template/images/logo.png" alt="" />{" "}
               </b>

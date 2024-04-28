@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function Inbox() {
   return (
     <div>
@@ -9,7 +11,7 @@ function Inbox() {
                 <div>
                   <div className="email-list m-t-15">
                     <div className="message">
-                      <a href="email-read.html">
+                      <Link to={"/admin/inbox/2"}>
                         <div className="col-mail col-mail-1">
                           <div className="email-checkbox">
                             <input type="checkbox" id="chk2" />
@@ -25,10 +27,10 @@ function Inbox() {
                           </div>
                           <div className="date">11:49 am</div>
                         </div>
-                      </a>
+                      </Link>
                     </div>
                     <div className="message">
-                      <a href="email-read.html">
+                      <Link to={"/admin/inbox/1"}>
                         <div className="col-mail col-mail-1">
                           <div className="email-checkbox">
                             <input type="checkbox" id="chk2" />
@@ -44,7 +46,7 @@ function Inbox() {
                           </div>
                           <div className="date">11:49 am</div>
                         </div>
-                      </a>
+                      </Link>
                     </div>
                   </div>
 

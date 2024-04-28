@@ -12,8 +12,9 @@ import {
   Password,
   ListBreed,
   AddBreed,
+  ChatBox,
+  Inbox,
 } from "../Pages/Admin";
-import Inbox from "../Pages/Admin/Inbox";
 import OrderDetail from "../Pages/Admin/OrderDetail";
 import Profile from "../Pages/Admin/Profile";
 import UpdateBreed from "../Pages/Admin/UpdateBreed";
@@ -86,6 +87,10 @@ export const adminRoutes = [
   {
     path: "/inbox",
     element: <Inbox />,
+  },
+  {
+    path: "/inbox/:id",
+    element: <ChatBox />,
   },
 ];
 

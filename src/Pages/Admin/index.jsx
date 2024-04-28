@@ -10,3 +10,5 @@ export { default as UpdateBlog } from "./UpdateBlog";
 export { default as Password } from "./Password";
 export { default as ListBreed } from "./ListBreed";
 export { default as AddBreed } from "./AddBreed";
+export { default as ChatBox } from "./ChatBox/ChatBox";
+export { default as Inbox } from "./Inbox";
