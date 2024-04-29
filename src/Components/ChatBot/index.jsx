@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useCallback, useRef, memo } from "react";
 import style from "./chatbot.module.scss";
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -53,9 +53,6 @@ function ChatBot() {
       if (event.target.id === "chatbot-icon" || !isChatBoxVisible) {
         return;
       }
-      // if (!document.getElementById("chatbox").contains(event.target)) {
-      //   setChatBoxVisible(false);
-      // }
     },
     [isChatBoxVisible]
   );
@@ -285,4 +282,4 @@ function ChatBot() {
   );
 }
 
-export default ChatBot;
+export default memo(ChatBot);

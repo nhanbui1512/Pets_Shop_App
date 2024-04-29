@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef, useContext, memo } from "react";
 import style from "./navbar.module.scss";
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -249,4 +249,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default memo(Navbar);

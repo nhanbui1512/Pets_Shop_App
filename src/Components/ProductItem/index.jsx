@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import CircleButton from "../CircleButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faEye } from "@fortawesome/free-solid-svg-icons";
-import React, { useContext } from "react";
+import React, { useContext, memo } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -101,4 +101,4 @@ function ProductItem({ data, className }) {
     </div>
   );
 }
-export default ProductItem;
+export default memo(ProductItem);
