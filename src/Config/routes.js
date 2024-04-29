@@ -1,4 +1,3 @@
-import CardPredict from "../Components/CardPredict";
 import {
   BasicTable,
   AdminProfile,
@@ -15,6 +14,7 @@ import {
   ChatBox,
   Inbox,
 } from "../Pages/Admin";
+import Dashboard from "../Pages/Admin/Dashboard";
 import OrderDetail from "../Pages/Admin/OrderDetail";
 import Profile from "../Pages/Admin/Profile";
 import UpdateBreed from "../Pages/Admin/UpdateBreed";
@@ -22,11 +22,7 @@ import UpdateBreed from "../Pages/Admin/UpdateBreed";
 export const adminRoutes = [
   {
     path: "/",
-    element: (
-      <div>
-        <CardPredict />
-      </div>
-    ),
+    element: <Dashboard />,
   },
   {
     path: "/profile",

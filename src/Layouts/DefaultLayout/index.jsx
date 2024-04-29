@@ -5,9 +5,12 @@ import Footer from "../../Components/Footer";
 import Navbar from "../../Components/Navbar";
 import ChatBot from "../../Components/ChatBot";
 import { Outlet } from "react-router";
+import { useContext } from "react";
+import { StorageContext } from "../../Contexts/StorageContext";
 const cx = classNames.bind(styles);
 
 function DefaultLayout({ children }) {
+  const storage = useContext(StorageContext);
   return (
     <div>
       <Header />
@@ -15,7 +18,7 @@ function DefaultLayout({ children }) {
       <div className={cx("content")}>
         <Outlet />
       </div>
-      <ChatBot />
+      {storage.userData?.UserRoles !== "admin" && <ChatBot />}
       <Footer />
     </div>
   );

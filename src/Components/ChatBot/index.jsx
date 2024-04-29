@@ -9,7 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import scripQuestions from "./data";
 import { Button, Dialog, Fab, Paper, TextField } from "@mui/material";
-import CardPredict from "../CardPredict";
+import Typewriter from "typewriter-effect";
 
 const cx = classNames.bind(style);
 
@@ -146,8 +146,11 @@ function ChatBot() {
           <img src="/images/chatbot.jpg" alt="chatbot" />
         </div>
       </div>
-      {isChatBoxVisible && (
-        <div className={cx("center")} id="chatbox">
+      {
+        <div
+          className={cx("center", { visible: !isChatBoxVisible })}
+          id="chatbox"
+        >
           <div className={cx("chat")}>
             <div className={cx("messages")}>
               {messages.map((message, index) => (
@@ -160,7 +163,18 @@ function ChatBot() {
                 >
                   <div className={cx("time")}>Today at 11:41</div>
                   <div className={cx("text")}>
-                    <p>{message.message}</p>
+                    {message.name === "Tony Stark" ? (
+                      <Typewriter
+                        options={{
+                          strings: message.message,
+                          autoStart: true,
+                          delay: 50,
+                          cursor: "",
+                        }}
+                      />
+                    ) : (
+                      <p>{message.message}</p>
+                    )}
                   </div>
                   {message.image && (
                     <div className={cx("image-message")}>
@@ -169,8 +183,6 @@ function ChatBot() {
                   )}
                 </div>
               ))}
-
-              <CardPredict />
 
               {answerOptions.map((answ, index) => {
                 return (
@@ -240,7 +252,7 @@ function ChatBot() {
             </form>
           </div>
         </div>
-      )}
+      }
 
       <input
         style={{ display: "none" }}
