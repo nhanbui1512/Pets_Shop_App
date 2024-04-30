@@ -8,6 +8,7 @@ function Dashboard() {
           strings: ["Welcome to Dashboard!"],
           autoStart: true,
           loop: true,
+          delay: 50,
         }}
       />
     </div>

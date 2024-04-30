@@ -3,7 +3,7 @@ const scripQuestions = {
     {
       answersValue: "Tìm kiếm ngay!",
       childrens: {
-        autoBot: "Bắt đầu thôi, bạn muốn dự đoán bằng cách nào ?",
+        autoBot: "Bắt đầu thôi, bạn muốn gửi ảnh bằng phương thức nào sau đây?",
         answerOptions: [
           {
             answersValue: "Tải ảnh từ máy của bạn",
