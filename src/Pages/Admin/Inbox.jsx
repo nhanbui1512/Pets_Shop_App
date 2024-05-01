@@ -15,7 +15,7 @@ function Inbox() {
                         <div className="col-mail col-mail-1">
                           <div className="email-checkbox">
                             <input type="checkbox" id="chk2" />
-                            <label className="toggle" for="chk2"></label>
+                            <label className="toggle" htmlFor="chk2"></label>
                           </div>
                           <span className="star-toggle ti-star"></span>
                         </div>
@@ -34,7 +34,7 @@ function Inbox() {
                         <div className="col-mail col-mail-1">
                           <div className="email-checkbox">
                             <input type="checkbox" id="chk2" />
-                            <label className="toggle" for="chk2"></label>
+                            <label className="toggle" htmlFor="chk2"></label>
                           </div>
                           <span className="star-toggle ti-star"></span>
                         </div>

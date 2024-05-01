@@ -47,9 +47,11 @@ function OrderDetail() {
                     <p>
                       +1 3649-6589 <i className="fa fa-phone"></i>
                     </p>
+
                     <p>
                       company@gmail.com <i className="fa fa-envelope-o"></i>
                     </p>
+
                     <p>
                       USA <i className="fa fa-location-arrow"></i>
                     </p>
@@ -64,7 +66,7 @@ function OrderDetail() {
                   className={cx(["col-xs-8 col-sm-8", "col-md-8 text-left"])}
                 >
                   <div className={cx("receipt-right")}>
-                    <h5>Customer Name </h5>
+                    <h5>{orderData.nameUser}</h5>
                     <p>
                       <b>Mobile : </b>
                       {orderData.phone}
@@ -99,7 +101,7 @@ function OrderDetail() {
                   {orderData.items?.map((item, index) => {
                     return (
                       <tr key={index}>
-                        <td className="col-md-9">{`${item.productId?.name}, ${item.variantOptions?.name}`}</td>
+                        <td className="col-md-9">{`${item.productId?.name}, ${item.variantOptions?.name || ""}`}</td>
                         <td className="col-md-9">{item.quantity}</td>
                         <td className="col-md-9">
                           {item.price?.toLocaleString("vi", {
@@ -136,6 +138,7 @@ function OrderDetail() {
                       <p>
                         <strong>0</strong>
                       </p>
+
                       <p>
                         <strong>0</strong>
                       </p>
@@ -166,7 +169,8 @@ function OrderDetail() {
                 <div className="col-xs-8 col-sm-8 col-md-8 text-left">
                   <div className="receipt-right">
                     <p>
-                      <b>Date :</b> <p>{formatDay(orderData.createdAt)}</p>
+                      <b>Date :</b>
+                      <p>{formatDay(orderData.createdAt)}</p>
                     </p>
                     <h5
                       style={{

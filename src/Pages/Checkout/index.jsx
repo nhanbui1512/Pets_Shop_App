@@ -89,6 +89,7 @@ const OrderForm = () => {
       phoneNumber: form.phone,
       email: form.email,
       address: addressStr,
+      userName: form.name,
     })
       .then((res) => {
         toast.success("Đặt hàng thành công");
