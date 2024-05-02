@@ -7,7 +7,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Fragment, useEffect, useState } from "react";
 import { Pagination, Stack } from "@mui/material";
-import { getUsers } from "../../Services/API/Users";
+import { deleteUser, getUsers } from "../../Services/API/Users";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
@@ -17,6 +17,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { toast } from "react-toastify";
 
 export default function UserList() {
   const [open, setOpen] = useState("");
@@ -30,14 +31,16 @@ export default function UserList() {
   };
 
   const handleDelete = (id) => {
-    console.log(open);
-    // deleteUser(open)
-    //   .then((res) => {
-    //     setOpen("");
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    deleteUser(open)
+      .then((res) => {
+        setOpen("");
+        toast.success("Xóa người dùng thành công");
+      })
+      .catch((err) => {
+        setOpen("");
+        toast.error("Xóa người dùng thất bại");
+        console.log(err);
+      });
   };
 
   const handleChange = (event, number) => {

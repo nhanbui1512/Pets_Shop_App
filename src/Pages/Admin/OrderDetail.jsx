@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import classNames from "classnames/bind";
 import styles from "./OrderDetail.module.scss";
 import { useEffect, useState } from "react";
-import { getOrderById } from "../../Services/API/Ordes";
+import { getOrderById } from "../../Services/API/Orders";
 import { formatDay } from "../../Utils/time";
 
 const cx = classNames.bind(styles);

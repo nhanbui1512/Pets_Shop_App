@@ -125,3 +125,12 @@ export async function deleteOption(id) {
     throw error;
   }
 }
+
+export async function deleteProduct(id) {
+  try {
+    const res = await request.delete(`/products/${id}`);
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+}

@@ -50,3 +50,22 @@ export async function getOrderById(id) {
     throw error;
   }
 }
+
+export async function searchOrder({
+  value,
+  page,
+  perPage = 10,
+  type = "nameUser",
+}) {
+  let searchString = `${type}:"${value}"`;
+
+  try {
+    const res = await request.get(
+      `/orders?search=${searchString}&page=${page}&limit=${perPage}`
+    );
+
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+}

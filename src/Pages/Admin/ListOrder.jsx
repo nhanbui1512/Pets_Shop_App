@@ -19,7 +19,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
-import { deleteOrder, getOrders } from "../../Services/API/Ordes";
+import { deleteOrder, getOrders } from "../../Services/API/Orders";
 import { toast } from "react-toastify";
 
 function ListOrder() {

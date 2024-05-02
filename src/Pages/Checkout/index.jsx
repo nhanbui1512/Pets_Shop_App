@@ -11,7 +11,7 @@ import {
 } from "../../Services/API/Address";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { toast } from "react-toastify";
-import { OrderItems } from "../../Services/API/Ordes";
+import { OrderItems } from "../../Services/API/Orders";
 const cx = classNames.bind(styles);
 
 const OrderForm = () => {
