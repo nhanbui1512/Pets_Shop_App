@@ -1,6 +1,8 @@
 import { createContext, useEffect, useState } from "react";
 import { getMyProfile } from "../Services/API/authService";
 import { getAllCategories } from "../Services/API/Category";
+import { socket } from "../Services/Socket";
+
 // import Cookies from "js-cookie";
 
 export const StorageContext = createContext();
@@ -64,6 +66,10 @@ function GlobalStates({ children }) {
     saveCartToLocalStorage();
     // eslint-disable-next-line
   }, [cartItems]);
+
+  useEffect(() => {
+    socket.connect();
+  }, []);
 
   return (
     <StorageContext.Provider value={states}>{children}</StorageContext.Provider>
