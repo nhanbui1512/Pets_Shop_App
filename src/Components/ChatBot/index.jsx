@@ -10,6 +10,7 @@ import {
 import scripQuestions from "./data";
 import { Button, Dialog, Fab, Paper, TextField } from "@mui/material";
 import Typewriter from "typewriter-effect";
+import CardPredict from "../CardPredict";
 
 const cx = classNames.bind(style);
 
@@ -178,6 +179,7 @@ function ChatBot() {
                       <img src={message.image} alt="" />
                     </div>
                   )}
+                  {message.cardPredict && message.cardPredict}
                 </div>
               ))}
 
@@ -269,6 +271,10 @@ function ChatBot() {
                 {
                   name: "Peter Parker",
                   image: fileURL,
+                },
+                {
+                  name: "Tony Stack",
+                  cardPredict: <CardPredict />,
                 },
               ];
             });
