@@ -1,11 +1,33 @@
 import classNames from "classnames/bind";
 import styles from "./CartPredict.module.scss";
 import { Button, Dialog } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { memo } from "react";
+import { getBreeds } from "../../Services/API/Breeds";
+
 const cx = classNames.bind(styles);
 
 function CardPredict() {
   const [dialog, setDialog] = useState(false);
+
+  const [message, setMessages] = useState("");
+  const [breeds, setBreeds] = useState([]);
+
+  const handleFeedback = () => {
+    toast.success("Feedback thành công !");
+    setDialog(false);
+  };
+
+  useEffect(() => {
+    getBreeds({ page: 1, perPage: 50 })
+      .then((res) => {
+        setBreeds(res.docs);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <div
@@ -85,6 +107,8 @@ function CardPredict() {
                       Message:
                     </label>
                     <textarea
+                      value={message}
+                      onChange={(e) => setMessages(e.target.value)}
                       className="form-control"
                       id="message-text"
                     ></textarea>
@@ -92,9 +116,13 @@ function CardPredict() {
                   <div className={cx("slection-box")}>
                     <div className={cx("name-selection")}>Giống loài</div>
                     <select className={cx("selected")}>
-                      <option>Chó husky</option>
-                      <option>Chó pug</option>
-                      <option>Chó bull</option>
+                      {breeds.map((breed, index) => {
+                        return (
+                          <option value={breed._id} key={index}>
+                            {breed.breed_name}
+                          </option>
+                        );
+                      })}
                     </select>
                   </div>
                 </form>
@@ -109,7 +137,9 @@ function CardPredict() {
                 >
                   Close
                 </Button>
-                <Button variant="outlined">Send Feedback</Button>
+                <Button onClick={handleFeedback} variant="outlined">
+                  Send Feedback
+                </Button>
               </div>
             </div>
           </div>
@@ -118,4 +148,4 @@ function CardPredict() {
     </div>
   );
 }
-export default CardPredict;
+export default memo(CardPredict);

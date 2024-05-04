@@ -126,6 +126,10 @@ function ChatBot() {
                     message: `Liên kết ảnh : ${urlPredict}`,
                     image: urlPredict,
                   },
+                  {
+                    name: "Tony Stack",
+                    cardPredict: <CardPredict />,
+                  },
                 ];
               });
               setOpenDialog(false);
