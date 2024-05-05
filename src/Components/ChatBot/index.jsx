@@ -11,6 +11,7 @@ import scripQuestions from "./data";
 import { Button, Dialog, Fab, Paper, TextField } from "@mui/material";
 import Typewriter from "typewriter-effect";
 import CardPredict from "../CardPredict";
+import { predictBreed } from "../../Services/API/Predict";
 
 const cx = classNames.bind(style);
 
@@ -267,21 +268,30 @@ function ChatBot() {
             e.target.files[0].type.includes("image")
           ) {
             const file = e.target.files[0];
-            const fileURL = URL.createObjectURL(file);
-            setAnswerOptions([]);
-            setMessages((prev) => {
-              return [
-                ...prev,
-                {
-                  name: "Peter Parker",
-                  image: fileURL,
-                },
-                {
-                  name: "Tony Stack",
-                  cardPredict: <CardPredict />,
-                },
-              ];
-            });
+            // const fileURL = URL.createObjectURL(file);
+            // setAnswerOptions([]);
+
+            predictBreed({ file: file })
+              .then((res) => {
+                console.log(res);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+
+            // setMessages((prev) => {
+            //   return [
+            //     ...prev,
+            //     {
+            //       name: "Peter Parker",
+            //       image: fileURL,
+            //     },
+            //     {
+            //       name: "Tony Stack",
+            //       cardPredict: <CardPredict />,
+            //     },
+            //   ];
+            // });
           }
         }}
         ref={inputFileRef}
