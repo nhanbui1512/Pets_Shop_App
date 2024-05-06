@@ -55,14 +55,17 @@ export async function searchOrder({
   value,
   page,
   perPage = 10,
-  type = "nameUser",
+  type = "phone",
 }) {
   let searchString = `${type}:"${value}"`;
 
+  var queryString =
+    type === "phone"
+      ? `/orders?search=${searchString}&page=${page}&limit=${perPage}`
+      : `/orders?nameUser=${value}&page=${page}&limit=${perPage}`;
+
   try {
-    const res = await request.get(
-      `/orders?search=${searchString}&page=${page}&limit=${perPage}`
-    );
+    const res = await request.get(queryString);
 
     return res.data;
   } catch (error) {

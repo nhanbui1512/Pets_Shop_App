@@ -52,12 +52,6 @@ function UpdateBreed() {
     })
       .then((res) => {
         toast.success("Cập nhật thành công");
-        setAppearance("");
-        setBreedName("");
-        setBehavior("");
-        setIssue("");
-        setThumbnail("");
-        contentRef.current.innerHTML = "Edit Here !";
       })
       .catch((err) => {
         console.log(err);
