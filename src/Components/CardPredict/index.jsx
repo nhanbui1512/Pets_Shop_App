@@ -37,14 +37,37 @@ function CardPredict({ data }) {
       }}
       className="card"
     >
-      <img className="img-fluid" src={data.url || ""} alt="" />
+      <img className="img-fluid" src={data?.url || ""} alt="" />
       <div className="card-body">
-        <h5 className="card-title">{data.label || "Animal Name"}</h5>
+        <h5 className="card-title">{data?.label || "Animal Name"}</h5>
         <p className="card-text">
           This is a wider card with supporting text and below as a natural
           lead-in to the additional content. This content is a little bit
           longer.
         </p>
+
+        <div className="mt-4">
+          <h6>
+            Độ chính xác{" "}
+            <span className="pull-right">{data?.accuracy || 0}%</span>
+          </h6>
+          <div
+            className="progress mb-3"
+            style={{
+              height: 7,
+            }}
+          >
+            <div
+              className="progress-bar bg-primary"
+              style={{
+                width: `${data?.accuracy}%` || 0,
+              }}
+              role="progressbar"
+            >
+              <span className="sr-only">30% Order</span>
+            </div>
+          </div>
+        </div>
         <p className="card-text">
           <small className="text-muted">Last updated 3 mins ago</small>
         </p>
@@ -82,7 +105,7 @@ function CardPredict({ data }) {
               </div>
               <div className="modal-body">
                 <form>
-                  <img alt="" src={data.url || ""} />
+                  <img alt="" src={data?.url || ""} />
 
                   <div className="form-group">
                     <h3

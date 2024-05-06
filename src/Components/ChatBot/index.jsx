@@ -50,15 +50,6 @@ function ChatBot() {
     setChatBoxVisible((vis) => !vis);
   }, []);
 
-  const handleClickOutside = useCallback(
-    (event) => {
-      if (event.target.id === "chatbot-icon" || !isChatBoxVisible) {
-        return;
-      }
-    },
-    [isChatBoxVisible]
-  );
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (input.trim()) {
@@ -67,13 +58,6 @@ function ChatBot() {
       setInput("");
     }
   };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [handleClickOutside]);
 
   return (
     <div
@@ -121,7 +105,15 @@ function ChatBot() {
             onClick={() => {
               predictBreed({ url: urlPredict })
                 .then((res) => {
-                  console.log(res);
+                  setMessages((prev) => {
+                    return [
+                      ...prev,
+                      {
+                        name: "Tony Stack",
+                        cardPredict: <CardPredict data={res} />,
+                      },
+                    ];
+                  });
                 })
                 .catch((err) => {
                   console.log(err);
@@ -133,10 +125,6 @@ function ChatBot() {
                     name: "Peter Parker",
                     message: `Liên kết ảnh : ${urlPredict}`,
                     image: urlPredict,
-                  },
-                  {
-                    name: "Tony Stack",
-                    cardPredict: <CardPredict />,
                   },
                 ];
               });
@@ -290,8 +278,6 @@ function ChatBot() {
 
             predictBreed({ file: file })
               .then((res) => {
-                console.log(res);
-
                 setMessages((prev) => {
                   return [
                     ...prev,

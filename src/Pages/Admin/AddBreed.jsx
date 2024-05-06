@@ -67,7 +67,6 @@ function AddBreed() {
 
     const fetchApi = async () => {
       const result = await searchProduct({ value: debounceValue });
-      console.log(result);
       setSearchResult(result.docs);
     };
     fetchApi();

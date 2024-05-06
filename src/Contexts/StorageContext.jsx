@@ -56,6 +56,7 @@ function GlobalStates({ children }) {
       .then((res) => {
         setCurrentUser(true);
         setUserData(res);
+        socket.disconnect();
       })
       .catch((err) => {
         setCurrentUser(false);
@@ -68,8 +69,12 @@ function GlobalStates({ children }) {
   }, [cartItems]);
 
   useEffect(() => {
-    socket.connect();
-  }, []);
+    if (!userData || userData.UserRoles !== "admin") {
+      socket.connect();
+    } else {
+      socket.disconnect();
+    }
+  }, [userData]);
 
   return (
     <StorageContext.Provider value={states}>{children}</StorageContext.Provider>
