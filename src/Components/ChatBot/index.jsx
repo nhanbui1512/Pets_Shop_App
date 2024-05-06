@@ -119,6 +119,13 @@ function ChatBot() {
           </Button>
           <Button
             onClick={() => {
+              predictBreed({ url: urlPredict })
+                .then((res) => {
+                  console.log(res);
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
               setMessages((prev) => {
                 return [
                   ...prev,
