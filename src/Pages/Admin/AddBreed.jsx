@@ -11,6 +11,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { useDebounce } from "../../Hooks";
 import { searchProduct } from "../../Services/API/Products";
 import { addBreed } from "../../Services/API/Breeds";
+import uploadFile from "../../Services/Cloudinary";
 
 const cx = classNames.bind(styles);
 
@@ -41,6 +42,7 @@ function AddBreed() {
       behavior,
       htmlDomDescription: DOMContent,
       common_health_issues: issue,
+      breedImages: [thumbnail],
       diet: idProducts,
       description: "No Description",
     })
@@ -229,15 +231,22 @@ function AddBreed() {
                       onChange={(e) => {
                         if (e.target.files.length > 0) {
                           const file = e.target.files[0];
-                          const previewURL = URL.createObjectURL(file);
-                          file.preview = previewURL;
-                          setThumbnail(file);
+
+                          uploadFile(file)
+                            .then((res) => {
+                              toast.success("Upload ảnh thành công");
+                              setThumbnail(res.data.url);
+                            })
+                            .catch((err) => {
+                              console.log(err);
+                              toast.error("Upload ảnh không thành công");
+                            });
                         }
                       }}
                       className="form-control"
                       id="val-desc"
                     />
-                    {thumbnail && <img src={thumbnail.preview} alt=""></img>}
+                    {thumbnail && <img src={thumbnail} alt=""></img>}
                   </div>
                 </div>
 

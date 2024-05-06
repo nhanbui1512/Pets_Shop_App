@@ -12,6 +12,7 @@ import { Button, Dialog, Fab, Paper, TextField } from "@mui/material";
 import Typewriter from "typewriter-effect";
 import CardPredict from "../CardPredict";
 import { predictBreed } from "../../Services/API/Predict";
+import { toast } from "react-toastify";
 
 const cx = classNames.bind(style);
 
@@ -103,6 +104,16 @@ function ChatBot() {
           </Button>
           <Button
             onClick={() => {
+              setMessages((prev) => {
+                return [
+                  ...prev,
+                  {
+                    name: "Peter Parker",
+                    message: `Liên kết ảnh : ${urlPredict}`,
+                    image: urlPredict,
+                  },
+                ];
+              });
               predictBreed({ url: urlPredict })
                 .then((res) => {
                   setMessages((prev) => {
@@ -116,18 +127,14 @@ function ChatBot() {
                   });
                 })
                 .catch((err) => {
-                  console.log(err);
+                  toast.error("Liên kết ảnh không hợp lệ");
+                  setMessages((prev) => {
+                    const newState = [...prev];
+                    newState.pop();
+                    return newState;
+                  });
                 });
-              setMessages((prev) => {
-                return [
-                  ...prev,
-                  {
-                    name: "Peter Parker",
-                    message: `Liên kết ảnh : ${urlPredict}`,
-                    image: urlPredict,
-                  },
-                ];
-              });
+
               setOpenDialog(false);
               setAnswerOptions([]);
               setUrlPredict("");
