@@ -7,6 +7,8 @@ import {
   faLaughBeam,
   faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
+import { useContext } from "react";
+import { StorageContext } from "../../../Contexts/StorageContext";
 
 const cx = classNames.bind(style);
 
@@ -17,7 +19,8 @@ function ChatBox() {
       message: "Tìm kiếm và gợi ý bằng hình ảnh ?",
     },
   ]);
-
+  const storageContext = useContext(StorageContext);
+  const socket = storageContext.socket;
   const messagesEndRef = useRef(null); // Tham chiếu tới phần tử cuối cùng trong danh sách tin nhắn
   const inputFileRef = useRef();
 
@@ -32,6 +35,22 @@ function ChatBox() {
       });
     }
   };
+  const sendMessage = (message) => {
+    const user = storageContext.userData._id;
+    console.log(user);
+    if (message !== '') {
+      socket.emit('admin message to server', { message: message, user: user }); 
+    }
+  };
+  
+  useEffect(() => {
+    socket.on("user message to admin", (data) => {
+      setMessages(prevMessages => [...prevMessages, { name: "user", message: data }]);
+    });
+    return () => {
+      socket.off("user message to admin"); // Unsubscribe when component unmounts
+    };
+  }, []);
 
   useEffect(() => {
     scrollToBottom();
@@ -43,6 +62,7 @@ function ChatBox() {
       setMessages([...messages, { name: "Peter Parker", message: input }]);
       scrollToBottom();
       setInput("");
+      sendMessage(input);
     }
   };
 

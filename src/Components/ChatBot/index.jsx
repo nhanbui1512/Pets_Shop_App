@@ -13,6 +13,8 @@ import Typewriter from "typewriter-effect";
 import CardPredict from "../CardPredict";
 import { predictBreed } from "../../Services/API/Predict";
 import { toast } from "react-toastify";
+import { useContext } from "react";
+import { StorageContext } from "../../Contexts/StorageContext";
 
 const cx = classNames.bind(style);
 
@@ -29,7 +31,21 @@ function ChatBot() {
       message: "Tìm kiếm và gợi ý bằng hình ảnh ?",
     },
   ]);
-
+  const storageContext = useContext(StorageContext);
+  const socket = storageContext.socket;
+  const sendMessage = (message) => {
+    if (message !== '') {
+      socket.emit('user message to server', message);
+    }
+  };
+  useEffect(() => {
+    socket.on("admin message to user", (data) => {
+      setMessages(prevMessages => [...prevMessages, { name: "admin", message: data.message }]);
+    });
+    return () => {
+      socket.off("message to client");
+    };
+  }, [socket]);
   const messagesEndRef = useRef(null); // Tham chiếu tới phần tử cuối cùng trong danh sách tin nhắn
   const inputFileRef = useRef();
 
@@ -57,6 +73,7 @@ function ChatBot() {
       setMessages([...messages, { name: "Peter Parker", message: input }]);
       scrollToBottom();
       setInput("");
+      sendMessage(input);
     }
   };
 
