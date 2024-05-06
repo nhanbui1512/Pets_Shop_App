@@ -10,7 +10,7 @@ export async function predictBreed({ url, file }) {
   try {
     // Gửi yêu cầu POST đến server để upload hình ảnh
     const response = await axios.post(
-      "https://456c-2405-4802-6059-1030-422-fb86-ac68-c59a.ngrok-free.app/api/prediction",
+      "http://localhost:8000/api/prediction",
       formData,
       {
         headers: {

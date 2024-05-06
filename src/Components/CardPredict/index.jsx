@@ -8,7 +8,7 @@ import { getBreeds } from "../../Services/API/Breeds";
 
 const cx = classNames.bind(styles);
 
-function CardPredict() {
+function CardPredict({ data }) {
   const [dialog, setDialog] = useState(false);
 
   const [message, setMessages] = useState("");
@@ -37,13 +37,9 @@ function CardPredict() {
       }}
       className="card"
     >
-      <img
-        className="img-fluid"
-        src="https://huanluyenchohungcuong.vn/wp-content/uploads/2022/05/cho-corgi.jpg"
-        alt=""
-      />
+      <img className="img-fluid" src={data.url || ""} alt="" />
       <div className="card-body">
-        <h5 className="card-title">Card title</h5>
+        <h5 className="card-title">{data.label || "Animal Name"}</h5>
         <p className="card-text">
           This is a wider card with supporting text and below as a natural
           lead-in to the additional content. This content is a little bit
@@ -86,10 +82,7 @@ function CardPredict() {
               </div>
               <div className="modal-body">
                 <form>
-                  <img
-                    alt=""
-                    src="https://huanluyenchohungcuong.vn/wp-content/uploads/2022/05/cho-corgi.jpg"
-                  />
+                  <img alt="" src={data.url || ""} />
 
                   <div className="form-group">
                     <h3
