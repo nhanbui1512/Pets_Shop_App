@@ -22,6 +22,7 @@ function GlobalStates({ children }) {
     setCartItems,
     categories,
     setCategories,
+    socket,
   };
 
   const saveCartToLocalStorage = () => {
@@ -56,7 +57,6 @@ function GlobalStates({ children }) {
       .then((res) => {
         setCurrentUser(true);
         setUserData(res);
-        socket.disconnect();
       })
       .catch((err) => {
         setCurrentUser(false);
