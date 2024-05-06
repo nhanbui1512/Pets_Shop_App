@@ -268,30 +268,36 @@ function ChatBot() {
             e.target.files[0].type.includes("image")
           ) {
             const file = e.target.files[0];
-            // const fileURL = URL.createObjectURL(file);
-            // setAnswerOptions([]);
+            const fileURL = URL.createObjectURL(file);
+            setAnswerOptions([]);
+
+            setMessages((prev) => {
+              return [
+                ...prev,
+                {
+                  name: "Peter Parker",
+                  image: fileURL,
+                },
+              ];
+            });
 
             predictBreed({ file: file })
               .then((res) => {
                 console.log(res);
+
+                setMessages((prev) => {
+                  return [
+                    ...prev,
+                    {
+                      name: "Tony Stack",
+                      cardPredict: <CardPredict data={res} />,
+                    },
+                  ];
+                });
               })
               .catch((err) => {
                 console.log(err);
               });
-
-            // setMessages((prev) => {
-            //   return [
-            //     ...prev,
-            //     {
-            //       name: "Peter Parker",
-            //       image: fileURL,
-            //     },
-            //     {
-            //       name: "Tony Stack",
-            //       cardPredict: <CardPredict />,
-            //     },
-            //   ];
-            // });
           }
         }}
         ref={inputFileRef}
