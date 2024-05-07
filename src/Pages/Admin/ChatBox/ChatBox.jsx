@@ -9,20 +9,18 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useContext } from "react";
 import { StorageContext } from "../../../Contexts/StorageContext";
+import { useParams } from "react-router-dom";
 
 const cx = classNames.bind(style);
 
 function ChatBox() {
-  const [messages, setMessages] = useState([
-    {
-      name: "Tony Stark",
-      message: "Tìm kiếm và gợi ý bằng hình ảnh ?",
-    },
-  ]);
+  const [messages, setMessages] = useState([]);
   const storageContext = useContext(StorageContext);
   const socket = storageContext.socket;
   const messagesEndRef = useRef(null); // Tham chiếu tới phần tử cuối cùng trong danh sách tin nhắn
   const inputFileRef = useRef();
+
+  const { id } = useParams();
 
   const [input, setInput] = useState("");
 
@@ -36,19 +34,27 @@ function ChatBox() {
     }
   };
   const sendMessage = (message) => {
-    const user = storageContext.userData._id;
     if (message !== "") {
-      socket.emit("admin message to server", { message: message, user: user });
+      socket.emit("admin message to server", {
+        message: message,
+        socketId: id,
+      });
     }
   };
 
   useEffect(() => {
     socket.on("user message to admin", (data) => {
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { name: "user", message: data },
-      ]);
+      if (data.socketId === id) {
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { name: "user", message: data.message },
+        ]);
+      }
     });
+
+    return () => {
+      socket.off("user message to admin");
+    };
 
     // eslint-disable-next-line
   }, []);

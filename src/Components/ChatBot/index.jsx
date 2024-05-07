@@ -198,11 +198,13 @@ function ChatBot() {
                       <p>{message.message}</p>
                     )}
                   </div>
+
                   {message.image && (
                     <div className={cx("image-message")}>
                       <img src={message.image} alt="" />
                     </div>
                   )}
+
                   {message.cardPredict && message.cardPredict}
                 </div>
               ))}

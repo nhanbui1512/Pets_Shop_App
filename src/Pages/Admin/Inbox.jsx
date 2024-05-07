@@ -1,9 +1,33 @@
-import { useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { getConversations } from "../../Services/API/Chats";
+import { StorageContext } from "../../Contexts/StorageContext";
 
 function Inbox() {
+  const [chats, setChats] = useState([]);
+  const socket = useContext(StorageContext).socket;
+
   useEffect(() => {
     // call api get conversatioins
+    getConversations()
+      .then((res) => {
+        setChats(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    socket.on("newChat", (data) => {
+      console.log(data);
+      setChats((prev) => {
+        return [{ socketId: data.socketId, messages: [] }, ...prev];
+      });
+    });
+
+    return () => {
+      socket.off("newChat");
+    };
+    // eslint-disable-next-line
   }, []);
   return (
     <div>
@@ -14,44 +38,33 @@ function Inbox() {
               <div className="card-body">
                 <div>
                   <div className="email-list m-t-15">
-                    <div className="message">
-                      <Link to={"/admin/inbox/2"}>
-                        <div className="col-mail col-mail-1">
-                          <div className="email-checkbox">
-                            <input type="checkbox" id="chk2" />
-                            <label className="toggle" htmlFor="chk2"></label>
+                    {chats.map((chat, index) => {
+                      return (
+                        <div key={index} className="message">
+                          <div>
+                            <div className="col-mail col-mail-1">
+                              <div className="email-checkbox">
+                                <input type="checkbox" id="chk2" />
+                                <label
+                                  className="toggle"
+                                  htmlFor="chk2"
+                                ></label>
+                              </div>
+                              <span className="star-toggle ti-star"></span>
+                            </div>
+                            <div className="col-mail col-mail-2">
+                              <Link
+                                to={`/admin/inbox/${chat.socketId}`}
+                                className="subject"
+                              >
+                                Content Message Oldes
+                              </Link>
+                              <div className="date">11:49 am</div>
+                            </div>
                           </div>
-                          <span className="star-toggle ti-star"></span>
                         </div>
-                        <div className="col-mail col-mail-2">
-                          <div className="subject">
-                            Ingredia Nutrisha, A collection of textile samples
-                            lay spread out on the table - Samsa was a travelling
-                            salesman - and above it there hung a picture
-                          </div>
-                          <div className="date">11:49 am</div>
-                        </div>
-                      </Link>
-                    </div>
-                    <div className="message">
-                      <Link to={"/admin/inbox/1"}>
-                        <div className="col-mail col-mail-1">
-                          <div className="email-checkbox">
-                            <input type="checkbox" id="chk2" />
-                            <label className="toggle" htmlFor="chk2"></label>
-                          </div>
-                          <span className="star-toggle ti-star"></span>
-                        </div>
-                        <div className="col-mail col-mail-2">
-                          <div className="subject">
-                            Ingredia Nutrisha, A collection of textile samples
-                            lay spread out on the table - Samsa was a travelling
-                            salesman - and above it there hung a picture
-                          </div>
-                          <div className="date">11:49 am</div>
-                        </div>
-                      </Link>
-                    </div>
+                      );
+                    })}
                   </div>
 
                   <div className="row">
