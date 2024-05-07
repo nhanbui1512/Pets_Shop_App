@@ -37,19 +37,20 @@ function ChatBox() {
   };
   const sendMessage = (message) => {
     const user = storageContext.userData._id;
-    console.log(user);
-    if (message !== '') {
-      socket.emit('admin message to server', { message: message, user: user }); 
+    if (message !== "") {
+      socket.emit("admin message to server", { message: message, user: user });
     }
   };
-  
+
   useEffect(() => {
     socket.on("user message to admin", (data) => {
-      setMessages(prevMessages => [...prevMessages, { name: "user", message: data }]);
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { name: "user", message: data },
+      ]);
     });
-    return () => {
-      socket.off("user message to admin"); // Unsubscribe when component unmounts
-    };
+
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {

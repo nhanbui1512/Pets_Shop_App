@@ -2,17 +2,12 @@ import React, { useState, useEffect, useCallback, useRef, memo } from "react";
 import style from "./chatbot.module.scss";
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCamera,
-  faLaughBeam,
-  faPaperPlane,
-} from "@fortawesome/free-solid-svg-icons";
+import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import scripQuestions from "./data";
 import { Button, Dialog, Fab, Paper, TextField } from "@mui/material";
 import Typewriter from "typewriter-effect";
 import CardPredict from "../CardPredict";
 import { predictBreed } from "../../Services/API/Predict";
-import { toast } from "react-toastify";
 import { useContext } from "react";
 import { StorageContext } from "../../Contexts/StorageContext";
 
@@ -34,13 +29,16 @@ function ChatBot() {
   const storageContext = useContext(StorageContext);
   const socket = storageContext.socket;
   const sendMessage = (message) => {
-    if (message !== '') {
-      socket.emit('user message to server', message);
+    if (message !== "") {
+      socket.emit("user message to server", message);
     }
   };
   useEffect(() => {
     socket.on("admin message to user", (data) => {
-      setMessages(prevMessages => [...prevMessages, { name: "admin", message: data.message }]);
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { name: "admin", message: data.message },
+      ]);
     });
     return () => {
       socket.off("message to client");
@@ -144,10 +142,12 @@ function ChatBot() {
                   });
                 })
                 .catch((err) => {
-                  toast.error("Liên kết ảnh không hợp lệ");
                   setMessages((prev) => {
                     const newState = [...prev];
-                    newState.pop();
+                    newState.push({
+                      name: "Tony Stack",
+                      message: "Liên kết ảnh không hợp lệ",
+                    });
                     return newState;
                   });
                 });
@@ -251,27 +251,19 @@ function ChatBot() {
               <div ref={messagesEndRef} />
             </div>
             <form className={cx("input")} onSubmit={handleSubmit}>
-              <FontAwesomeIcon
-                className={cx("fas fa-camera")}
-                icon={faCamera}
-              />
-              <FontAwesomeIcon
-                className={cx("fas fa-laugh-beam")}
-                icon={faLaughBeam}
-              />
               <input
                 type="text"
                 placeholder="Type your message here!"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
               />
-              <button type="submit">
-                <i className="fas fa-paper-plane" />
+
+              <button onClick={handleSubmit} className={cx("send-btn")}>
+                <FontAwesomeIcon
+                  className={cx("fas fa-microphone")}
+                  icon={faPaperPlane}
+                />
               </button>
-              <FontAwesomeIcon
-                className={cx("fas fa-microphone")}
-                icon={faPaperPlane}
-              />
             </form>
           </div>
         </div>
@@ -313,6 +305,15 @@ function ChatBot() {
                 });
               })
               .catch((err) => {
+                setMessages((prev) => {
+                  return [
+                    ...prev,
+                    {
+                      name: "Tony Stack",
+                      message: "Hệ thống đang lỗi, vui lòng thử lại sau",
+                    },
+                  ];
+                });
                 console.log(err);
               });
           }

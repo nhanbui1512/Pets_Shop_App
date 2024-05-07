@@ -1,6 +1,10 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 function Inbox() {
+  useEffect(() => {
+    // call api get conversatioins
+  }, []);
   return (
     <div>
       <div className="container-fluid">
