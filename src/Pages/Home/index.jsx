@@ -13,6 +13,7 @@ function Home() {
   const [page, setPage] = useState(1);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [totalPage, setTotalPage] = useState(1);
 
   const handleChange = (event, number) => {
     setPage(number);
@@ -21,10 +22,11 @@ function Home() {
 
   useEffect(() => {
     setLoading(true);
-    getProducts({ page: page, perPage: 21 })
+    getProducts({ page: page, perPage: 15 })
       .then((res) => {
         setLoading(false);
         setProducts(res.docs);
+        setTotalPage(res.totalPages);
       })
       .catch((err) => {
         console.log(err);
@@ -51,7 +53,11 @@ function Home() {
           }}
           spacing={2}
         >
-          <Pagination onChange={handleChange} count={10} color="primary" />
+          <Pagination
+            onChange={handleChange}
+            count={totalPage}
+            color="primary"
+          />
         </Stack>
       </div>
     </div>

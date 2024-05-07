@@ -68,11 +68,7 @@ function ChatBox() {
   };
 
   return (
-    <div
-      style={{
-        position: "relative",
-      }}
-    >
+    <div>
       {
         <div className={cx("center")} id="chatbox">
           <div className={cx("chat")}>

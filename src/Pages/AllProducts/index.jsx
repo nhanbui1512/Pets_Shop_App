@@ -8,6 +8,7 @@ import Loader from "../../Components/Loader";
 function AllProducts() {
   const [page, setPage] = useState(1);
   const [products, setProducts] = useState([]);
+  const [totalPage, setTotalPage] = useState(1);
 
   const collectionContext = useContext(CollectionContext);
   const [loading, setLoading] = useState(true);
@@ -18,10 +19,11 @@ function AllProducts() {
 
   useEffect(() => {
     setLoading(true);
-    getProducts({ page: page, perPage: 21 })
+    getProducts({ page: page, perPage: 15 })
       .then((res) => {
         setProducts(res.docs);
         setLoading(false);
+        setTotalPage(res.totalPages);
       })
       .catch((err) => {
         console.log(err);
@@ -78,7 +80,11 @@ function AllProducts() {
           }}
           spacing={2}
         >
-          <Pagination onChange={handleChange} count={10} color="primary" />
+          <Pagination
+            onChange={handleChange}
+            count={totalPage}
+            color="primary"
+          />
         </Stack>
       </div>
     </div>

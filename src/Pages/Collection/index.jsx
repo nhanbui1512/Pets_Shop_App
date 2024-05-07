@@ -11,14 +11,11 @@ function Collection() {
 
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
-
   const [products, setProducts] = useState([]);
-
   const collectionContext = useContext(CollectionContext);
   const [loading, setLoading] = useState(true);
 
   const handleChange = (event, number) => {
-    console.log(number);
     setPage(number);
     setLoading(true);
     getCategoryById({ id, page: number, perPage: 20 })
@@ -35,7 +32,7 @@ function Collection() {
   useEffect(() => {
     setPage(1);
     setLoading(true);
-    getCategoryById({ id, page: 1, perPage: 20 })
+    getCategoryById({ id, page: 1, perPage: 15 })
       .then((res) => {
         setProducts(res.docs);
         setLoading(false);
