@@ -14,11 +14,10 @@ import {
   ChatBox,
   Inbox,
   Bills,
+  Dashboard,
+  OrderDetail,
+  UpdateBreed,
 } from "../Pages/Admin";
-import Dashboard from "../Pages/Admin/Dashboard";
-import OrderDetail from "../Pages/Admin/OrderDetail";
-import Profile from "../Pages/Admin/Profile";
-import UpdateBreed from "../Pages/Admin/UpdateBreed";
 
 export const adminRoutes = [
   {
@@ -95,7 +94,7 @@ export const adminRoutes = [
   },
   {
     path: "/bill/:id",
-    element: <div>Bill id</div>,
+    element: <OrderDetail bill />,
   },
 ];
 
@@ -106,7 +105,7 @@ export const userRoutes = [
   },
   {
     path: "/profile",
-    element: <Profile />,
+    element: <AdminProfile />,
   },
   {
     path: "/password",

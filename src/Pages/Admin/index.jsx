@@ -13,3 +13,6 @@ export { default as AddBreed } from "./AddBreed";
 export { default as ChatBox } from "./ChatBox/ChatBox";
 export { default as Inbox } from "./Inbox";
 export { default as Bills } from "./Bills";
+export { default as Dashboard } from "./Dashboard";
+export { default as OrderDetail } from "./OrderDetail";
+export { default as UpdateBreed } from "./UpdateBreed";

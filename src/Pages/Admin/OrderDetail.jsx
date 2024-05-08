@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 
 const cx = classNames.bind(styles);
 
-function OrderDetail() {
+function OrderDetail({ bill }) {
   const { id } = useParams();
   const [orderData, setOrderData] = useState({});
 
@@ -201,15 +201,17 @@ function OrderDetail() {
                 </div>
               </div>
             </div>
-            <Button
-              sx={{
-                float: "right",
-              }}
-              variant="outlined"
-              onClick={handleConfirmOrder}
-            >
-              Confirm
-            </Button>
+            {bill || (
+              <Button
+                sx={{
+                  float: "right",
+                }}
+                variant="outlined"
+                onClick={handleConfirmOrder}
+              >
+                Confirm
+              </Button>
+            )}
           </div>
         </div>
       </div>
