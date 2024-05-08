@@ -55,7 +55,6 @@ function ChatBox() {
     return () => {
       socket.off("user message to admin");
     };
-
     // eslint-disable-next-line
   }, []);
 

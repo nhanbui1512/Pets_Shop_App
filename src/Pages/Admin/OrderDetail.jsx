@@ -2,8 +2,10 @@ import { useParams } from "react-router-dom";
 import classNames from "classnames/bind";
 import styles from "./OrderDetail.module.scss";
 import { useEffect, useState } from "react";
-import { getOrderById } from "../../Services/API/Orders";
+import { confirmOrder, getOrderById } from "../../Services/API/Orders";
 import { formatDay } from "../../Utils/time";
+import { Button } from "@mui/material";
+import { toast } from "react-toastify";
 
 const cx = classNames.bind(styles);
 
@@ -20,6 +22,17 @@ function OrderDetail() {
         console.log(err);
       });
   }, [id]);
+
+  const handleConfirmOrder = () => {
+    confirmOrder(id)
+      .then((res) => {
+        toast.success("Xác nhận đơn hàng thành công");
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Xác nhận đơn hàng thất bại");
+      });
+  };
 
   return (
     <div>
@@ -188,6 +201,15 @@ function OrderDetail() {
                 </div>
               </div>
             </div>
+            <Button
+              sx={{
+                float: "right",
+              }}
+              variant="outlined"
+              onClick={handleConfirmOrder}
+            >
+              Confirm
+            </Button>
           </div>
         </div>
       </div>

@@ -13,6 +13,7 @@ import {
   AddBreed,
   ChatBox,
   Inbox,
+  Bills,
 } from "../Pages/Admin";
 import Dashboard from "../Pages/Admin/Dashboard";
 import OrderDetail from "../Pages/Admin/OrderDetail";
@@ -87,6 +88,14 @@ export const adminRoutes = [
   {
     path: "/inbox/:id",
     element: <ChatBox />,
+  },
+  {
+    path: "/bill",
+    element: <Bills />,
+  },
+  {
+    path: "/bill/:id",
+    element: <div>Bill id</div>,
   },
 ];
 

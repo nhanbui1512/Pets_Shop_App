@@ -12,3 +12,4 @@ export { default as ListBreed } from "./ListBreed";
 export { default as AddBreed } from "./AddBreed";
 export { default as ChatBox } from "./ChatBox/ChatBox";
 export { default as Inbox } from "./Inbox";
+export { default as Bills } from "./Bills";

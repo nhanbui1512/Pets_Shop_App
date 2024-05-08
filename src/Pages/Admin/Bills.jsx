@@ -19,10 +19,10 @@ import DialogContentText from "@mui/material/DialogContentText";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
-import { deleteOrder, getOrders } from "../../Services/API/Orders";
+import { deleteOrder, getBills } from "../../Services/API/Orders";
 import { toast } from "react-toastify";
 
-function ListOrder() {
+function Bills() {
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(10);
   const [orders, setOrders] = useState([]);
@@ -55,7 +55,7 @@ function ListOrder() {
   };
 
   useEffect(() => {
-    getOrders({ page: page, perPage: 20 }).then((res) => {
+    getBills({ page: page, perPage: 20 }).then((res) => {
       setOrders(res.docs);
       setTotalPage(res.totalPages);
     });
@@ -66,7 +66,6 @@ function ListOrder() {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell align="left">Select</TableCell>
               <TableCell>Products</TableCell>
               <TableCell align="right">Address</TableCell>
               <TableCell align="right">Name</TableCell>
@@ -82,13 +81,8 @@ function ListOrder() {
                 key={index}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell align="left">
-                  <span>
-                    <input type="checkbox" />
-                  </span>
-                </TableCell>
                 <TableCell component="th" scope="row">
-                  <Link to={`/admin/orders/${order._id}`}>
+                  <Link to={`/admin/bill/${order._id}`}>
                     {order.items?.map((item, index) => (
                       <p
                         key={index}
@@ -175,4 +169,4 @@ function ListOrder() {
     </>
   );
 }
-export default ListOrder;
+export default Bills;
