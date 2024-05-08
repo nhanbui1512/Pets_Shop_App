@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { StorageContext } from "../../Contexts/StorageContext";
+import { Tooltip } from "@mui/material";
 
 const cx = classNames.bind(styles);
 
@@ -41,7 +42,6 @@ function ProductItem({ data, className }) {
         };
         items.push(newItem);
       }
-      console.log(items);
 
       return items;
     });
@@ -77,22 +77,32 @@ function ProductItem({ data, className }) {
               </div>
 
               <div className={cx(["pd_10_0", "actions"])}>
-                <CircleButton
-                  onClick={handleAddItem}
-                  className={cx("cart-btn")}
-                  icon={
-                    <FontAwesomeIcon
-                      color="#fff"
-                      fontSize={16}
-                      icon={faCartShopping}
+                <Tooltip title="Thêm vào giỏ hàng">
+                  <div>
+                    <CircleButton
+                      onClick={handleAddItem}
+                      className={cx("cart-btn")}
+                      icon={
+                        <FontAwesomeIcon
+                          color="#fff"
+                          fontSize={16}
+                          icon={faCartShopping}
+                        />
+                      }
                     />
-                  }
-                />
-                <Link to={`/product/${data._id}`}>
-                  <CircleButton className={cx("view-btn")}>
-                    <FontAwesomeIcon color="#fff" fontSize={16} icon={faEye} />
-                  </CircleButton>
-                </Link>
+                  </div>
+                </Tooltip>
+                <Tooltip title="Xem chi tiết">
+                  <Link to={`/product/${data._id}`}>
+                    <CircleButton className={cx("view-btn")}>
+                      <FontAwesomeIcon
+                        color="#fff"
+                        fontSize={16}
+                        icon={faEye}
+                      />
+                    </CircleButton>
+                  </Link>
+                </Tooltip>
               </div>
             </div>
           </div>

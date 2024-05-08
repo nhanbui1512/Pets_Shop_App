@@ -67,7 +67,6 @@ function Bills() {
           <TableHead>
             <TableRow>
               <TableCell>Products</TableCell>
-              <TableCell align="right">Address</TableCell>
               <TableCell align="right">Name</TableCell>
               <TableCell align="right">PhoneNumber</TableCell>
               <TableCell align="right">Total</TableCell>
@@ -90,7 +89,6 @@ function Bills() {
                     ))}
                   </Link>
                 </TableCell>
-                <TableCell align="right">{order.address}</TableCell>
                 <TableCell align="right">{order.nameUser}</TableCell>
                 <TableCell align="right">{order.phone}</TableCell>
                 <TableCell align="right">
