@@ -5,12 +5,14 @@ import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import ActiveNumber from "../CountNumber";
 import styles from "./CartProduct.module.scss";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { StorageContext } from "../../Contexts/StorageContext";
 
 const cx = classNames.bind(styles);
 
 function CartProduct({ data, setCartItems, index }) {
   const [quantity, setQuantity] = useState(data.quantity);
+  const storage = useContext(StorageContext);
 
   const handleDeleteItem = (index) => {
     setCartItems((prev) => {
@@ -20,10 +22,20 @@ function CartProduct({ data, setCartItems, index }) {
     });
   };
 
+  const handleChangeCount = (quantity) => {
+    setQuantity(quantity);
+    storage.setCartItems((prev) => {
+      const newState = [...prev];
+      const product = newState.find((product) => product._id === data._id);
+      product.quantity = quantity;
+      return newState;
+    });
+  };
+
   return (
     <tr className={cx("product")}>
       <td>
-        <Link className={cx("text-dec")}>
+        <Link to={`/product/${data._id}`} className={cx("text-dec")}>
           <img
             className={cx("product_img")}
             src={
@@ -35,19 +47,26 @@ function CartProduct({ data, setCartItems, index }) {
         </Link>
       </td>
       <td className={cx("product_name")}>
-        <Link className={cx("text-dec")}>
+        <Link to={`/product/${data._id}`} className={cx("text-dec")}>
           {data?.name || "Cá hồi que cho chó Bow wow 150g"}
         </Link>
       </td>
       <td className={cx("product_species")}>
-        <Link className={cx("text-dec")}>chó cỏ</Link>
+        <p className={cx("text-dec")}>
+          {data.variantOption?.name || "Mặc định"}
+        </p>
       </td>
       <td className={cx("product_price")}>
         {`${data?.price.toLocaleString("vi-VN", { currency: "VND" })}đ` ||
           "65.000đ"}
       </td>
       <td>
-        <ActiveNumber value={quantity} setValue={setQuantity} />
+        <ActiveNumber
+          value={quantity}
+          onChange={(value) => {
+            handleChangeCount(value);
+          }}
+        />
       </td>
       <td
         className={cx("product_price")}

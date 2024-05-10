@@ -44,7 +44,7 @@ function ProductDetail() {
         name: product.name,
         productImage: product.productImage[0],
         price: option.price,
-        quantity: 1,
+        quantity: quantity,
         category: product.categoryID,
         variantOption: {
           _id: option._id,
@@ -56,6 +56,10 @@ function ProductDetail() {
     }
     storage.setCartItems(cartItems);
     toast.success("Thêm sản phẩm vào giỏ hàng thành công");
+  };
+
+  const handleChangeQuantity = (value) => {
+    setQuantity(value);
   };
 
   useEffect(() => {
@@ -115,6 +119,9 @@ function ProductDetail() {
                 value={quantity}
                 setValue={setQuantity}
                 className={cx("count-box")}
+                onChange={(value) => {
+                  handleChangeQuantity(value);
+                }}
               />
               <Button onClick={handleBuy} rouded>
                 MUA HÀNG
