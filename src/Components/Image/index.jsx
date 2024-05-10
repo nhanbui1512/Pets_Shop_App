@@ -1,24 +1,24 @@
 import PropTypes from "prop-types";
 import { useState, forwardRef, useEffect } from "react";
-import images from "../../Assets/images";
+import { Skeleton } from "@mui/material";
 const Image = forwardRef(({ src, alt, ...props }, ref) => {
-  const [fallBack, setFallBack] = useState("");
+  const [fallBack, setFallBack] = useState(false);
 
   useEffect(() => {
-    setFallBack(""); // Reset fallBack when src changes
+    setFallBack(false); // Reset fallBack when src changes
   }, [src]);
 
   const handleErr = () => {
-    setFallBack(images.noImage);
+    setFallBack(true);
   };
   return (
-    <img
-      src={fallBack || src}
-      alt={alt}
-      ref={ref}
-      {...props}
-      onError={handleErr}
-    />
+    <>
+      {fallBack ? (
+        <Skeleton variant="rectangular" width={210} height={118} />
+      ) : (
+        <img src={src} alt={alt} ref={ref} {...props} onError={handleErr} />
+      )}
+    </>
   );
 });
 
