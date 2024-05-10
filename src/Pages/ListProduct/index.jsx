@@ -2,6 +2,7 @@ import classNames from "classnames/bind";
 import styles from "./ListProduct.module.scss";
 import ProductItem from "../../Components/ProductItem";
 import SortToolBox from "../../Components/SortToolBox";
+import ListSkeleton from "../../Components/ListSkeleton";
 
 const cx = classNames.bind(styles);
 
@@ -18,6 +19,8 @@ function ListProduct({
       <div className={cx("tools-bar")}>
         <SortToolBox />
       </div>
+
+      {products.length === 0 && <ListSkeleton />}
 
       <div className={cx("list-product")}>
         {products.map((item, index) => (

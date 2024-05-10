@@ -4,6 +4,7 @@ import ProductItem from "../ProductItem";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { StorageContext } from "../../Contexts/StorageContext";
+import ListSkeleton from "../ListSkeleton";
 
 const cx = classNames.bind(styles);
 
@@ -46,6 +47,7 @@ function SellerList({ items = [], headerColor = "#064475" }) {
         </div>
       </div>
       <div className={cx("product-container")}>
+        {items.length === 0 && <ListSkeleton />}
         <div className={cx("product-list")}>
           {items.map((item, index) => (
             <ProductItem key={index} data={item} />
