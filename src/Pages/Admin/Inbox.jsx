@@ -11,20 +11,46 @@ function Inbox() {
     // call api get conversatioins
     getConversations()
       .then((res) => {
-        setChats(res);
+        setChats(res.reverse());
       })
       .catch((err) => {
         console.log(err);
       });
 
     socket.on("newChat", (data) => {
-      console.log(data);
       setChats((prev) => {
-        return [{ socketId: data.socketId, messages: [] }, ...prev];
+        return [
+          { socketId: data.socketId, lastMessage: data.message },
+          ...prev,
+        ];
+      });
+
+      socket.on("user message to admin", (data) => {
+        const socketId = data.socketId;
+        const message = data.message;
+
+        setChats((prev) => {
+          const newState = [...prev];
+          const indexConv = newState.findIndex(
+            (chat) => chat.socketId === socketId
+          );
+
+          // thay nội dung tin nhắn cuối cùng hiển thị preview
+          if (indexConv !== -1) {
+            newState[indexConv].lastMessage = message;
+            // đưa đoạn hội thoại lên đầu
+            if (indexConv !== 0) {
+              const element = newState.splice(indexConv, 1)[0];
+              newState.unshift(element);
+            }
+          }
+          return newState;
+        });
       });
     });
 
     return () => {
+      socket.off("user message to admin");
       socket.off("newChat");
     };
     // eslint-disable-next-line
@@ -57,7 +83,7 @@ function Inbox() {
                                 to={`/admin/inbox/${chat.socketId}`}
                                 className="subject"
                               >
-                                Content Message Oldes
+                                {`${chat.socketId}: ${chat.lastMessage}`}
                               </Link>
                               <div className="date">11:49 am</div>
                             </div>

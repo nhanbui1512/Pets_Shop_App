@@ -10,6 +10,7 @@ import {
 import { useContext } from "react";
 import { StorageContext } from "../../../Contexts/StorageContext";
 import { useParams } from "react-router-dom";
+import { getMessages } from "../../../Services/API/Chats";
 
 const cx = classNames.bind(style);
 
@@ -43,6 +44,14 @@ function ChatBox() {
   };
 
   useEffect(() => {
+    getMessages(id)
+      .then((res) => {
+        setMessages(res.messages.reverse());
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
     socket.on("user message to admin", (data) => {
       if (data.socketId === id) {
         setMessages((prevMessages) => [
@@ -65,7 +74,7 @@ function ChatBox() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (input.trim()) {
-      setMessages([...messages, { name: "Peter Parker", message: input }]);
+      setMessages([...messages, { isAdmin: true, message: input }]);
       scrollToBottom();
       setInput("");
       sendMessage(input);
@@ -82,8 +91,7 @@ function ChatBox() {
                 <div
                   key={index}
                   className={cx("message", {
-                    parker: message.name === "Peter Parker",
-                    stark: message.name === "Tony Stark",
+                    parker: message.isAdmin,
                   })}
                 >
                   <div className={cx("time")}>Today at 11:41</div>

@@ -70,7 +70,7 @@ function GlobalStates({ children }) {
 
   useEffect(() => {
     if (!userData || userData.UserRoles !== "admin") {
-      // socket.connect();
+      socket.connect();
     } else {
       socket.disconnect();
     }
