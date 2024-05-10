@@ -23,8 +23,12 @@ function Header() {
     }
 
     const fetchApi = async () => {
-      const result = await searchProduct({ value: debounceValue });
-      setSearchResult(result.docs);
+      try {
+        const result = await searchProduct({ value: debounceValue });
+        setSearchResult(result.docs);
+      } catch (error) {
+        console.log(error);
+      }
     };
     fetchApi();
   }, [debounceValue]);

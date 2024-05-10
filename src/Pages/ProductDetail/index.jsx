@@ -87,7 +87,7 @@ function ProductDetail() {
           className={cx("row")}
         >
           <div className={cx(["left"])}>
-            <div classNam e={cx("image-container")}>
+            <div className={cx("image-container")}>
               {product.productImage?.length > 0 || (
                 <Skeleton
                   variant="rectangular"
