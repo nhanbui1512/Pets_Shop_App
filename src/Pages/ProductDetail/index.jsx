@@ -22,6 +22,8 @@ const cx = classNames.bind(styles);
 
 function ProductDetail() {
   const { id } = useParams();
+  const [loading, setLoading] = useState(false);
+
   const [product, setProduct] = useState({});
   const [option, setOption] = useState({});
   const [quantity, setQuantity] = useState(1);
@@ -67,8 +69,10 @@ function ProductDetail() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    setLoading(true);
     getProductById(id)
       .then((res) => {
+        setLoading(false);
         setProduct(res);
         setOption(res.variantOptions[0]);
         contentRef.current.innerHTML = res.htmlDomDescription;
@@ -100,14 +104,14 @@ function ProductDetail() {
             </div>
           </div>
           <div className={cx("right")}>
-            {product.name ? (
+            {product.name && !loading ? (
               <h1 className={cx("product-name")}>{product.name}</h1>
             ) : (
               <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
             )}
 
             <div className={cx("price")}>
-              {option.price ? (
+              {option.price && !loading ? (
                 <span>{`${Number(option.price).toLocaleString("vi-VN", { currency: "VND" })}đ`}</span>
               ) : (
                 <Skeleton
@@ -117,7 +121,16 @@ function ProductDetail() {
                 />
               )}
             </div>
-            <p className={cx("description")}>{product.description}</p>
+            {product.description && !loading ? (
+              <p className={cx("description")}>{product.description}</p>
+            ) : (
+              <Skeleton
+                variant="text"
+                sx={{ fontSize: "1rem" }}
+                width={"100%"}
+              />
+            )}
+
             <div className={cx("slection-box")}>
               <div className={cx("name-selection")}>Lựa chọn</div>
               <select
