@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import Typewriter from "typewriter-effect";
 import { useContext } from "react";
 import { StorageContext } from "../../Contexts/StorageContext";
-import ListSkeleton from "../../Components/ListSkeleton";
 
 function Dashboard() {
   const storageContext = useContext(StorageContext);
@@ -21,7 +20,7 @@ function Dashboard() {
         }}
       />
 
-      <ListSkeleton />
+      {/* <ListSkeleton /> */}
     </div>
   );
 }

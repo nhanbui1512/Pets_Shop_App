@@ -8,10 +8,11 @@ import { toast } from "react-toastify";
 import { memo } from "react";
 
 import { getBreeds } from "../../Services/API/Breeds";
+import TagLink from "../TagLink";
 
 const cx = classNames.bind(styles);
 
-function CardPredict({ data }) {
+function CardPredict({ data = {} }) {
   const [dialog, setDialog] = useState(false);
 
   const [message, setMessages] = useState("");
@@ -80,8 +81,15 @@ function CardPredict({ data }) {
           </div>
         </div>
         <p className="card-text">
-          <small className="text-muted">Last updated 3 mins ago</small>
+          <small className="text-muted">
+            Các sản phẩm gợi ý cho vật nuôi của bạn
+          </small>
         </p>
+        {data.data_breed?.diets?.map((product, index) => (
+          <TagLink key={index} to={`/product/${product._id}`}>
+            {product.name}
+          </TagLink>
+        ))}
       </div>
 
       <div>
