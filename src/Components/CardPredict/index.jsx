@@ -2,7 +2,7 @@ import classNames from "classnames/bind";
 import styles from "./CartPredict.module.scss";
 import Typewriter from "typewriter-effect";
 
-import { Button, Dialog } from "@mui/material";
+import { Button, Dialog, Rating, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { memo } from "react";
@@ -14,7 +14,7 @@ const cx = classNames.bind(styles);
 
 function CardPredict({ data = {} }) {
   const [dialog, setDialog] = useState(false);
-
+  const [rating, setRating] = useState(0);
   const [message, setMessages] = useState("");
   const [breeds, setBreeds] = useState([]);
 
@@ -137,6 +137,14 @@ function CardPredict({ data = {} }) {
                       Corgi Dog
                     </h3>
                   </div>
+                  <Typography component="legend">Rating</Typography>
+                  <Rating
+                    name="simple-controlled"
+                    value={rating}
+                    onChange={(event, newValue) => {
+                      setRating(newValue);
+                    }}
+                  />
                   <div className="form-group">
                     <label htmlFor="message-text" className="col-form-label">
                       Message:
