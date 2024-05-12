@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faEye } from "@fortawesome/free-solid-svg-icons";
 import React, { useContext, memo } from "react";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 import { StorageContext } from "../../Contexts/StorageContext";
 import { Tooltip } from "@mui/material";
