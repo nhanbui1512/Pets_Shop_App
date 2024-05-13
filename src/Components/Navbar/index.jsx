@@ -55,17 +55,17 @@ function Navbar() {
               <li>
                 <div className={cx("line-vertical")}></div>
                 <div className={cx("line-horizontal")}></div>
-                <Link to={"/income"}>Income</Link>
+                <Link>Income</Link>
               </li>
               <li>
                 <div className={cx("line-vertical")}></div>
                 <div className={cx("line-horizontal")}></div>
-                <Link to={"/expenses"}>Expenses</Link>
+                <Link>Expenses</Link>
               </li>
               <li>
                 <div className={cx("line-vertical")}></div>
                 <div className={cx("line-horizontal")}></div>
-                <Link to={"/statements"}>Statements</Link>
+                <Link>Statements</Link>
               </li>
               <li>
                 <div className={cx("line-vertical")}></div>
@@ -73,7 +73,7 @@ function Navbar() {
                 {/* <a href="#payouts" title="Payouts">
                   Payouts
                 </a> */}
-                <Link to={"/payouts"}>Payouts</Link>
+                <Link>Payouts</Link>
               </li>
             </ul>
           )}

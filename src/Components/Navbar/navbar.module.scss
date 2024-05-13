@@ -11,6 +11,7 @@
   }
 
   .main-item {
+    user-select: none;
     width: 200px;
     font-size: 1rem;
     border-radius: 8px;
@@ -25,6 +26,7 @@
   }
 
   .ul-items {
+    user-select: none;
     position: absolute;
     overflow-y: auto;
     max-height: 400px;
