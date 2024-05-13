@@ -18,8 +18,12 @@ function CardPredict({ data = {} }) {
   const [rating, setRating] = useState(0);
   const [message, setMessages] = useState("");
   const [breeds, setBreeds] = useState([]);
+  const [isPredicted, setIsPredicted] = useState(false);
 
   const handleFeedback = () => {
+    if (message.trim() === "" || rating === 0) {
+      return toast.error("Bạn phải điền đẩy đủ thông tin");
+    }
     feedBackPredict({
       feedback: message,
       feedbackNumber: rating,
@@ -28,6 +32,7 @@ function CardPredict({ data = {} }) {
     })
       .then((res) => {
         toast.success("Feedback thành công !");
+        setIsPredicted(true);
       })
       .catch((err) => {
         toast.error("Feedback thất bại");
@@ -107,7 +112,11 @@ function CardPredict({ data = {} }) {
       <div>
         <Button
           onClick={() => {
-            setDialog(true);
+            if (!isPredicted) {
+              setDialog(true);
+            } else {
+              toast("Bạn đã thực hiện đánh giá");
+            }
           }}
           variant="contained"
           sx={{ float: "right" }}
