@@ -1,7 +1,6 @@
-import request from "./request";
+import request from "../request";
 
 export async function feedBackPredict({
-  userId,
   feedback,
   links,
   feedbackNumber,
@@ -9,12 +8,12 @@ export async function feedBackPredict({
 }) {
   try {
     const res = await request.post(`/feedbacks`, {
-      userId,
       feedback,
       links,
       feedbackNumber,
       cardBreedsId,
     });
+    return res.data;
   } catch (error) {
     throw error;
   }

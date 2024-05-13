@@ -9,6 +9,7 @@ import { memo } from "react";
 
 import { getBreeds } from "../../Services/API/Breeds";
 import TagLink from "../TagLink";
+import { feedBackPredict } from "../../Services/API/Feedback";
 
 const cx = classNames.bind(styles);
 
@@ -19,7 +20,18 @@ function CardPredict({ data = {} }) {
   const [breeds, setBreeds] = useState([]);
 
   const handleFeedback = () => {
-    toast.success("Feedback thành công !");
+    feedBackPredict({
+      feedback: message,
+      feedbackNumber: rating,
+      links: data.url,
+      cardBreedsId: data.data_breed._id,
+    })
+      .then((res) => {
+        toast.success("Feedback thành công !");
+      })
+      .catch((err) => {
+        toast.error("Feedback thất bại");
+      });
     setDialog(false);
   };
 
