@@ -8,3 +8,12 @@ export async function getConversations() {
     throw error;
   }
 }
+
+export async function getMessages(socketId) {
+  try {
+    const res = await request.get(`/conversations/${socketId}`);
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+}

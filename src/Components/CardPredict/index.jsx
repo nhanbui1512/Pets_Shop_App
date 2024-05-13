@@ -1,21 +1,37 @@
 import classNames from "classnames/bind";
 import styles from "./CartPredict.module.scss";
-import { Button, Dialog } from "@mui/material";
+import Typewriter from "typewriter-effect";
+
+import { Button, Dialog, Rating, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { memo } from "react";
+
 import { getBreeds } from "../../Services/API/Breeds";
+import TagLink from "../TagLink";
+import { feedBackPredict } from "../../Services/API/Feedback";
 
 const cx = classNames.bind(styles);
 
-function CardPredict({ data }) {
+function CardPredict({ data = {} }) {
   const [dialog, setDialog] = useState(false);
-
+  const [rating, setRating] = useState(0);
   const [message, setMessages] = useState("");
   const [breeds, setBreeds] = useState([]);
 
   const handleFeedback = () => {
-    toast.success("Feedback thành công !");
+    feedBackPredict({
+      feedback: message,
+      feedbackNumber: rating,
+      links: data.url,
+      cardBreedsId: data.data_breed._id,
+    })
+      .then((res) => {
+        toast.success("Feedback thành công !");
+      })
+      .catch((err) => {
+        toast.error("Feedback thất bại");
+      });
     setDialog(false);
   };
 
@@ -37,14 +53,22 @@ function CardPredict({ data }) {
       }}
       className="card"
     >
-      <img className="img-fluid" src={data?.url || ""} alt="" />
+      <img
+        className="img-fluid"
+        src={data.data_breed?.breedImages?.[0] || ""}
+        alt=""
+      />
       <div className="card-body">
         <h5 className="card-title">{data?.label || "Animal Name"}</h5>
-        <p className="card-text">
-          This is a wider card with supporting text and below as a natural
-          lead-in to the additional content. This content is a little bit
-          longer.
-        </p>
+        <Typewriter
+          options={{
+            strings: data.data_breed?.appearance,
+            autoStart: true,
+            delay: 30,
+            cursor: "",
+          }}
+        />
+        {/* <p className="card-text">{data.data_breed?.appearance}</p> */}
 
         <div className="mt-4">
           <h6>
@@ -69,8 +93,15 @@ function CardPredict({ data }) {
           </div>
         </div>
         <p className="card-text">
-          <small className="text-muted">Last updated 3 mins ago</small>
+          <small className="text-muted">
+            Các sản phẩm gợi ý cho vật nuôi của bạn
+          </small>
         </p>
+        {data.data_breed?.diets?.map((product, index) => (
+          <TagLink key={index} to={`/product/${product._id}`}>
+            {product.name}
+          </TagLink>
+        ))}
       </div>
 
       <div>
@@ -118,6 +149,14 @@ function CardPredict({ data }) {
                       Corgi Dog
                     </h3>
                   </div>
+                  <Typography component="legend">Rating</Typography>
+                  <Rating
+                    name="simple-controlled"
+                    value={rating}
+                    onChange={(event, newValue) => {
+                      setRating(newValue);
+                    }}
+                  />
                   <div className="form-group">
                     <label htmlFor="message-text" className="col-form-label">
                       Message:

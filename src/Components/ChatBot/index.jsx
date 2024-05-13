@@ -10,12 +10,14 @@ import CardPredict from "../CardPredict";
 import { predictBreed } from "../../Services/API/Predict";
 import { useContext } from "react";
 import { StorageContext } from "../../Contexts/StorageContext";
+import { TypingIndicator } from "../TypingIndicator";
 
 const cx = classNames.bind(style);
 
 function ChatBot() {
   const [isChatBoxVisible, setChatBoxVisible] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [answerOptions, setAnswerOptions] = useState(
     scripQuestions.answerOptions
@@ -56,9 +58,56 @@ function ChatBot() {
     }
   };
 
+  const handlePredict = (e) => {
+    if (e.target.files.length > 0 && e.target.files[0].type.includes("image")) {
+      const file = e.target.files[0];
+      const fileURL = URL.createObjectURL(file);
+      setAnswerOptions([]);
+      setLoading(true);
+      setMessages((prev) => {
+        return [
+          ...prev,
+          {
+            name: "Peter Parker",
+            image: fileURL,
+          },
+        ];
+      });
+
+      predictBreed({ file: file })
+        .then((res) => {
+          setLoading(false);
+          setMessages((prev) => {
+            return [
+              ...prev,
+              {
+                name: "Tony Stack",
+                cardPredict: <CardPredict data={res} />,
+              },
+            ];
+          });
+        })
+        .catch((err) => {
+          setLoading(false);
+          setMessages((prev) => {
+            return [
+              ...prev,
+              {
+                name: "Tony Stack",
+                message: "Hệ thống đang lỗi, vui lòng thử lại sau",
+              },
+            ];
+          });
+          console.log(err);
+        });
+    }
+  };
+
   useEffect(() => {
-    scrollToBottom();
-  }, [messages, isChatBoxVisible]); // Luôn cuộn xuống khi có tin nhắn mới được thêm vào
+    setTimeout(() => {
+      scrollToBottom();
+    }, 500);
+  }, [messages, isChatBoxVisible, loading]); // Luôn cuộn xuống khi có tin nhắn mới được thêm vào
 
   const toggleChatBox = useCallback((event) => {
     event.stopPropagation(); // Ngăn sự kiện lan ra ngoài
@@ -250,6 +299,11 @@ function ChatBot() {
                 );
               })}
               {/* Tham chiếu tới phần tử cuối cùng để cuộn xuống */}
+              {loading && (
+                <div className={cx("message")}>
+                  <TypingIndicator />
+                </div>
+              )}
               <div ref={messagesEndRef} />
             </div>
             <form className={cx("input")} onSubmit={handleSubmit}>
@@ -275,51 +329,7 @@ function ChatBot() {
         style={{ display: "none" }}
         max={5}
         accept=".jpg, .jpeg, .png"
-        onChange={(e) => {
-          if (
-            e.target.files.length > 0 &&
-            e.target.files[0].type.includes("image")
-          ) {
-            const file = e.target.files[0];
-            const fileURL = URL.createObjectURL(file);
-            setAnswerOptions([]);
-
-            setMessages((prev) => {
-              return [
-                ...prev,
-                {
-                  name: "Peter Parker",
-                  image: fileURL,
-                },
-              ];
-            });
-
-            predictBreed({ file: file })
-              .then((res) => {
-                setMessages((prev) => {
-                  return [
-                    ...prev,
-                    {
-                      name: "Tony Stack",
-                      cardPredict: <CardPredict data={res} />,
-                    },
-                  ];
-                });
-              })
-              .catch((err) => {
-                setMessages((prev) => {
-                  return [
-                    ...prev,
-                    {
-                      name: "Tony Stack",
-                      message: "Hệ thống đang lỗi, vui lòng thử lại sau",
-                    },
-                  ];
-                });
-                console.log(err);
-              });
-          }
-        }}
+        onChange={handlePredict}
         ref={inputFileRef}
         type="file"
         className="disappear"

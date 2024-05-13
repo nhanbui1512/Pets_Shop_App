@@ -17,6 +17,10 @@ function Cart() {
   const check = true;
   const storage = useContext(StorageContext);
 
+  const total = storage.cartItems.reduce((accumulator, item) => {
+    return accumulator + item.price * item.quantity;
+  }, 0);
+
   return (
     <div className={cx("content-cart")}>
       <h3 className={cx("content-cart_head")}>Giỏ hàng</h3>
@@ -86,11 +90,16 @@ function Cart() {
 
               <div className={cx("content-box_house")}>
                 <div className={cx("content-box_title")}>Tổng tiền</div>
-                <div className={cx("content-box_price")}>370.000₫</div>
+                <div className={cx("content-box_price")}>
+                  {total.toLocaleString("vi-VN", { currency: "VND" })}₫
+                </div>
               </div>
 
               <div className={cx("btn_total")}>
-                <Link className={cx("content-box_house", "text-dec")}>
+                <Link
+                  to={"/payment"}
+                  className={cx("content-box_house", "text-dec")}
+                >
                   <FontAwesomeIcon
                     className={cx("btn-total_icon")}
                     icon={faCheckCircle}

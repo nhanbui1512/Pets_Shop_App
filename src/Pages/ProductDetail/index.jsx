@@ -16,11 +16,14 @@ import { toast } from "react-toastify";
 
 import { StorageContext } from "../../Contexts/StorageContext";
 import ImageSlider from "../../Components/ImageSlider";
+import { Skeleton } from "@mui/material";
 
 const cx = classNames.bind(styles);
 
 function ProductDetail() {
   const { id } = useParams();
+  const [loading, setLoading] = useState(false);
+
   const [product, setProduct] = useState({});
   const [option, setOption] = useState({});
   const [quantity, setQuantity] = useState(1);
@@ -30,38 +33,46 @@ function ProductDetail() {
   const contentRef = useRef();
 
   const handleBuy = () => {
-    const cartItems = [...storage.cartItems];
-    const isExistProduct = cartItems.find(
-      (item) =>
-        item._id === product._id && item.variantOption._id === option._id
-    );
+    if (Object.keys(product).length !== 0) {
+      const cartItems = [...storage.cartItems];
+      const isExistProduct = cartItems.find(
+        (item) =>
+          item._id === product._id && item.variantOption._id === option._id
+      );
 
-    if (isExistProduct) {
-      isExistProduct.quantity += quantity;
-    } else {
-      const newItem = {
-        _id: product._id,
-        name: product.name,
-        productImage: product.productImage[0],
-        price: option.price,
-        quantity: 1,
-        category: product.categoryID,
-        variantOption: {
-          _id: option._id,
-          name: option.name,
-        },
-      };
+      if (isExistProduct) {
+        isExistProduct.quantity += quantity;
+      } else {
+        const newItem = {
+          _id: product._id,
+          name: product.name,
+          productImage: product.productImage[0],
+          price: option.price,
+          quantity: quantity,
+          category: product.categoryID,
+          variantOption: {
+            _id: option._id,
+            name: option.name,
+          },
+        };
 
-      cartItems.push(newItem);
+        cartItems.push(newItem);
+      }
+      storage.setCartItems(cartItems);
+      toast.success("Thêm sản phẩm vào giỏ hàng thành công");
     }
-    storage.setCartItems(cartItems);
-    toast.success("Thêm sản phẩm vào giỏ hàng thành công");
+  };
+
+  const handleChangeQuantity = (value) => {
+    setQuantity(value);
   };
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    setLoading(true);
     getProductById(id)
       .then((res) => {
+        setLoading(false);
         setProduct(res);
         setOption(res.variantOptions[0]);
         contentRef.current.innerHTML = res.htmlDomDescription;
@@ -81,15 +92,45 @@ function ProductDetail() {
         >
           <div className={cx(["left"])}>
             <div className={cx("image-container")}>
+              {product.productImage?.length > 0 || (
+                <Skeleton
+                  variant="rectangular"
+                  animation="wave"
+                  width={370}
+                  height={370}
+                />
+              )}
               <ImageSlider images={product.productImage} />
             </div>
           </div>
           <div className={cx("right")}>
-            <h1 className={cx("product-name")}>{product.name}</h1>
+            {product.name && !loading ? (
+              <h1 className={cx("product-name")}>{product.name}</h1>
+            ) : (
+              <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+            )}
+
             <div className={cx("price")}>
-              <span>{`${Number(option.price).toLocaleString("vi-VN", { currency: "VND" })}đ`}</span>
+              {option.price && !loading ? (
+                <span>{`${Number(option.price).toLocaleString("vi-VN", { currency: "VND" })}đ`}</span>
+              ) : (
+                <Skeleton
+                  variant="text"
+                  sx={{ fontSize: "1rem" }}
+                  width={"100%"}
+                />
+              )}
             </div>
-            <p className={cx("description")}>{product.description}</p>
+            {product.description && !loading ? (
+              <p className={cx("description")}>{product.description}</p>
+            ) : (
+              <Skeleton
+                variant="text"
+                sx={{ fontSize: "1rem" }}
+                width={"100%"}
+              />
+            )}
+
             <div className={cx("slection-box")}>
               <div className={cx("name-selection")}>Lựa chọn</div>
               <select
@@ -115,6 +156,9 @@ function ProductDetail() {
                 value={quantity}
                 setValue={setQuantity}
                 className={cx("count-box")}
+                onChange={(value) => {
+                  handleChangeQuantity(value);
+                }}
               />
               <Button onClick={handleBuy} rouded>
                 MUA HÀNG

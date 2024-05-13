@@ -6,17 +6,21 @@ import styles from "./CountNumber.module.scss";
 
 const cx = classNames.bind(styles);
 
-function CountNumber({ value = 0, setValue, className }) {
+function CountNumber({ value = 0, className, onChange }) {
   const handleReduce = () => {
     if (value <= 1) {
-      setValue(value);
+      return handleChange(value);
     } else {
-      setValue(--value);
+      return handleChange(--value);
     }
   };
 
+  const handleChange = (value) => {
+    if (onChange) onChange(value);
+  };
+
   const handleIncrease = () => {
-    setValue(++value);
+    return handleChange(++value);
   };
   return (
     <div className={cx("btn-active_product", { [className]: className })}>

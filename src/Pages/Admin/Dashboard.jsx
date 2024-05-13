@@ -2,14 +2,14 @@ import { useEffect } from "react";
 import Typewriter from "typewriter-effect";
 import { useContext } from "react";
 import { StorageContext } from "../../Contexts/StorageContext";
+import CardPredict from "../../Components/CardPredict";
 
 function Dashboard() {
   const storageContext = useContext(StorageContext);
   const socket = storageContext.socket;
   useEffect(() => {
     socket.connect();
-  }
-  , [socket]);
+  }, [socket]);
   return (
     <div>
       <Typewriter
@@ -20,6 +20,9 @@ function Dashboard() {
           delay: 50,
         }}
       />
+
+      <CardPredict />
+      {/* <ListSkeleton /> */}
     </div>
   );
 }
