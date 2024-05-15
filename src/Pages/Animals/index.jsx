@@ -5,6 +5,7 @@ import { useState } from "react";
 import { getBreeds } from "../../Services/API/Breeds";
 import { formatDay } from "../../Utils/time";
 import { Link } from "react-router-dom";
+import ListSkeleton from "../../Components/ListSkeleton";
 const cx = classNames.bind(styles);
 
 function Animal() {
@@ -22,6 +23,7 @@ function Animal() {
   return (
     <div className={cx("wrapper")}>
       <div className="container-fluid">
+        {breeds.length === 0 && <ListSkeleton />}
         <div className="row">
           <div className="col-12 m-b-30">
             <div className="row">
@@ -30,7 +32,7 @@ function Animal() {
                   <div key={index} className="col-md-6 col-lg-3">
                     <div className="card">
                       <img
-                        className="img-fluid"
+                        className={cx(["card-img", "img-fluid"])}
                         src={breed.breedImages[0]}
                         alt=""
                       />
