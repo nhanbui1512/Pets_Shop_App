@@ -18,6 +18,8 @@ function CardPredict({ data = {} }) {
   const [rating, setRating] = useState(0);
   const [message, setMessages] = useState("");
   const [breeds, setBreeds] = useState([]);
+  const [improveBreedId, setImproveBreedId] = useState(data.data_breed?._id);
+
   const [isPredicted, setIsPredicted] = useState(false);
 
   const handleFeedback = () => {
@@ -28,7 +30,7 @@ function CardPredict({ data = {} }) {
       feedback: message,
       feedbackNumber: rating,
       links: data.url,
-      cardBreedsId: data.data_breed._id,
+      cardBreedsId: improveBreedId,
     })
       .then((res) => {
         toast.success("Feedback thành công !");
@@ -179,7 +181,11 @@ function CardPredict({ data = {} }) {
                   </div>
                   <div className={cx("slection-box")}>
                     <div className={cx("name-selection")}>Giống loài</div>
-                    <select className={cx("selected")}>
+                    <select
+                      value={improveBreedId}
+                      onChange={(e) => setImproveBreedId(e.target.value)}
+                      className={cx("selected")}
+                    >
                       {breeds.map((breed, index) => {
                         return (
                           <option value={breed._id} key={index}>
