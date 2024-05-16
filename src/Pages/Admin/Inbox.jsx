@@ -2,10 +2,24 @@ import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getConversations } from "../../Services/API/Chats";
 import { StorageContext } from "../../Contexts/StorageContext";
-
+import Button from "@mui/material/Button";
 function Inbox() {
   const [chats, setChats] = useState([]);
+  const [deleteIds, setDeleteIds] = useState([]);
+
   const socket = useContext(StorageContext).socket;
+
+  const handleChecked = (e, idConversation) => {
+    const isChecked = e.target.checked;
+    if (isChecked === true && deleteIds.includes(idConversation) === false) {
+      setDeleteIds((prev) => [...prev, idConversation]);
+    } else {
+      setDeleteIds((prev) => {
+        const filterd = prev.filter((item) => item !== idConversation);
+        return filterd;
+      });
+    }
+  };
 
   useEffect(() => {
     // call api get conversatioins
@@ -59,6 +73,9 @@ function Inbox() {
     <div>
       <div className="container-fluid">
         <div className="row">
+          <Button sx={{ margin: "10px 20px" }} variant="contained">
+            Delete
+          </Button>
           <div className="col-lg-12">
             <div className="card">
               <div className="card-body">
@@ -70,7 +87,11 @@ function Inbox() {
                           <div>
                             <div className="col-mail col-mail-1">
                               <div className="email-checkbox">
-                                <input type="checkbox" id="chk2" />
+                                <input
+                                  onChange={(e) => handleChecked(e, chat._id)}
+                                  type="checkbox"
+                                  id="chk2"
+                                />
                                 <label
                                   className="toggle"
                                   htmlFor="chk2"

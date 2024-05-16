@@ -13,12 +13,16 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { toast } from "react-toastify";
 
 const cx = classNames.bind(styles);
 
 function Orders() {
   const [searchResult, setSearchResult] = useState([]);
   const handleSearchSubmit = (form) => {
+    if (form.searchValue.trim() === "") {
+      return toast.error("Vui lòng điền đầy đủ thông tin");
+    }
     searchOrder({
       value: form.searchValue,
       type: form.type,
