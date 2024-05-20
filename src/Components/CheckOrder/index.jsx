@@ -52,7 +52,7 @@ function CheckOrder({ onSearchSubmit }) {
             <label htmlFor="phone">Số điện thoại</label>
           </div>
           <div className={cx("option-form")}>
-            <p>{type === "name" ? "Tên" : "Số điện thoại"}</p>
+            <p>{type === "nameUser" ? "Tên" : "Số điện thoại"}</p>
             <input
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}

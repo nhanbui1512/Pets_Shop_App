@@ -61,7 +61,11 @@ function ListBreed() {
                       {breed.breed_name}
                     </Link>
                   </TableCell>
-                  <TableCell align="left">{breed.appearance}</TableCell>
+                  <TableCell align="left">
+                    <Link to={`/admin/breeds/${breed._id}`}>
+                      {breed.appearance}
+                    </Link>
+                  </TableCell>
                   <TableCell align="left">
                     {formatDay(breed.createdAt)}
                   </TableCell>
