@@ -30,13 +30,13 @@
   font-weight: normal;
   z-index: 0;
   span {
-    height: 100%;
     border-left: solid 1px #e8e8e8;
     padding: 10px 12px;
   }
 }
 .sort-modes {
   background-color: #fff;
+  list-style-type: none;
   li {
     cursor: pointer;
     min-width: 145px;
