@@ -7,6 +7,7 @@ const CountNumber = () => {
   const handleOnChange = (number) => {
     setValue(number);
   };
+
   return (
     <CountNumberComponent
       value={value}
