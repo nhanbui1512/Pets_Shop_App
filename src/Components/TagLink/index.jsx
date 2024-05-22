@@ -3,9 +3,9 @@ import styles from "./TagLink.module.scss";
 import classNames from "classnames/bind";
 const cx = classNames.bind(styles);
 
-function TagLink({ children, to = "/" }) {
+function TagLink({ children, to = "/", style }) {
   return (
-    <Link to={to} className={cx("link-wrapper")}>
+    <Link style={style} to={to} className={cx("link-wrapper")}>
       <div className={cx("wrapper")}>
         <p>{children}</p>
       </div>
