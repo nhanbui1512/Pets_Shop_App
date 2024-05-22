@@ -14,7 +14,7 @@ const ImageSlider = ({ images = [] }) => {
 };
 
 export default {
-  title: "Example/ImageSlider",
+  title: "Components/ImageSlider",
   component: ImageSlider,
   parameters: {
     layout: "centered",

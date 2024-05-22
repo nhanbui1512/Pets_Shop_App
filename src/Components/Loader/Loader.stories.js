@@ -7,7 +7,7 @@ const Loader = () => {
 };
 
 export default {
-  title: "Example/Loader",
+  title: "Components/Loader",
   component: Loader,
   parameters: {
     layout: "centered",

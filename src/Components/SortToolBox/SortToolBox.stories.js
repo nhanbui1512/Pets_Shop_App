@@ -6,7 +6,7 @@ const SortToolBox = () => {
 };
 
 export default {
-  title: "Example/SortToolBox",
+  title: "Components/SortToolBox",
   component: SortToolBox,
   parameters: {
     layout: "centered",

@@ -18,7 +18,7 @@ const CountNumber = () => {
 };
 
 export default {
-  title: "Example/Counter",
+  title: "Components/Counter",
   component: CountNumber,
   parameters: {
     layout: "centered",

@@ -4,7 +4,7 @@ const TypingIndicator = () => {
 };
 
 export default {
-  title: "Example/TypingIndicator",
+  title: "Components/TypingIndicator",
   component: TypingIndicator,
   parameters: {
     layout: "centered",

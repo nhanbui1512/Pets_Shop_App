@@ -12,7 +12,7 @@ const TagLink = ({ children, to = "/", style = {} }) => {
 };
 
 export default {
-  title: "Example/TagLink",
+  title: "Components/TagLink",
   component: TagLink,
   parameters: {
     layout: "centered",

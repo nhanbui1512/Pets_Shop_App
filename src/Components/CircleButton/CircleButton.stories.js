@@ -8,7 +8,7 @@ const CircleButton = ({ children }) => {
 };
 
 export default {
-  title: "Example/CircleButton",
+  title: "Components/CircleButton",
   component: CircleButton,
   parameters: {
     layout: "centered",

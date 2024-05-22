@@ -16,7 +16,7 @@ const Skeleton = ({ variant, animation, width, height }) => {
 };
 
 export default {
-  title: "Example/Skeleton",
+  title: "Components/Skeleton",
   component: Skeleton,
   parameters: {
     layout: "centered",
