@@ -44,6 +44,9 @@
   font-weight: 500;
   line-height: 1.6;
   box-shadow: 4px 4px 12px #111;
+  &:hover {
+    color: var(--white);
+  }
 }
 
 .content-blog_intro {

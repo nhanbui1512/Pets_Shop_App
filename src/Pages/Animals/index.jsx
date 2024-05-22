@@ -31,11 +31,13 @@ function Animal() {
                 return (
                   <div key={index} className="col-md-6 col-lg-3">
                     <div className="card">
-                      <img
-                        className={cx(["card-img", "img-fluid"])}
-                        src={breed.breedImages[0]}
-                        alt=""
-                      />
+                      <Link to={`/animals/${breed._id}`}>
+                        <img
+                          className={cx(["card-img", "img-fluid"])}
+                          src={breed.breedImages[0]}
+                          alt=""
+                        />
+                      </Link>
                       <div className="card-body">
                         <Link to={`/animals/${breed._id}`}>
                           {" "}
