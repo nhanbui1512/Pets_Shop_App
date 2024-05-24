@@ -157,7 +157,7 @@ function CardPredict({ data = {} }) {
                         fontWeight: 600,
                       }}
                     >
-                      Corgi Dog
+                      {data.data_breed?.breed_name}
                     </h3>
                   </div>
                   <Typography component="legend">Rating</Typography>

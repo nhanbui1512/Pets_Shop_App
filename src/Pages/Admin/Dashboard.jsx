@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import Typewriter from "typewriter-effect";
 import { useContext } from "react";
 import { StorageContext } from "../../Contexts/StorageContext";
-import CardPredict from "../../Components/CardPredict";
 
 function Dashboard() {
   const storageContext = useContext(StorageContext);
@@ -21,7 +20,6 @@ function Dashboard() {
         }}
       />
 
-      <CardPredict />
       {/* <ListSkeleton /> */}
     </div>
   );
