@@ -10,6 +10,7 @@ import { memo } from "react";
 import { getBreeds } from "../../Services/API/Breeds";
 import TagLink from "../TagLink";
 import { feedBackPredict } from "../../Services/API/Feedback";
+import { Link } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
@@ -60,13 +61,21 @@ function CardPredict({ data = {} }) {
       }}
       className="card"
     >
-      <img
-        className="img-fluid"
-        src={data.data_breed?.breedImages?.[0] || ""}
-        alt=""
-      />
+      <Link to={`/animals/${data.data_breed._id}`}>
+        {" "}
+        <img
+          className="img-fluid"
+          src={data.data_breed?.breedImages?.[0] || ""}
+          alt=""
+        />
+      </Link>
+
       <div className="card-body">
-        <h5 className="card-title">{data?.label || "Animal Name"}</h5>
+        <Link to={`/animals/${data.data_breed._id}`}>
+          {" "}
+          <h5 className="card-title">{data?.label || "Animal Name"}</h5>
+        </Link>
+
         <Typewriter
           options={{
             strings: data.data_breed?.appearance,
