@@ -1,5 +1,6 @@
 import { ImageList, ImageListItem } from "@mui/material";
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
+import { getBreeds } from "../../Services/API/Breeds";
 
 const itemData = [
   {
@@ -51,25 +52,45 @@ const itemData = [
     title: "Bike",
   },
 ];
-class ListFeedBack extends Component {
-  render() {
-    return (
-      <div>
-        <ImageList sx={{ width: 800, height: 450 }} cols={3}>
-          {itemData.map((item) => (
-            <ImageListItem key={item.img}>
-              <img
-                srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-                alt={item.title}
-                loading="lazy"
-              />
-            </ImageListItem>
-          ))}
-        </ImageList>
+function ListFeedBack() {
+  const [breeds, setBreeds] = useState([]);
+
+  useEffect(() => {
+    getBreeds({ page: 1, perPage: 40 })
+      .then((res) => {
+        setBreeds(res.docs);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  return (
+    <div style={{ display: "flex", gap: 16 }}>
+      <div style={{ display: "flex", flexDirection: "column", maxWidth: 300 }}>
+        {breeds.map((item, index) => {
+          return (
+            <div key={index}>
+              <p>{item.breed_name}</p>
+            </div>
+          );
+        })}
       </div>
-    );
-  }
+
+      <ImageList sx={{ width: 800, height: 800 }} cols={3}>
+        {itemData.map((item) => (
+          <ImageListItem key={item.img}>
+            <img
+              srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+              src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
+              alt={item.title}
+              loading="lazy"
+            />
+          </ImageListItem>
+        ))}
+      </ImageList>
+    </div>
+  );
 }
 
 export default ListFeedBack;

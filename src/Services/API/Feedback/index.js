@@ -18,3 +18,12 @@ export async function feedBackPredict({
     throw error;
   }
 }
+
+export async function getFeedbacksByBreed(id) {
+  try {
+    const res = await request.get(`/feedbacks?breed_id=${id}`);
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+}
