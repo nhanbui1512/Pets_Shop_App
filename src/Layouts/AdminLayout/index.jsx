@@ -375,6 +375,12 @@ function AdminLayout({ children }) {
                   <Link to={"/admin/bill"}>List Bill</Link>
                 </li>
               </DropdownMenu>
+
+              <DropdownMenu title={"Feedback"}>
+                <li>
+                  <Link to={"/admin/feedbacks"}>List Feedback</Link>
+                </li>
+              </DropdownMenu>
             </ul>
           </div>
         </div>
