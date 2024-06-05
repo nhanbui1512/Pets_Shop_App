@@ -18,7 +18,7 @@ import {
   OrderDetail,
   UpdateBreed,
 } from "../Pages/Admin";
-import ListFeedBack from "../Pages/Admin/ListFeedBack";
+import ListFeedBack from "../Pages/Admin/ListFeedback";
 
 export const adminRoutes = [
   {
@@ -99,6 +99,10 @@ export const adminRoutes = [
   },
   {
     path: "/feedbacks",
+    element: <ListFeedBack />,
+  },
+  {
+    path: "/feedbacks/:id",
     element: <ListFeedBack />,
   },
 ];

@@ -1,0 +1,11 @@
+.card_image {
+  position: relative;
+  cursor: pointer;
+}
+.check-icon {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 8px;
+  color: var(--white);
+}

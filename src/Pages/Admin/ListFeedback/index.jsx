@@ -1,6 +1,13 @@
+import classNames from "classnames/bind";
 import { ImageList, ImageListItem } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { getBreeds } from "../../Services/API/Breeds";
+import { getBreeds } from "../../../Services/API/Breeds";
+import { Link, useParams } from "react-router-dom";
+import styles from "./ListFeedback.module.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import { getFeedbacksByBreed } from "../../../Services/API/Feedback";
+const cx = classNames.bind(styles);
 
 const itemData = [
   {
@@ -54,6 +61,29 @@ const itemData = [
 ];
 function ListFeedBack() {
   const [breeds, setBreeds] = useState([]);
+  const [choosedImages, setChoosedImages] = useState([]);
+
+  const { id } = useParams();
+
+  const handleChoose = (img) => {
+    const isExist = choosedImages.indexOf(img);
+    if (isExist === -1) return setChoosedImages((prev) => [...prev, img]);
+    setChoosedImages((prev) => {
+      const newState = [...prev];
+      newState.splice(isExist, 1);
+      return newState;
+    });
+  };
+
+  useEffect(() => {
+    getFeedbacksByBreed(id)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [id]);
 
   useEffect(() => {
     getBreeds({ page: 1, perPage: 40 })
@@ -66,26 +96,40 @@ function ListFeedBack() {
   }, []);
 
   return (
-    <div style={{ display: "flex", gap: 16 }}>
+    <div style={{ display: "flex", justifyContent: "center", gap: 64 }}>
       <div style={{ display: "flex", flexDirection: "column", maxWidth: 300 }}>
         {breeds.map((item, index) => {
           return (
             <div key={index}>
-              <p>{item.breed_name}</p>
+              <Link to={`/admin/feedbacks/${item._id}`}>
+                {" "}
+                <p>{item.breed_name}</p>
+              </Link>
             </div>
           );
         })}
       </div>
 
-      <ImageList sx={{ width: 800, height: 800 }} cols={3}>
+      <ImageList sx={{ width: 800 }} cols={3}>
         {itemData.map((item) => (
-          <ImageListItem key={item.img}>
+          <ImageListItem
+            onClick={() => {
+              handleChoose(item.img);
+            }}
+            className={cx("card_image")}
+            key={item.img}
+          >
             <img
               srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
               src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
               alt={item.title}
               loading="lazy"
             />
+            {choosedImages.includes(item.img) && (
+              <span className={cx("check-icon")}>
+                <FontAwesomeIcon fontSize={16} icon={faCheckCircle} />
+              </span>
+            )}
           </ImageListItem>
         ))}
       </ImageList>
