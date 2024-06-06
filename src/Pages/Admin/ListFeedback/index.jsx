@@ -9,59 +9,10 @@ import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { getFeedbacksByBreed } from "../../../Services/API/Feedback";
 const cx = classNames.bind(styles);
 
-const itemData = [
-  {
-    img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
-    title: "Breakfast",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d",
-    title: "Burger",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1522770179533-24471fcdba45",
-    title: "Camera",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c",
-    title: "Coffee",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1533827432537-70133748f5c8",
-    title: "Hats",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62",
-    title: "Honey",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1516802273409-68526ee1bdd6",
-    title: "Basketball",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1518756131217-31eb79b20e8f",
-    title: "Fern",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1597645587822-e99fa5d45d25",
-    title: "Mushrooms",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1567306301408-9b74779a11af",
-    title: "Tomato basil",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1471357674240-e1a485acb3e1",
-    title: "Sea star",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
-    title: "Bike",
-  },
-];
 function ListFeedBack() {
   const [breeds, setBreeds] = useState([]);
   const [choosedImages, setChoosedImages] = useState([]);
+  const [feedbacks, setFeedbacks] = useState([]);
 
   const { id } = useParams();
 
@@ -76,13 +27,24 @@ function ListFeedBack() {
   };
 
   useEffect(() => {
-    getFeedbacksByBreed(id)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (!id) {
+      getFeedbacksByBreed()
+        .then((res) => {
+          setFeedbacks(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      getFeedbacksByBreed(id)
+        .then((res) => {
+          setFeedbacks(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    setChoosedImages([]);
   }, [id]);
 
   useEffect(() => {
@@ -103,7 +65,7 @@ function ListFeedBack() {
             <div key={index}>
               <Link to={`/admin/feedbacks/${item._id}`}>
                 {" "}
-                <p>{item.breed_name}</p>
+                <p>{`${item.breed_name} : ${item.feedbackCount} feedback`}</p>
               </Link>
             </div>
           );
@@ -111,21 +73,22 @@ function ListFeedBack() {
       </div>
 
       <ImageList sx={{ width: 800 }} cols={3}>
-        {itemData.map((item) => (
+        {feedbacks.map((item, index) => (
           <ImageListItem
+            style={{ height: 200 }}
             onClick={() => {
-              handleChoose(item.img);
+              handleChoose(item.links);
             }}
             className={cx("card_image")}
-            key={item.img}
+            key={index}
           >
             <img
-              srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-              src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
+              style={{ maxHeight: 200, objectFit: "cover" }}
+              src={`${item.links}`}
               alt={item.title}
               loading="lazy"
             />
-            {choosedImages.includes(item.img) && (
+            {choosedImages.includes(item.links) && (
               <span className={cx("check-icon")}>
                 <FontAwesomeIcon fontSize={16} icon={faCheckCircle} />
               </span>

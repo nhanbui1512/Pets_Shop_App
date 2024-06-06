@@ -60,6 +60,9 @@ const OrderForm = () => {
   };
 
   const handleSubmit = (e) => {
+    if (storage.cartItems.length === 0)
+      return toast.error("Giỏ hàng đang trống");
+
     let provinceSlected = provinces.find(
       (item) => item.province_id === province
     );

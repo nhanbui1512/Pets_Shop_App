@@ -20,8 +20,11 @@ export async function feedBackPredict({
 }
 
 export async function getFeedbacksByBreed(id) {
+  let path = `/feedbacks?breed_id=${id}`;
+  if (!id) path = "/feedbacks";
+
   try {
-    const res = await request.get(`/feedbacks?breed_id=${id}`);
+    const res = await request.get(path);
     return res.data;
   } catch (error) {
     throw error;

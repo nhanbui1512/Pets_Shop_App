@@ -5,13 +5,26 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import GlobalStyles from "./GlobalStyles";
 import Storage from "./Contexts/StorageContext";
-
+import { isMobile } from "react-device-detect";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.Fragment>
     <GlobalStyles>
       <Storage>
-        <App />
+        {isMobile ? (
+          <div
+            style={{
+              display: "flex",
+              height: "100vh",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            Only Support Desktop UI
+          </div>
+        ) : (
+          <App />
+        )}
       </Storage>
     </GlobalStyles>
   </React.Fragment>

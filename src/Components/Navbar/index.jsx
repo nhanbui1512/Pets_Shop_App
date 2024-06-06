@@ -164,6 +164,11 @@ function Navbar() {
                             key={index}
                           />
                         ))}
+                        {cartItems.length === 0 && (
+                          <div className={cx("empty-title")}>
+                            <p>Bạn chưa có sản phẩm nào</p>
+                          </div>
+                        )}
                       </div>
                       <div className={cx("cart-footer-item")}>
                         <div className={cx("cart-total-price")}>
