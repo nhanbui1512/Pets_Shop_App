@@ -30,7 +30,7 @@ function ListFeedBack() {
     if (!id) {
       getFeedbacksByBreed()
         .then((res) => {
-          setFeedbacks(res.data);
+          setFeedbacks(res);
         })
         .catch((err) => {
           console.log(err);
@@ -57,9 +57,20 @@ function ListFeedBack() {
       });
   }, []);
 
+  const totalFeedback = breeds.reduce(
+    (accumulator, currentValue) => accumulator + currentValue.feedbackCount,
+    0
+  );
+
   return (
     <div style={{ display: "flex", justifyContent: "center", gap: 64 }}>
       <div style={{ display: "flex", flexDirection: "column", maxWidth: 300 }}>
+        <div>
+          <Link to={`/admin/feedbacks`}>
+            {" "}
+            <p>{`All : ${totalFeedback}`}</p>
+          </Link>
+        </div>
         {breeds.map((item, index) => {
           return (
             <div key={index}>
@@ -72,30 +83,32 @@ function ListFeedBack() {
         })}
       </div>
 
-      <ImageList sx={{ width: 800 }} cols={3}>
-        {feedbacks.map((item, index) => (
-          <ImageListItem
-            style={{ height: 200 }}
-            onClick={() => {
-              handleChoose(item.links);
-            }}
-            className={cx("card_image")}
-            key={index}
-          >
-            <img
-              style={{ maxHeight: 200, objectFit: "cover" }}
-              src={`${item.links}`}
-              alt={item.title}
-              loading="lazy"
-            />
-            {choosedImages.includes(item.links) && (
-              <span className={cx("check-icon")}>
-                <FontAwesomeIcon fontSize={16} icon={faCheckCircle} />
-              </span>
-            )}
-          </ImageListItem>
-        ))}
-      </ImageList>
+      <div>
+        <ImageList sx={{ width: 800 }} cols={3}>
+          {feedbacks.map((item, index) => (
+            <ImageListItem
+              style={{ height: 200 }}
+              onClick={() => {
+                handleChoose(item.links);
+              }}
+              className={cx("card_image")}
+              key={index}
+            >
+              <img
+                style={{ maxHeight: 200, objectFit: "cover" }}
+                src={`${item.links}`}
+                alt={item.title}
+                loading="lazy"
+              />
+              {choosedImages.includes(item.links) && (
+                <span className={cx("check-icon")}>
+                  <FontAwesomeIcon fontSize={16} icon={faCheckCircle} />
+                </span>
+              )}
+            </ImageListItem>
+          ))}
+        </ImageList>
+      </div>
     </div>
   );
 }
