@@ -17,6 +17,7 @@ function BreedDetail() {
   const { id } = useParams();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     getBreedById(id)
       .then((res) => {
         setData(res);
