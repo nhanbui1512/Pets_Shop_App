@@ -16,7 +16,14 @@ const Image = forwardRef(({ src, alt, ...props }, ref) => {
       {fallBack ? (
         <Skeleton variant="rectangular" width={210} height={118} />
       ) : (
-        <img src={src} alt={alt} ref={ref} {...props} onError={handleErr} />
+        <img
+          loading="lazy"
+          src={src}
+          alt={alt}
+          ref={ref}
+          {...props}
+          onError={handleErr}
+        />
       )}
     </>
   );
