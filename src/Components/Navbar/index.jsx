@@ -180,7 +180,7 @@ function Navbar() {
                           to={"/payment"}
                           className={cx("cart-checkout-button")}
                         >
-                          Thanh toán
+                          Đặt hàng
                         </Link>
                       </div>
                     </div>
