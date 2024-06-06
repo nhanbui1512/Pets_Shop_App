@@ -87,7 +87,7 @@ function Navbar() {
                 className={({ isActive }) =>
                   cx("nav-item", { active: isActive })
                 }
-                title="News"
+                title="Home"
               >
                 TRANG CHỦ
               </NavLink>
@@ -98,7 +98,7 @@ function Navbar() {
                 className={({ isActive }) =>
                   cx("nav-item", { active: isActive })
                 }
-                title="News"
+                title="Products"
               >
                 SẢN PHẨM
               </NavLink>
@@ -120,7 +120,7 @@ function Navbar() {
                 className={({ isActive }) =>
                   cx("nav-item", { active: isActive })
                 }
-                title="News"
+                title="Animal"
               >
                 CHÓ MÈO
               </NavLink>
