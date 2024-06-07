@@ -1,18 +1,32 @@
 import classNames from "classnames/bind";
-import { ImageList, ImageListItem } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  ImageList,
+  ImageListItem,
+} from "@mui/material";
+import React, { Fragment, useEffect, useState } from "react";
 import { getBreeds } from "../../../Services/API/Breeds";
 import { Link, useParams } from "react-router-dom";
 import styles from "./ListFeedback.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
-import { getFeedbacksByBreed } from "../../../Services/API/Feedback";
+import { faCheckCircle, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  deleteMultiFeedback,
+  getFeedbacksByBreed,
+} from "../../../Services/API/Feedback";
+import { toast } from "react-toastify";
 const cx = classNames.bind(styles);
 
 function ListFeedBack() {
   const [breeds, setBreeds] = useState([]);
   const [choosedImages, setChoosedImages] = useState([]);
   const [feedbacks, setFeedbacks] = useState([]);
+  const [popperDelete, setPopperDelete] = useState(false);
 
   const { id } = useParams();
 
@@ -26,6 +40,24 @@ function ListFeedBack() {
     });
   };
 
+  const handleDelete = () => {
+    deleteMultiFeedback(choosedImages)
+      .then((res) => {
+        toast.success("Xóa feedbacks thành công");
+        setChoosedImages([]);
+        setPopperDelete(false);
+        setFeedbacks((prev) => {
+          const result = prev.filter(
+            (feedback) => !choosedImages.includes(feedback._id)
+          );
+          return result;
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Xóa feedbacks không thành công");
+      });
+  };
   useEffect(() => {
     if (!id) {
       getFeedbacksByBreed()
@@ -57,59 +89,112 @@ function ListFeedBack() {
       });
   }, []);
 
-  const totalFeedback = breeds.reduce(
+  var totalFeedback = breeds.reduce(
     (accumulator, currentValue) => accumulator + currentValue.feedbackCount,
     0
   );
 
   return (
-    <div style={{ display: "flex", justifyContent: "center", gap: 64 }}>
-      <div style={{ display: "flex", flexDirection: "column", maxWidth: 300 }}>
-        <div>
-          <Link to={`/admin/feedbacks`}>
-            {" "}
-            <p>{`All : ${totalFeedback}`}</p>
-          </Link>
-        </div>
-        {breeds.map((item, index) => {
-          return (
-            <div key={index}>
-              <Link to={`/admin/feedbacks/${item._id}`}>
-                {" "}
-                <p>{`${item.breed_name} : ${item.feedbackCount} feedback`}</p>
-              </Link>
-            </div>
-          );
-        })}
-      </div>
+    <>
+      <Button
+        onClick={() => {
+          if (choosedImages.length === 0)
+            return toast.error("Vui lòng chọn ảnh để xóa");
+          setPopperDelete(true);
+        }}
+        style={{ float: "right" }}
+        variant="outlined"
+        startIcon={<FontAwesomeIcon icon={faTrash} />}
+      >
+        Delete
+      </Button>
 
-      <div>
-        <ImageList sx={{ width: 800 }} cols={3}>
-          {feedbacks.map((item, index) => (
-            <ImageListItem
-              style={{ height: 200 }}
+      <Fragment>
+        <Dialog
+          open={popperDelete}
+          onClose={() => {
+            setPopperDelete(false);
+          }}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Do you want delete feedbacks ?"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              The data will be deleted and cannot be restored.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button
               onClick={() => {
-                handleChoose(item.links);
+                setPopperDelete(false);
               }}
-              className={cx("card_image")}
-              key={index}
             >
-              <img
-                style={{ maxHeight: 200, objectFit: "cover" }}
-                src={`${item.links}`}
-                alt={item.title}
-                loading="lazy"
-              />
-              {choosedImages.includes(item.links) && (
-                <span className={cx("check-icon")}>
-                  <FontAwesomeIcon fontSize={16} icon={faCheckCircle} />
-                </span>
-              )}
-            </ImageListItem>
-          ))}
-        </ImageList>
+              Disagree
+            </Button>
+            <Button onClick={handleDelete} autoFocus>
+              Agree
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </Fragment>
+      <div style={{ display: "flex", justifyContent: "center", gap: 64 }}>
+        <div
+          style={{ display: "flex", flexDirection: "column", maxWidth: 300 }}
+        >
+          <div>
+            <Link className={cx("breed_item")} to={`/admin/feedbacks`}>
+              {" "}
+              <p>{`All : ${totalFeedback}`}</p>
+            </Link>
+          </div>
+          {breeds.map((item, index) => {
+            return (
+              <div key={index}>
+                <Link
+                  className={cx("breed_item")}
+                  to={`/admin/feedbacks/${item._id}`}
+                >
+                  {" "}
+                  <p>{`${item.breed_name} : ${item.feedbackCount} feedback`}</p>
+                </Link>
+              </div>
+            );
+          })}
+        </div>
+        <div>
+          <ImageList sx={{ width: 800 }} cols={3}>
+            {feedbacks.length === 0 && (
+              <h5 style={{ fontSize: 16 }}>Hiện không có phản hồi nào</h5>
+            )}
+            {feedbacks.map((item, index) => (
+              <ImageListItem
+                style={{ height: 200 }}
+                onClick={() => {
+                  handleChoose(item._id);
+                }}
+                className={cx("card_image")}
+                key={index}
+              >
+                <img
+                  style={{ maxHeight: 200, objectFit: "cover" }}
+                  src={`${item.links}`}
+                  alt={item.title}
+                  loading="lazy"
+                />
+                {choosedImages.includes(item._id) && (
+                  <span className={cx("check-icon")}>
+                    <FontAwesomeIcon fontSize={16} icon={faCheckCircle} />
+                  </span>
+                )}
+              </ImageListItem>
+            ))}
+          </ImageList>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

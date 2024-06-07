@@ -30,3 +30,13 @@ export async function getFeedbacksByBreed(id) {
     throw error;
   }
 }
+
+export async function deleteMultiFeedback(ids = []) {
+  console.log(ids);
+  try {
+    const res = await request.delete("/feedbacks", { data: { ids: ids } });
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+}
