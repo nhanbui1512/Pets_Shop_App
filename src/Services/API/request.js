@@ -1,10 +1,10 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-// const production = "http://18.142.137.253:3000/api";
-const dev = "http://localhost:3000/api";
+const production = "http://18.142.137.253:3000/api";
+// const dev = "http://localhost:3000/api";
 const request = axios.create({
-  baseURL: dev,
+  baseURL: production,
   headers: {
     Accept: "application/json, text/plain, */*",
   },
