@@ -3,7 +3,7 @@ import { getMyProfile } from "../Services/API/authService";
 import { getAllCategories } from "../Services/API/Category";
 import { socket } from "../Services/Socket";
 
-// import Cookies from "js-cookie";
+import Cookies from "js-cookie";
 
 export const StorageContext = createContext();
 
@@ -53,14 +53,17 @@ function GlobalStates({ children }) {
         console.log(err);
       });
 
-    getMyProfile()
-      .then((res) => {
-        setCurrentUser(true);
-        setUserData(res);
-      })
-      .catch((err) => {
-        setCurrentUser(false);
-      });
+    const token = Cookies.get("token");
+    if (token) {
+      getMyProfile()
+        .then((res) => {
+          setCurrentUser(true);
+          setUserData(res);
+        })
+        .catch((err) => {
+          setCurrentUser(false);
+        });
+    }
   }, []);
 
   useEffect(() => {
