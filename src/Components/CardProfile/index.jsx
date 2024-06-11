@@ -16,7 +16,7 @@ import uploadFile from "../../Services/Cloudinary";
 
 const cx = classNames.bind(styles);
 
-function CartProfile() {
+function CardProfile() {
   const storage = useContext(StorageContext);
   const inputFileRef = useRef();
   const [avatar, setAvatar] = useState("");
@@ -199,4 +199,4 @@ function CartProfile() {
     </div>
   );
 }
-export default CartProfile;
+export default CardProfile;

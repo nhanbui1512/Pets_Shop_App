@@ -1,9 +1,9 @@
-import CartProfile from "../../Components/CartProfile";
+import CardProfile from "../../Components/CardProfile";
 
 function Profile() {
   return (
     <div>
-      <CartProfile />
+      <CardProfile />
     </div>
   );
 }
