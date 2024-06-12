@@ -96,6 +96,18 @@ function ListFeedBack() {
 
   return (
     <>
+      <div className="row page-titles mx-0">
+        <div className="col p-md-0">
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item">
+              <Link to="/admin">Dashboard</Link>
+            </li>
+            <li className="breadcrumb-item">
+              <Link to="/admin/feedbacks">List Feedback</Link>
+            </li>
+          </ol>
+        </div>
+      </div>
       <Button
         onClick={() => {
           if (choosedImages.length === 0)

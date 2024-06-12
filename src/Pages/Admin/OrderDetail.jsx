@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import classNames from "classnames/bind";
 import styles from "./OrderDetail.module.scss";
 import { useEffect, useState } from "react";
@@ -36,6 +36,25 @@ function OrderDetail({ bill }) {
 
   return (
     <div>
+      <div className="row page-titles mx-0">
+        <div className="col p-md-0">
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item">
+              <Link to="/admin">Dashboard</Link>
+            </li>
+            <li className="breadcrumb-item">
+              <Link to={bill ? `/admin/bill` : `/admin/orders`}>
+                {bill ? `List Bill` : `List Order`}
+              </Link>
+            </li>
+            <li className="breadcrumb-item">
+              <Link to={bill ? `/admin/bill/${id}` : `/admin/orders/${id}`}>
+                {id}
+              </Link>
+            </li>
+          </ol>
+        </div>
+      </div>
       <div className={cx("col-md-12")}>
         <div className={cx("row")}>
           <div className={cx(["receipt-main"])}>

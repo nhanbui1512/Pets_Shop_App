@@ -11,7 +11,7 @@ import {
   updateProduct,
 } from "../../Services/API/Products";
 
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
   Dialog,
   DialogActions,
@@ -94,162 +94,179 @@ function UpdateProduct() {
       });
   }, [id]);
   return (
-    <div className="container-fluid">
-      <div className="col-lg-12">
-        <div className="card">
-          <div className="card-body">
-            <div className="form-validation">
-              <div className="form-valide">
-                <div className="form-group row">
-                  <label
-                    className="col-lg-4 col-form-label"
-                    htmlFor="val-username"
-                  >
-                    Product Name <span className="text-danger">*</span>
-                  </label>
-                  <div className="col-lg-6">
-                    <input
-                      onChange={(e) => {
-                        setProductName(e.target.value);
-                      }}
-                      value={productName}
-                      type="text"
-                      className="form-control"
-                      id="val-username"
-                      name="val-username"
-                    />
-                  </div>
-                </div>
-                <div className="form-group row">
-                  <label
-                    className="col-lg-4 col-form-label"
-                    htmlFor="val-confirm-password"
-                  >
-                    Descriptions <span className="text-danger">*</span>
-                  </label>
-                  <div className="col-lg-6">
-                    <textarea
-                      value={description}
-                      onChange={(e) => {
-                        setDescription(e.target.value);
-                      }}
-                      type="text"
-                      className="form-control"
-                      id="val-confirm-password"
-                      name="val-confirm-password"
-                    />
-                  </div>
-                </div>
-
-                <div className="form-group row">
-                  <label
-                    className="col-lg-4 col-form-label"
-                    htmlFor="val-confirm-password"
-                  >
-                    Category <span className="text-danger">*</span>
-                  </label>
-                  <div className="col-lg-6">
-                    <select
-                      onChange={(e) => {
-                        setCategoryId(e.target.value);
-                      }}
-                      value={categoryId}
+    <div>
+      <div className="row page-titles mx-0">
+        <div className="col p-md-0">
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item">
+              <Link to="/admin">Dashboard</Link>
+            </li>
+            <li className="breadcrumb-item">
+              <Link to="/admin/products">List Product</Link>
+            </li>
+            <li className="breadcrumb-item">
+              <Link to={`/admin/products/${id}`}>{productName}</Link>
+            </li>
+          </ol>
+        </div>
+      </div>
+      <div className="container-fluid">
+        <div className="col-lg-12">
+          <div className="card">
+            <div className="card-body">
+              <div className="form-validation">
+                <div className="form-valide">
+                  <div className="form-group row">
+                    <label
+                      className="col-lg-4 col-form-label"
+                      htmlFor="val-username"
                     >
-                      {categories.map((item, index) => {
-                        return (
-                          <option value={item._id} key={index}>
-                            {item.name}
-                          </option>
-                        );
-                      })}
-                    </select>
+                      Product Name <span className="text-danger">*</span>
+                    </label>
+                    <div className="col-lg-6">
+                      <input
+                        onChange={(e) => {
+                          setProductName(e.target.value);
+                        }}
+                        value={productName}
+                        type="text"
+                        className="form-control"
+                        id="val-username"
+                        name="val-username"
+                      />
+                    </div>
                   </div>
-                </div>
+                  <div className="form-group row">
+                    <label
+                      className="col-lg-4 col-form-label"
+                      htmlFor="val-confirm-password"
+                    >
+                      Descriptions <span className="text-danger">*</span>
+                    </label>
+                    <div className="col-lg-6">
+                      <textarea
+                        value={description}
+                        onChange={(e) => {
+                          setDescription(e.target.value);
+                        }}
+                        type="text"
+                        className="form-control"
+                        id="val-confirm-password"
+                        name="val-confirm-password"
+                      />
+                    </div>
+                  </div>
 
-                <div className="form-group row">
-                  <label className="col-lg-4 col-form-label">
-                    Options <span className="text-danger">*</span>
-                  </label>
-                  <div className="col-lg-6">
-                    <InteractiveList
-                      canUpdate
-                      items={options}
-                      setItems={setOptions}
-                      onDeleteOption={(index) => {
-                        setDeleteOption(index);
-                      }}
-                      onAddItem={(option) => {
-                        CreateOption({
-                          idProduct: id,
-                          name: option.optionName,
-                          value: option.optionName,
-                          price: option.price,
-                          quantity: option.quantity,
-                        })
-                          .then((res) => {
-                            setOptions(res.variantOptions);
+                  <div className="form-group row">
+                    <label
+                      className="col-lg-4 col-form-label"
+                      htmlFor="val-confirm-password"
+                    >
+                      Category <span className="text-danger">*</span>
+                    </label>
+                    <div className="col-lg-6">
+                      <select
+                        onChange={(e) => {
+                          setCategoryId(e.target.value);
+                        }}
+                        value={categoryId}
+                      >
+                        {categories.map((item, index) => {
+                          return (
+                            <option value={item._id} key={index}>
+                              {item.name}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="form-group row">
+                    <label className="col-lg-4 col-form-label">
+                      Options <span className="text-danger">*</span>
+                    </label>
+                    <div className="col-lg-6">
+                      <InteractiveList
+                        canUpdate
+                        items={options}
+                        setItems={setOptions}
+                        onDeleteOption={(index) => {
+                          setDeleteOption(index);
+                        }}
+                        onAddItem={(option) => {
+                          CreateOption({
+                            idProduct: id,
+                            name: option.optionName,
+                            value: option.optionName,
+                            price: option.price,
+                            quantity: option.quantity,
                           })
-                          .catch((err) => {
-                            console.log(err);
-                          });
-                      }}
-                    />
+                            .then((res) => {
+                              setOptions(res.variantOptions);
+                            })
+                            .catch((err) => {
+                              console.log(err);
+                            });
+                        }}
+                      />
+                    </div>
                   </div>
-                </div>
 
-                <div className="form-group row">
-                  <label
-                    className="col-lg-4 col-form-label"
-                    htmlFor="val-username"
-                  >
-                    Ảnh sản phẩm <span className="text-danger">*</span>
-                  </label>
-                  <div className="col-lg-6">
-                    <FilesManager
-                      imageFiles={imageFiles}
-                      setImageFiles={setImageFiles}
-                    />
+                  <div className="form-group row">
+                    <label
+                      className="col-lg-4 col-form-label"
+                      htmlFor="val-username"
+                    >
+                      Ảnh sản phẩm <span className="text-danger">*</span>
+                    </label>
+                    <div className="col-lg-6">
+                      <FilesManager
+                        imageFiles={imageFiles}
+                        setImageFiles={setImageFiles}
+                      />
+                    </div>
                   </div>
-                </div>
 
-                <Editor contentRef={contentRef} />
+                  <Editor contentRef={contentRef} />
 
-                <div className="form-group row">
-                  <div className="col-lg-8 ml-auto">
-                    <Button onClick={handleUpdate} variant="contained">
-                      Update
-                    </Button>
+                  <div className="form-group row">
+                    <div className="col-lg-8 ml-auto">
+                      <Button onClick={handleUpdate} variant="contained">
+                        Update
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <Fragment>
-        <Dialog
-          open={deleteOption !== -1}
-          onClose={handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">
-            {"Do you want delete this option?"}
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              The data will be deleted and cannot be restored.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>Disagree</Button>
-            <Button onClick={handleDelete} autoFocus>
-              Agree
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </Fragment>
+        <Fragment>
+          <Dialog
+            open={deleteOption !== -1}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">
+              {"Do you want delete this option?"}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                The data will be deleted and cannot be restored.
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}>Disagree</Button>
+              <Button onClick={handleDelete} autoFocus>
+                Agree
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </Fragment>
+      </div>
     </div>
   );
 }

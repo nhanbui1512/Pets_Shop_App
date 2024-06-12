@@ -386,19 +386,6 @@ function AdminLayout({ children }) {
         </div>
 
         <div className="content-body">
-          <div className="row page-titles mx-0">
-            <div className="col p-md-0">
-              <ol className="breadcrumb">
-                <li className="breadcrumb-item">
-                  <Link href="/">Dashboard</Link>
-                </li>
-                <li className="breadcrumb-item active">
-                  <Link href="/">Home</Link>
-                </li>
-              </ol>
-            </div>
-          </div>
-
           <div
             style={{
               minHeight: "100vh",

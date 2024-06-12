@@ -70,6 +70,18 @@ export default function BasicTable() {
   }, [page]);
   return (
     <>
+      <div className="row page-titles mx-0">
+        <div className="col p-md-0">
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item">
+              <Link to="/admin">Dashboard</Link>
+            </li>
+            <li className="breadcrumb-item active">
+              <Link to="/admin/products">List Product</Link>
+            </li>
+          </ol>
+        </div>
+      </div>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
