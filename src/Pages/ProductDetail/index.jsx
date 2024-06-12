@@ -17,6 +17,8 @@ import { toast } from "react-toastify";
 import { StorageContext } from "../../Contexts/StorageContext";
 import ImageSlider from "../../Components/ImageSlider";
 import { Skeleton } from "@mui/material";
+import { faEllipsis, faLink } from "@fortawesome/free-solid-svg-icons";
+import HeadlessTippy from "@tippyjs/react/headless";
 
 const cx = classNames.bind(styles);
 
@@ -67,6 +69,19 @@ function ProductDetail() {
     setQuantity(value);
   };
 
+  const handleCoppyLink = () => {
+    const currentUrl = window.location.href;
+
+    navigator.clipboard
+      .writeText(currentUrl)
+      .then(function () {
+        toast.success("Đã sao chép đường dẫn");
+      })
+      .catch(function (error) {
+        toast.error("Chưa thể sao chép đường dẫn");
+      });
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
     setLoading(true);
@@ -104,6 +119,24 @@ function ProductDetail() {
             </div>
           </div>
           <div className={cx("right")}>
+            <HeadlessTippy
+              interactive
+              placement="bottom"
+              offset={[-5, 0]}
+              delay={[0, 300]}
+              render={() => (
+                <div className={cx("more-menu")}>
+                  <div onClick={handleCoppyLink} className={cx("more-item")}>
+                    <FontAwesomeIcon icon={faLink} />
+                    <span>Coppy Link</span>
+                  </div>
+                </div>
+              )}
+            >
+              <div className={cx("more-btn")}>
+                <FontAwesomeIcon fontSize={26} icon={faEllipsis} />
+              </div>
+            </HeadlessTippy>
             {product.name && !loading ? (
               <h1 className={cx("product-name")}>{product.name}</h1>
             ) : (

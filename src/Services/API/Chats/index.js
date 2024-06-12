@@ -17,3 +17,12 @@ export async function getMessages(socketId) {
     throw error;
   }
 }
+
+export async function deleteConversation(id) {
+  try {
+    const res = await request.delete(`/conversations/${id}`);
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+}
