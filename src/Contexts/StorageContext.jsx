@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { getMyProfile } from "../Services/API/authService";
-import { getAllCategories } from "../Services/API/Category";
 import { socket } from "../Services/Socket";
+import { categories as categoriesData } from "./data";
 
 import Cookies from "js-cookie";
 
@@ -44,15 +44,10 @@ function GlobalStates({ children }) {
 
   useEffect(() => {
     loadCartFromLocalStorage();
-    getAllCategories()
-      .then((res) => {
-        const filteredItems = res.filter((item) => item.name !== "Bài viết");
-        setCategories(filteredItems);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
+    const filteredItems = categoriesData.filter(
+      (item) => item.name !== "Bài viết"
+    );
+    setCategories(filteredItems);
     const token = Cookies.get("token");
     if (token) {
       getMyProfile()
@@ -73,7 +68,7 @@ function GlobalStates({ children }) {
 
   useEffect(() => {
     if (!userData || userData.UserRoles !== "admin") {
-      socket.connect();
+      // socket.connect();
     } else {
       socket.disconnect();
     }

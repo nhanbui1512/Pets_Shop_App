@@ -2,11 +2,10 @@ import classNames from "classnames/bind";
 import styles from "./Home.module.scss";
 import SellerList from "../../Components/SellerList";
 import { useEffect, useState } from "react";
-import { getProducts } from "../../Services/API/Products";
 import Loader from "../../Components/Loader";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-
+import data from "./data";
 const cx = classNames.bind(styles);
 
 function Home() {
@@ -22,15 +21,9 @@ function Home() {
 
   useEffect(() => {
     setLoading(true);
-    getProducts({ page: page, perPage: 15 })
-      .then((res) => {
-        setLoading(false);
-        setProducts(res.docs);
-        setTotalPage(res.totalPages);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    setLoading(false);
+    setProducts(data.docs);
+    setTotalPage(data.totalPages);
   }, [page]);
 
   return (

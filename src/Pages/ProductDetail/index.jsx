@@ -11,7 +11,6 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { useParams } from "react-router-dom";
 import { useContext, useEffect, useRef, useState } from "react";
-import { getProductById } from "../../Services/API/Products";
 import { toast } from "react-toastify";
 
 import { StorageContext } from "../../Contexts/StorageContext";
@@ -19,6 +18,7 @@ import ImageSlider from "../../Components/ImageSlider";
 import { Skeleton } from "@mui/material";
 import { faEllipsis, faLink } from "@fortawesome/free-solid-svg-icons";
 import HeadlessTippy from "@tippyjs/react/headless";
+import data from "./data";
 
 const cx = classNames.bind(styles);
 
@@ -85,16 +85,13 @@ function ProductDetail() {
   useEffect(() => {
     window.scrollTo(0, 0);
     setLoading(true);
-    getProductById(id)
-      .then((res) => {
-        setLoading(false);
-        setProduct(res);
-        setOption(res.variantOptions[0]);
-        contentRef.current.innerHTML = res.htmlDomDescription;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const res = data.docs.find((item) => item._id === id);
+    setTimeout(() => {
+      setLoading(false);
+      setProduct(res);
+      setOption(res.variantOptions[0]);
+      contentRef.current.innerHTML = res.htmlDomDescription;
+    }, 200);
   }, [id]);
   return (
     <div>

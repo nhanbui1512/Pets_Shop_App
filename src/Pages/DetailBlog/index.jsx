@@ -5,8 +5,8 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 
-import { getBlogById } from "../../Services/API/Blogs";
 import { formatDay } from "../../Utils/time";
+import blogs from "./data";
 
 const cx = classNames.bind(styles);
 
@@ -17,15 +17,9 @@ function DetailBlog() {
   const { id } = useParams();
 
   useEffect(() => {
-    getBlogById(id)
-      .then((res) => {
-        // console.log(res);
-        setData(res);
-        contentRef.current.innerHTML = res.content;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const res = blogs.docs.find((item) => item._id === id);
+    setData(res);
+    contentRef.current.innerHTML = res.content;
   }, [id]);
 
   return (

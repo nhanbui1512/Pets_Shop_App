@@ -2,23 +2,18 @@ import classNames from "classnames/bind";
 import styles from "./Animal.module.scss";
 import { useEffect } from "react";
 import { useState } from "react";
-import { getBreeds } from "../../Services/API/Breeds";
 import { formatDay } from "../../Utils/time";
 import { Link } from "react-router-dom";
 import ListSkeleton from "../../Components/ListSkeleton";
+import data from "./data";
+
 const cx = classNames.bind(styles);
 
 function Animal() {
   const [breeds, setBreeds] = useState([]);
 
   useEffect(() => {
-    getBreeds({ page: 1, perPage: 50 })
-      .then((res) => {
-        setBreeds(res.docs);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    setBreeds(data.docs);
   }, []);
   return (
     <div className={cx("wrapper")}>
@@ -31,7 +26,7 @@ function Animal() {
                 return (
                   <div key={index} className="col-md-6 col-lg-3">
                     <div className="card">
-                      <Link to={`/animals/${breed._id}`}>
+                      <Link to={`/animals`}>
                         <img
                           className={cx(["card-img", "img-fluid"])}
                           src={breed.breedImages[0]}
@@ -39,8 +34,7 @@ function Animal() {
                         />
                       </Link>
                       <div className="card-body">
-                        <Link to={`/animals/${breed._id}`}>
-                          {" "}
+                        <Link to={`/animals`}>
                           <h5 className="card-title">{breed.breed_name}</h5>
                         </Link>
                         <p className="card-text">{breed.appearance}</p>

@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import ListProduct from "../ListProduct";
-import { getProducts } from "../../Services/API/Products";
 import { CollectionContext } from "../../Layouts/CollectionLayout";
 import { Pagination, Stack } from "@mui/material";
 import Loader from "../../Components/Loader";
+import data from "./data";
 
 function AllProducts() {
   const [page, setPage] = useState(1);
@@ -19,15 +19,11 @@ function AllProducts() {
 
   useEffect(() => {
     setLoading(true);
-    getProducts({ page: page, perPage: 15 })
-      .then((res) => {
-        setProducts(res.docs);
-        setLoading(false);
-        setTotalPage(res.totalPages);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    setTimeout(() => {
+      setProducts(data.docs);
+      setLoading(false);
+      setTotalPage(data.totalPages);
+    }, 200);
   }, [page]);
 
   // filter price range
