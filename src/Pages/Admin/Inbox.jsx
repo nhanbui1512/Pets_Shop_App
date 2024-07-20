@@ -5,6 +5,7 @@ import { StorageContext } from "../../Contexts/StorageContext";
 import Button from "@mui/material/Button";
 function Inbox() {
   const [chats, setChats] = useState([]);
+
   const [deleteIds, setDeleteIds] = useState([]);
 
   const socket = useContext(StorageContext).socket;
@@ -19,6 +20,14 @@ function Inbox() {
         return filterd;
       });
     }
+  };
+
+  const handleDelete = () => {
+    setChats((prev) => {
+      const newState = [...prev];
+      const result = newState.filter((item) => !deleteIds.includes(item._id));
+      return result;
+    });
   };
 
   useEffect(() => {
@@ -73,7 +82,11 @@ function Inbox() {
     <div>
       <div className="container-fluid">
         <div className="row">
-          <Button sx={{ margin: "10px 20px" }} variant="contained">
+          <Button
+            onClick={handleDelete}
+            sx={{ margin: "10px 20px" }}
+            variant="contained"
+          >
             Delete
           </Button>
           <div className="col-lg-12">
@@ -91,6 +104,7 @@ function Inbox() {
                                   onChange={(e) => handleChecked(e, chat._id)}
                                   type="checkbox"
                                   id="chk2"
+                                  checked={deleteIds.includes(chat._id)}
                                 />
                                 <label
                                   className="toggle"

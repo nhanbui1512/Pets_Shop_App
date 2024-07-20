@@ -178,8 +178,10 @@ function ChatBot() {
                   },
                 ];
               });
+              setLoading(true);
               predictBreed({ url: urlPredict })
                 .then((res) => {
+                  setLoading(false);
                   setMessages((prev) => {
                     return [
                       ...prev,
@@ -191,6 +193,7 @@ function ChatBot() {
                   });
                 })
                 .catch((err) => {
+                  setLoading(false);
                   setMessages((prev) => {
                     const newState = [...prev];
                     newState.push({

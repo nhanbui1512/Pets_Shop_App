@@ -10,7 +10,7 @@ export async function predictBreed({ url, file }) {
   try {
     // Gửi yêu cầu POST đến server để upload hình ảnh
     const response = await axios.post(
-      "http://localhost:8000/api/prediction",
+      "http://127.0.0.1:8000/api/prediction",
       formData,
       {
         headers: {

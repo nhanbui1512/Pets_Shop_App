@@ -108,18 +108,21 @@ function ListFeedBack() {
           </ol>
         </div>
       </div>
-      <Button
-        onClick={() => {
-          if (choosedImages.length === 0)
-            return toast.error("Vui lòng chọn ảnh để xóa");
-          setPopperDelete(true);
-        }}
-        style={{ float: "right" }}
-        variant="outlined"
-        startIcon={<FontAwesomeIcon icon={faTrash} />}
+      <div
+        style={{ display: "flex", justifyContent: "right", marginBottom: 16 }}
       >
-        Delete
-      </Button>
+        <Button
+          onClick={() => {
+            if (choosedImages.length === 0)
+              return toast.error("Vui lòng chọn ảnh để xóa");
+            setPopperDelete(true);
+          }}
+          variant="outlined"
+          startIcon={<FontAwesomeIcon icon={faTrash} />}
+        >
+          Delete
+        </Button>
+      </div>
 
       <Fragment>
         <Dialog
