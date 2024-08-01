@@ -29,6 +29,10 @@ import Orders from "./Pages/Orders";
 import Collection from "./Pages/Collection";
 import BreedDetail from "./Pages/BreedDetail";
 
+import ScrollToTop from "react-scroll-to-top";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
+
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -80,6 +84,11 @@ function App() {
   );
   return (
     <>
+      <ScrollToTop
+        className="scroll-btn"
+        smooth
+        component={<FontAwesomeIcon icon={faArrowUp} />}
+      />
       <RouterProvider router={router} />
       <ToastContainer
         position="top-right"
