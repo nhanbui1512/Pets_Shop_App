@@ -104,3 +104,19 @@
   text-overflow: ellipsis;
   padding-right: 8px;
 }
+@media (min-width: 1024px) {
+}
+
+/* Tablet */
+@media (min-width: 740px) and (max-width: 1023px) {
+}
+
+/* Mobile */
+@media (max-width: 740px) {
+  .header-content_search {
+    display: none !important;
+  }
+  .header-content_logo img {
+    width: 70% !important;
+  }
+}

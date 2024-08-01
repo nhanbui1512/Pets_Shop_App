@@ -50,3 +50,29 @@
     background-color: var(--blue-primary);
   }
 }
+
+@media (min-width: 1024px) {
+}
+
+/* Tablet */
+@media (min-width: 740px) and (max-width: 1023px) {
+}
+
+/* Mobile */
+@media (max-width: 740px) {
+  .image-container {
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    a {
+      width: 100%;
+      height: 100%;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover !important;
+    }
+  }
+}

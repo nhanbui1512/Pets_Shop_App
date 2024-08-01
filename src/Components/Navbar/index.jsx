@@ -55,9 +55,27 @@ function Navbar() {
               <li>
                 <div className={cx("line-vertical")}></div>
                 <div className={cx("line-horizontal")}></div>
-                <Link>Income</Link>
+                <NavLink
+                  className={(nav) => cx("", { navActive: nav.isActive })}
+                  to={`/`}
+                >
+                  Trang Chủ
+                </NavLink>
               </li>
-              <li>
+              {storage.categories.map((item, index) => (
+                <li key={index}>
+                  <div className={cx("line-vertical")}></div>
+                  <div className={cx("line-horizontal")}></div>
+                  <NavLink
+                    className={(nav) => cx("", { navActive: nav.isActive })}
+                    to={`/collections/${item._id}`}
+                  >
+                    {item.name}
+                  </NavLink>
+                </li>
+              ))}
+
+              {/* <li>
                 <div className={cx("line-vertical")}></div>
                 <div className={cx("line-horizontal")}></div>
                 <Link>Expenses</Link>
@@ -70,11 +88,9 @@ function Navbar() {
               <li>
                 <div className={cx("line-vertical")}></div>
                 <div className={cx("line-horizontal")}></div>
-                {/* <a href="#payouts" title="Payouts">
-                  Payouts
-                </a> */}
+    
                 <Link>Payouts</Link>
-              </li>
+              </li> */}
             </ul>
           )}
         </nav>

@@ -201,6 +201,7 @@
     overflow-y: auto;
     max-height: 400px;
     width: 200px;
+    padding-right: 10px;
   }
 
   .main-item:hover {
@@ -465,5 +466,27 @@
 
   .cart-item-details {
     margin-top: 20px;
+  }
+}
+.navActive {
+  color: var(--primary-item);
+  background-color: var(--background-item);
+  width: 100%;
+}
+@media (min-width: 1024px) {
+}
+
+/* Tablet */
+@media (min-width: 740px) and (max-width: 1023px) {
+}
+
+/* Mobile */
+@media (max-width: 740px) {
+  .nav-items {
+    display: none !important;
+  }
+  .navbar-container {
+    width: 100% !important;
+    justify-content: space-around !important;
   }
 }
