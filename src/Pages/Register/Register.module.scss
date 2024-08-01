@@ -54,3 +54,16 @@
 .register-contain_differ:hover .register-contain_differ-active {
   color: #ff5050;
 }
+@media (min-width: 1024px) {
+}
+
+/* Tablet */
+@media (min-width: 740px) and (max-width: 1023px) {
+}
+
+/* Mobile */
+@media (max-width: 740px) {
+  .register-box {
+    padding: 14px;
+  }
+}

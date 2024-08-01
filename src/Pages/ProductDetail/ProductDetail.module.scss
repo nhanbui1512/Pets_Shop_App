@@ -122,3 +122,28 @@
     font-weight: 600;
   }
 }
+
+@media (min-width: 1024px) {
+}
+
+/* Tablet */
+@media (min-width: 740px) and (max-width: 1023px) {
+}
+
+/* Mobile */
+@media (max-width: 740px) {
+  .MuiBox-root {
+    display: flex;
+  }
+  .wrapper {
+    padding-top: 20px;
+    flex-direction: column;
+    align-items: center;
+  }
+  .left {
+    flex: 1;
+  }
+  .right {
+    margin-top: 12px;
+  }
+}

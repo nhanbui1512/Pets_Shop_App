@@ -21,7 +21,7 @@ import CartItem from "../CartItem";
 
 import HeadlessTippy from "@tippyjs/react/headless";
 import { StorageContext } from "../../Contexts/StorageContext";
-
+import { isMobile } from "react-device-detect";
 import Cookies from "js-cookie";
 
 const cx = classNames.bind(style);
@@ -165,12 +165,11 @@ function Navbar() {
               delay={[0, 200]}
               interactive
               render={() => {
-                return (
+                return isMobile ? (
+                  <></>
+                ) : (
                   <div className={cx("cart-container")} ref={cartRef}>
                     <div>
-                      {/* <div className={cx("cart-header-item")}>
-                  <h4>Giỏ hàng</h4>
-                </div> */}
                       <div className={cx("cart-body-item")}>
                         {cartItems.map((item, index) => (
                           <CartItem
