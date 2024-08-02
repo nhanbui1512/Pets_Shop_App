@@ -32,56 +32,58 @@ function Cart() {
           </p>
         ) : (
           <div className={cx("content-box_table")}>
-            <table>
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>Tên sản phẩm</th>
-                  <th>Loại</th>
-                  <th>Giá bán lẻ</th>
-                  <th>Số lượng</th>
-                  <th>Tổng phí</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {storage.cartItems.map((item, index) => (
-                  <CartProduct
-                    setCartItems={storage.setCartItems}
-                    index={index}
-                    data={item}
-                    key={index}
-                  />
-                ))}
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>
-                    <Link className={cx("btn-cart_back")}>
-                      <FontAwesomeIcon
-                        className={cx("btn-icon_back")}
-                        icon={faArrowAltCircleRight}
-                      />
-                      <span className={cx("btn-cast_title")}>
-                        Tiếp tục mua hàng
-                      </span>
-                    </Link>
-                  </th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th>
-                    <Link className={cx("btn-cart_back", "btn-cart_update")}>
-                      <span className={cx("btn-cast_title")}>
-                        Cập nhật giá thành
-                      </span>
-                    </Link>
-                  </th>
-                </tr>
-              </tfoot>
-            </table>
+            <fieldset>
+              <table>
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>Tên sản phẩm</th>
+                    <th>Loại</th>
+                    <th>Giá bán lẻ</th>
+                    <th>Số lượng</th>
+                    <th>Tổng phí</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {storage.cartItems.map((item, index) => (
+                    <CartProduct
+                      setCartItems={storage.setCartItems}
+                      index={index}
+                      data={item}
+                      key={index}
+                    />
+                  ))}
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th>
+                      <Link className={cx("btn-cart_back")}>
+                        <FontAwesomeIcon
+                          className={cx("btn-icon_back")}
+                          icon={faArrowAltCircleRight}
+                        />
+                        <span className={cx("btn-cast_title")}>
+                          Tiếp tục mua hàng
+                        </span>
+                      </Link>
+                    </th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th>
+                      <Link className={cx("btn-cart_back", "btn-cart_update")}>
+                        <span className={cx("btn-cast_title")}>
+                          Cập nhật giá thành
+                        </span>
+                      </Link>
+                    </th>
+                  </tr>
+                </tfoot>
+              </table>
+            </fieldset>
 
             <div className={cx("content-box_total")}>
               <div className={cx("content-box_house")}>

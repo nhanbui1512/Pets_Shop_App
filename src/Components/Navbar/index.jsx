@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext, memo } from "react";
+import React, { useState, useRef, useContext, memo, useEffect } from "react";
 import style from "./navbar.module.scss";
 import classNames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,7 +7,7 @@ import {
   faList,
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 
 import { MenuList, Paper } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
@@ -36,7 +36,11 @@ function Navbar() {
 
   // Function to toggle the isOpen state
   const toggleOpen = () => setIsOpen(!isOpen);
-
+  const handleClose = () => setIsOpen(false);
+  const location = useLocation();
+  useEffect(() => {
+    handleClose();
+  }, [location.pathname]);
   return (
     <div className={cx("navbar")}>
       <div className={cx("navbar-container")}>

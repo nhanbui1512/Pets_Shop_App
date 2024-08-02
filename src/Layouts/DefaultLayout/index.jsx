@@ -7,6 +7,7 @@ import ChatBot from "../../Components/ChatBot";
 import { Outlet } from "react-router";
 import { useContext } from "react";
 import { StorageContext } from "../../Contexts/StorageContext";
+import { isMobile } from "react-device-detect";
 const cx = classNames.bind(styles);
 
 function DefaultLayout({ children }) {
@@ -18,7 +19,7 @@ function DefaultLayout({ children }) {
       <div className={cx("content")}>
         <Outlet />
       </div>
-      {storage.userData?.UserRoles !== "admin" && <ChatBot />}
+      {storage.userData?.UserRoles !== "admin" && !isMobile && <ChatBot />}
       <Footer />
     </div>
   );
