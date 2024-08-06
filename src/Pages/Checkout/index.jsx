@@ -8,7 +8,7 @@ import {
   getDistricts,
   getProvinces,
   getWards,
-} from "../../Services/API/Address";
+} from "../../Services/API/Address/data.static";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { toast } from "react-toastify";
 import { OrderItems } from "../../Services/API/Orders";
@@ -123,28 +123,24 @@ const OrderForm = () => {
   };
 
   useEffect(() => {
-    getProvinces()
-      .then((res) => {
-        setProvinces(res.results);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const data = getProvinces();
+    setProvinces(data);
   }, []);
 
   useEffect(() => {
     if (province !== "") {
-      getDistricts(province).then((res) => {
-        setDistricts(res.results);
-      });
+      var data = getDistricts(province);
+      setDistricts(data);
     }
   }, [province]);
 
   useEffect(() => {
     if (district !== "") {
-      getWards(district).then((res) => {
-        setWards(res.results);
-      });
+      // getWards(district).then((res) => {
+      //   setWards(res.results);
+      // });
+      var data = getWards(district);
+      setWards(data);
     }
   }, [district]);
 
@@ -194,8 +190,8 @@ const OrderForm = () => {
                 }}
               >
                 {provinces.map((item, index) => (
-                  <MenuItem key={index} value={item.province_id}>
-                    {item.province_name}
+                  <MenuItem key={index} value={item.id}>
+                    {item.name}
                   </MenuItem>
                 ))}
               </Select>
@@ -216,8 +212,8 @@ const OrderForm = () => {
                 }}
               >
                 {districts.map((item, index) => (
-                  <MenuItem key={index} value={item.district_id}>
-                    {item.district_name}
+                  <MenuItem key={index} value={item.id}>
+                    {item.name}
                   </MenuItem>
                 ))}
               </Select>
@@ -230,8 +226,8 @@ const OrderForm = () => {
               </InputLabel>
               <Select value={ward} onChange={(e) => setWard(e.target.value)}>
                 {wards.map((item, index) => (
-                  <MenuItem key={index} value={item.ward_id}>
-                    {item.ward_name}
+                  <MenuItem key={index} value={item.id}>
+                    {item.name}
                   </MenuItem>
                 ))}
               </Select>
