@@ -25,7 +25,6 @@ function Collection() {
     window.scrollTo(0, 0);
   };
   useEffect(() => {
-    setPage(1);
     setLoading(true);
     const res = categories.find((item) => item._id === id);
     setTimeout(() => {

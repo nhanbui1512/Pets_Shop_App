@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
 import Loader from "../../Components/Loader";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-import data from "./data";
+import data from "../ProductDetail/data";
+import { getPaginatedArray } from "../../Utils/Array";
 const cx = classNames.bind(styles);
 
 function Home() {
@@ -20,10 +21,12 @@ function Home() {
   };
 
   useEffect(() => {
+    const limit = 21;
     setLoading(true);
     setLoading(false);
-    setProducts(data.docs);
-    setTotalPage(data.totalPages);
+    var result = getPaginatedArray(data.docs, page, limit);
+    setProducts(result);
+    setTotalPage(Math.floor(data.docs.length / limit));
   }, [page]);
 
   return (
