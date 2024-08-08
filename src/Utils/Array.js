@@ -17,6 +17,8 @@ export const binarySearch = (arr, key, targetValue) => {
 };
 
 export const getPaginatedArray = (arr, page, limit) => {
+  if (!Array.isArray(arr)) return;
+  if (page <= 0 || limit <= 0) return [];
   const startIndex = (page - 1) * limit;
   const endIndex = startIndex + limit;
 
