@@ -18,7 +18,7 @@ import ImageSlider from "../../Components/ImageSlider";
 import { Skeleton } from "@mui/material";
 import { faEllipsis, faLink } from "@fortawesome/free-solid-svg-icons";
 import HeadlessTippy from "@tippyjs/react/headless";
-import data from "./data";
+import { getProductById } from "../../Services/API/Products";
 
 const cx = classNames.bind(styles);
 
@@ -85,13 +85,18 @@ function ProductDetail() {
   useEffect(() => {
     window.scrollTo(0, 0);
     setLoading(true);
-    const res = data.docs.find((item) => item._id === id);
-    setTimeout(() => {
-      setLoading(false);
-      setProduct(res);
-      setOption(res.variantOptions[0]);
-      contentRef.current.innerHTML = res.htmlDomDescription;
-    }, 200);
+    getProductById(id)
+      .then((res) => {
+        setProduct(res.data);
+        console.log(res);
+        setOption(res.data?.options[0]);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, [id]);
   return (
     <div>
@@ -104,7 +109,7 @@ function ProductDetail() {
         >
           <div className={cx(["left"])}>
             <div className={cx("image-container")}>
-              {product.productImage?.length > 0 || (
+              {product.product_images?.length > 0 || (
                 <Skeleton
                   variant="rectangular"
                   animation="wave"
@@ -112,7 +117,7 @@ function ProductDetail() {
                   height={370}
                 />
               )}
-              <ImageSlider images={product.productImage} />
+              <ImageSlider images={product.product_images} />
             </div>
           </div>
           <div className={cx("right")}>
@@ -151,8 +156,8 @@ function ProductDetail() {
                 />
               )}
             </div>
-            {product.description && !loading ? (
-              <p className={cx("description")}>{product.description}</p>
+            {product.shortDescription && !loading ? (
+              <p className={cx("description")}>{product.shortDescription}</p>
             ) : (
               <Skeleton
                 variant="text"
@@ -167,16 +172,16 @@ function ProductDetail() {
                 ref={selectRef}
                 onChange={(e) => {
                   const idOption = e.target.value;
-                  const optionSelected = product.variantOptions.find(
-                    (option) => option._id === idOption
+                  const optionSelected = product.options.find(
+                    (option) => option.id === idOption
                   );
                   setOption(optionSelected);
                 }}
                 className={cx("selected")}
               >
-                {product.variantOptions?.map((item, index) => (
-                  <option value={item._id} key={index}>
-                    {item.name || "Mặc định"}
+                {product.options?.map((item, index) => (
+                  <option value={item.id} key={index}>
+                    {item.optionName || "Mặc định"}
                   </option>
                 ))}
               </select>

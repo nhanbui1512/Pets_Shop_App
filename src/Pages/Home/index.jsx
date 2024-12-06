@@ -6,6 +6,7 @@ import Loader from "../../Components/Loader";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import data from "./data";
+import { getProducts } from "../../Services/API/Products";
 const cx = classNames.bind(styles);
 
 function Home() {
@@ -22,8 +23,15 @@ function Home() {
   useEffect(() => {
     setLoading(true);
     setLoading(false);
-    setProducts(data.docs);
-    setTotalPage(data.totalPages);
+    getProducts({ page: page, perPage: 6 })
+      .then((res) => {
+        console.log(res);
+        setProducts(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    // setProducts(data.docs);
   }, [page]);
 
   return (
@@ -39,20 +47,7 @@ function Home() {
           display: "flex",
           justifyContent: "center",
         }}
-      >
-        <Stack
-          sx={{
-            mt: 2,
-          }}
-          spacing={2}
-        >
-          <Pagination
-            onChange={handleChange}
-            count={totalPage}
-            color="primary"
-          />
-        </Stack>
-      </div>
+      ></div>
     </div>
   );
 }

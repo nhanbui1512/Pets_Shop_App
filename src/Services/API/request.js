@@ -1,8 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-// const production = "https://petsshop-be.onrender.com/api";
-const dev = "http://localhost:3000/api";
+const dev = "http://localhost:3001/api";
 const request = axios.create({
   baseURL: dev,
   headers: {

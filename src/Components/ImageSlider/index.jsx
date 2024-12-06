@@ -40,7 +40,7 @@ function ImageSlider({ images = [] }) {
             <div className={cx("image-container")} key={index}>
               <Image
                 src={
-                  step ||
+                  step.fileUrl ||
                   "https://bizweb.dktcdn.net/100/229/172/products/bow-wow-pho-mai-cuon-ga-1709195207055.jpg?v=1709440731433"
                 }
                 alt=""

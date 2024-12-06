@@ -2,7 +2,7 @@ import request from "../request";
 
 export async function getProducts({ page, perPage }) {
   try {
-    const res = await request.get(`/products?limit=${perPage}&page=${page}`);
+    const res = await request.get(`/products?per_page=${perPage}&page=${page}`);
     return res.data;
   } catch (error) {
     throw error;

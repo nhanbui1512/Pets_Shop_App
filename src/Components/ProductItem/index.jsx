@@ -21,22 +21,22 @@ function ProductItem({ data, className }) {
       const items = [...prev];
       const isExist = items.find(
         (item) =>
-          item._id === data._id &&
-          item.variantOption._id === data.variantOptions[0]._id
+          item.id === data.id &&
+          item.variantOption.id === data.variantOptions[0].id
       );
       if (isExist) {
         isExist.quantity++;
       } else {
         const newItem = {
-          _id: data._id,
+          id: data.id,
           name: data.name,
-          productImage: data.productImage[0],
-          price: data.variantOptions?.[0].price,
+          productImage: data.product_images?.[0]?.fileUrl,
+          price: data.options?.[0].price,
           quantity: 1,
           category: data.categoryID,
           variantOption: {
-            _id: data.variantOptions[0]._id,
-            name: data.variantOptions[0].name,
+            id: data.options?.[0]?.id,
+            name: data.options?.[0]?.name,
           },
         };
         items.push(newItem);
@@ -53,24 +53,24 @@ function ProductItem({ data, className }) {
       <div className="mb-22">
         <div className="col">
           <div className={cx("image-container")}>
-            <Link to={`/product/${data._id}`}>
+            <Link to={`/product/${data.id}`}>
               <Image
                 className={cx("product-image")}
-                src={data?.productImage[0] || ""}
+                src={data?.product_images?.[0]?.fileUrl || ""}
               />
             </Link>
           </div>
           <div className={cx("product-info")}>
             <div className={cx("info-inner")}>
               <div className={cx("name-product")}>
-                <Link to={`/product/${data._id}`}>
+                <Link to={`/product/${data.id}`}>
                   {data?.name || "Tên sản phẩm"}
                 </Link>
               </div>
 
               <div className={cx("price")}>
                 <span>
-                  {data?.variantOptions[0].price.toLocaleString("vi-VN", {
+                  {data?.options?.[0]?.price.toLocaleString("vi-VN", {
                     currency: "VND",
                   })}
                   đ
@@ -94,7 +94,7 @@ function ProductItem({ data, className }) {
                   </div>
                 </Tooltip>
                 <Tooltip title="Xem chi tiết">
-                  <Link to={`/product/${data._id}`}>
+                  <Link to={`/product/${data.id}`}>
                     <CircleButton className={cx("view-btn")}>
                       <FontAwesomeIcon
                         color="#fff"
