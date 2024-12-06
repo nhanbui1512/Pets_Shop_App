@@ -7,6 +7,8 @@ import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import data from "./data";
 import { getProducts } from "../../Services/API/Products";
+import data from "../ProductDetail/data";
+import { getPaginatedArray } from "../../Utils/Array";
 const cx = classNames.bind(styles);
 
 function Home() {
@@ -21,6 +23,7 @@ function Home() {
   };
 
   useEffect(() => {
+    const limit = 21;
     setLoading(true);
     setLoading(false);
     getProducts({ page: page, perPage: 6 })

@@ -15,3 +15,13 @@ export const binarySearch = (arr, key, targetValue) => {
   }
   return undefined;
 };
+
+export const getPaginatedArray = (arr, page, limit) => {
+  if (!Array.isArray(arr)) return;
+  if (page <= 0 || limit <= 0) return [];
+  const startIndex = (page - 1) * limit;
+  const endIndex = startIndex + limit;
+
+  // Nếu endIndex nằm ngoài mảng thì slice sẽ lấy từ startIndex đến cuối mảng
+  return arr.slice(startIndex, endIndex);
+};
