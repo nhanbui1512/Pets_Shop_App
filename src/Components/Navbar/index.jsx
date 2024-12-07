@@ -41,6 +41,7 @@ function Navbar() {
   useEffect(() => {
     handleClose();
   }, [location.pathname]);
+
   return (
     <div className={cx("navbar")}>
       <div className={cx("navbar-container")}>
@@ -72,7 +73,7 @@ function Navbar() {
                   <div className={cx("line-horizontal")}></div>
                   <NavLink
                     className={(nav) => cx("", { navActive: nav.isActive })}
-                    to={`/collections/${item._id}`}
+                    to={`/collections/${item.id}`}
                   >
                     {item.name}
                   </NavLink>
@@ -225,7 +226,7 @@ function Navbar() {
                 render={() => (
                   <Paper className={cx("profile-menu")}>
                     <MenuList>
-                      <Link to={`/${storage.userData.UserRoles}`}>
+                      <Link>
                         <MenuItem>
                           {" "}
                           <FontAwesomeIcon

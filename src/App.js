@@ -32,7 +32,20 @@ import BreedDetail from "./Pages/BreedDetail";
 import ScrollToTop from "react-scroll-to-top";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
-
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+// config font for MUI component
+const theme = createTheme({
+  typography: {
+    fontFamily: "var(--font-family)",
+  },
+  components: {
+    MuiButtonBase: {
+      root: {
+        textTransform: "none",
+      },
+    },
+  },
+});
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -84,23 +97,25 @@ function App() {
   );
   return (
     <>
-      <ScrollToTop
-        className="scroll-btn"
-        smooth
-        component={<FontAwesomeIcon icon={faArrowUp} />}
-      />
-      <RouterProvider router={router} />
-      <ToastContainer
-        position="top-right"
-        autoClose={2500}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss={false}
-        pauseOnHover={false}
-        draggable
-      />
+      <ThemeProvider theme={theme}>
+        <ScrollToTop
+          className="scroll-btn"
+          smooth
+          component={<FontAwesomeIcon icon={faArrowUp} />}
+        />
+        <RouterProvider router={router} />
+        <ToastContainer
+          position="top-right"
+          autoClose={2500}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss={false}
+          pauseOnHover={false}
+          draggable
+        />
+      </ThemeProvider>
     </>
   );
 }

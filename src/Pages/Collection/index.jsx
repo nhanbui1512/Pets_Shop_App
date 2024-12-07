@@ -4,7 +4,7 @@ import { CollectionContext } from "../../Layouts/CollectionLayout";
 import { Pagination, Stack } from "@mui/material";
 import Loader from "../../Components/Loader";
 import { useParams } from "react-router-dom";
-import { categories } from "./data";
+import { getProductsByCategory } from "../../Services/API/Products";
 
 function Collection() {
   const { id } = useParams();
@@ -26,12 +26,16 @@ function Collection() {
   };
   useEffect(() => {
     setLoading(true);
-    const res = categories.find((item) => item._id === id);
-    setTimeout(() => {
-      setProducts(res.data.docs);
-      setLoading(false);
-      setTotalPage(res.data.totalPages);
-    }, 500);
+    getProductsByCategory({ id: id, perPage: 40 })
+      .then((res) => {
+        setProducts(res.data);
+        setTotalPage(res.totalPages);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => setLoading(false));
+    setPage(1);
     // eslint-disable-next-line
   }, [id]);
 

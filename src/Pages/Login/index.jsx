@@ -2,56 +2,48 @@ import classNames from "classnames/bind";
 import styles from "./Login.module.scss";
 import { Link } from "react-router-dom";
 import { useContext, useState } from "react";
-import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 import Cookies from "js-cookie";
 
 import TitleInput from "../../Components/TitleInput";
-import Button from "../../Components/Button";
-import Input from "../../Components/Input";
 import { useNavigate } from "react-router-dom";
 import { Login as LoginRequest } from "../../Services/API/authService";
 import { StorageContext } from "../../Contexts/StorageContext";
 
 import { toast } from "react-toastify";
+import { Controller, useForm } from "react-hook-form";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 
 const cx = classNames.bind(styles);
 
 function Login() {
-  const storage = useContext(StorageContext);
-  const navigate = useNavigate();
+  const form = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [err, setErr] = useState([]);
-  const [fail, setFail] = useState(false);
-
-  const handleEmail = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePassword = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleLogin = () => {
-    if (!email || !password) {
-      setErr((preps) => ["Vui lòng nhập đầy đủ email và mật khẩu"]);
-    } else {
+  const handleSubmit = ({ email, password }) => {
+    if (email && password) {
       LoginRequest(email, password)
         .then((res) => {
-          Cookies.set("token", res.accessToken, { expires: 7 }); // Lưu token trong 7 ngày
+          Cookies.set("token", res.accessToken, { expires: 7 });
           storage.setCurrentUser(true);
-          storage.setUserData(res.userData);
+          storage.setUserData(res.user);
           toast.success("Đăng nhập thành công");
           navigate("/");
         })
         .catch((err) => {
-          setEmail("");
-          setPassword("");
           setFail(true);
         });
     }
   };
+  const storage = useContext(StorageContext);
+  const navigate = useNavigate();
+
+  const [fail, setFail] = useState(false);
 
   return (
     <div className={cx("app")}>
@@ -68,45 +60,69 @@ function Login() {
             <Button icon={faUser} title={"Tạo tài khoản"} link={"/signup"} />
           </div>
         </div>
-        <div className={cx("login")}>
+        <form
+          onSubmit={form.handleSubmit(handleSubmit)}
+          className={cx("login")}
+        >
           <TitleInput
             title={"Đăng nhập"}
             desc={"Nếu bạn có tài khoản, hãy đăng nhập dưới đây."}
-            err={err}
           />
 
-          <Input
-            value={email}
-            handle={handleEmail}
-            name="Email"
-            typeOf="Email"
+          <Controller
+            name="email"
+            control={form.control}
+            render={({ field }) => (
+              <TextField
+                onChange={field.onChange}
+                value={field.email}
+                sx={{
+                  width: "100%",
+                  "& .MuiInputBase-input": {
+                    paddingY: 2.5,
+                  },
+                }}
+                placeholder="Input your email"
+              />
+            )}
           />
-          <Input
-            value={password}
-            handle={handlePassword}
-            name="Mật khẩu"
-            typeOf="password"
+
+          <Controller
+            name="password"
+            control={form.control}
+            render={({ field }) => (
+              <TextField
+                onChange={field.onChange}
+                value={field.password}
+                type="password"
+                sx={{
+                  marginTop: 2,
+                  width: "100%",
+                  "& .MuiInputBase-input": {
+                    paddingY: 1,
+                  },
+                }}
+                placeholder="Input your password"
+              />
+            )}
           />
           <div className={cx("regiter-contain_title")}>
             {fail && <b>* Email hoặc mật khẩu không đúng</b>}
           </div>
           <div className={cx("regiter-contain_active")}>
-            <Button
-              icon={faLock}
-              handle={handleLogin}
-              className={cx("app-btn_update")}
-              title="Đăng nhập"
-            />
+            <Button type="submit" onClick={handleSubmit} variant="contained">
+              Đăng nhập
+            </Button>
             <div className={cx("register-contain_differ")}>
               <Link
                 to={"/login"}
                 className={cx("register-contain_differ-active")}
               >
-                Mất mật khẩu?
+                Quên mật khẩu?
               </Link>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );

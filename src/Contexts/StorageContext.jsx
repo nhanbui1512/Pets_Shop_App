@@ -71,7 +71,7 @@ function GlobalStates({ children }) {
   }, [cartItems]);
 
   useEffect(() => {
-    if (!userData || userData.UserRoles !== "admin") {
+    if (!userData || userData?.role?.roleName !== "admin") {
       // socket.connect();
     } else {
       socket.disconnect();

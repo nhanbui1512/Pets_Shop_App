@@ -3,7 +3,7 @@ import ListProduct from "../ListProduct";
 import { CollectionContext } from "../../Layouts/CollectionLayout";
 import { Pagination, Stack } from "@mui/material";
 import Loader from "../../Components/Loader";
-import data from "./data";
+import { getProducts } from "../../Services/API/Products";
 
 function AllProducts() {
   const [page, setPage] = useState(1);
@@ -19,11 +19,16 @@ function AllProducts() {
 
   useEffect(() => {
     setLoading(true);
-    setTimeout(() => {
-      setProducts(data.docs);
-      setLoading(false);
-      setTotalPage(data.totalPages);
-    }, 200);
+
+    getProducts({ page: page, perPage: 24 })
+      .then((res) => {
+        setProducts(res.data);
+        setTotalPage(res.totalPages);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => setLoading(false));
   }, [page]);
 
   // filter price range
@@ -36,8 +41,8 @@ function AllProducts() {
       for (let product of products) {
         for (let range of priceRange) {
           if (
-            product.variantOptions[0].price >= range.from &&
-            product.variantOptions[0].price <= range.to
+            product.options?.[0]?.price >= range.from &&
+            product.options?.[0]?.price <= range.to
           ) {
             filtered.push(product);
             break;

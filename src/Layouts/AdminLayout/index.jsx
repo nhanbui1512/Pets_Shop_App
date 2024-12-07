@@ -8,7 +8,7 @@ function AdminLayout({ children }) {
   const [openSidebar, setOpenSidebar] = useState(true);
   const storage = useContext(StorageContext);
 
-  if (!storage.userData || storage.userData.UserRoles !== "admin") {
+  if (!storage.userData || storage.userData.role.roleName !== "admin") {
     return <Navigate to="/login" />;
   }
 
@@ -285,7 +285,7 @@ function AdminLayout({ children }) {
                     <div className="dropdown-content-body">
                       <ul>
                         <li>
-                          <Link to={`/${storage.userData?.UserRoles}/profile`}>
+                          <Link to={`/admin/profile`}>
                             <i className="icon-user"></i> <span>Profile</span>
                           </Link>
                         </li>

@@ -36,34 +36,31 @@ function ProductDetail() {
   const contentRef = useRef();
 
   const handleBuy = () => {
-    if (Object.keys(product).length !== 0) {
-      const cartItems = [...storage.cartItems];
-      const isExistProduct = cartItems.find(
-        (item) =>
-          item._id === product._id && item.variantOption._id === option._id
-      );
-
-      if (isExistProduct) {
-        isExistProduct.quantity += quantity;
-      } else {
+    storage.setCartItems((prev) => {
+      const items = [...prev];
+      const isExited = items.find((item) => item.option?.id === option.id);
+      if (!isExited) {
         const newItem = {
-          _id: product._id,
+          id: product.id,
           name: product.name,
-          productImage: product.productImage[0],
-          price: option.price,
-          quantity: quantity,
-          category: product.categoryID,
-          variantOption: {
-            _id: option._id,
-            name: option.name,
+          productImage: product.product_images?.[0]?.fileUrl,
+          price: product.options?.[0].price,
+          quantity: 1,
+          categoryId: product.categoryId,
+          option: {
+            id: option.id,
+            name: option.optionName,
           },
         };
-
-        cartItems.push(newItem);
+        items.push(newItem);
+      } else {
+        isExited.quantity++;
       }
-      storage.setCartItems(cartItems);
-      toast.success("Thêm sản phẩm vào giỏ hàng thành công");
-    }
+
+      return items;
+    });
+
+    toast.success("Thêm sản phẩm vào giỏ hàng thành công");
   };
 
   const handleChangeQuantity = (value) => {
@@ -152,7 +149,7 @@ function ProductDetail() {
 
             <div className={cx("price")}>
               {option.price && !loading ? (
-                <span>{`${Number(option.price).toLocaleString("vi-VN", { currency: "VND" })}đ`}</span>
+                <span>{`${Number(option?.price).toLocaleString("vi-VN", { currency: "VND" })}đ`}</span>
               ) : (
                 <Skeleton
                   variant="text"
@@ -178,7 +175,7 @@ function ProductDetail() {
                 onChange={(e) => {
                   const idOption = e.target.value;
                   const optionSelected = product.options.find(
-                    (option) => option.id === idOption
+                    (option) => option.id === Number(idOption)
                   );
                   setOption(optionSelected);
                 }}
@@ -220,7 +217,7 @@ function ProductDetail() {
           </div>
         </div>
       </div>
-      <div className={cx("dom-content")} ref={contentRef}></div>
+      <div className={cx(["dom-content", "std"])} ref={contentRef}></div>
     </div>
   );
 }

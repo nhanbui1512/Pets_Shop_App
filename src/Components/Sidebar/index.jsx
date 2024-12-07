@@ -32,7 +32,7 @@ function Sidebar() {
             {storage.categories.map((item, index) => (
               <li key={index}>
                 <NavLink
-                  to={`/collections/${item._id}`}
+                  to={`/collections/${item.id}`}
                   className={({ isActive }) =>
                     cx("item", { isActive: isActive })
                   }

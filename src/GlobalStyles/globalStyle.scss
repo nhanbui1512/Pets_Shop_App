@@ -45,12 +45,12 @@ html *::-webkit-scrollbar-track {
   background-color: rgba(0, 0, 0, 0);
 }
 
-button,
-input,
-[tabindex] {
-  border: none;
-  outline: none !important;
-}
+// button,
+// input,
+// [tabindex] {
+//   border: none;
+//   outline: none !important;
+// }
 
 //custom tippy tooltip
 
@@ -107,4 +107,13 @@ body {
 .scroll-btn {
   bottom: 100px;
   right: 35px;
+}
+.std {
+  table {
+    justify-self: center;
+    margin: 16px 0px !important;
+  }
+}
+td {
+  border: 1px solid gray !important;
 }

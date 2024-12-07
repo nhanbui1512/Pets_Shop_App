@@ -15,36 +15,34 @@ const cx = classNames.bind(styles);
 
 function ProductItem({ data, className }) {
   const storage = useContext(StorageContext);
+  const defaultOption = data?.options[0];
 
   const handleAddItem = () => {
     storage.setCartItems((prev) => {
       const items = [...prev];
-      const isExist = items.find(
-        (item) =>
-          item.id === data.id &&
-          item.variantOption.id === data.variantOptions[0].id
+      const isExited = items.find(
+        (item) => item.option?.id === defaultOption.id
       );
-      if (isExist) {
-        isExist.quantity++;
-      } else {
+      if (!isExited) {
         const newItem = {
           id: data.id,
           name: data.name,
           productImage: data.product_images?.[0]?.fileUrl,
-          price: data.options?.[0].price,
+          price: defaultOption.price,
           quantity: 1,
-          category: data.categoryID,
-          variantOption: {
-            id: data.options?.[0]?.id,
-            name: data.options?.[0]?.name,
+          categoryId: data.categoryId,
+          option: {
+            id: defaultOption.id,
+            name: defaultOption.optionName,
           },
         };
         items.push(newItem);
+      } else {
+        isExited.quantity++;
       }
 
       return items;
     });
-
     toast.success("Thêm sản phẩm vào giỏ hàng thành công");
   };
 

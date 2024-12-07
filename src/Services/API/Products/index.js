@@ -135,7 +135,7 @@ export async function deleteProduct(id) {
   }
 }
 
-export async function getProductsByCategory({ id, page = 1, perPage }) {
+export async function getProductsByCategory({ id, page = 1, perPage = 20 }) {
   const response = await request.get(
     `/products/category/${id}?&page=${page}&per_page=${perPage}`
   );
