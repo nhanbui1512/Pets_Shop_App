@@ -18,30 +18,31 @@ import Button from "@mui/material/Button";
 const cx = classNames.bind(styles);
 
 function Login() {
-  const form = useForm({
+  const { handleSubmit, control, reset } = useForm({
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  const handleSubmit = ({ email, password }) => {
-    if (email && password) {
-      LoginRequest(email, password)
-        .then((res) => {
-          Cookies.set("token", res.accessToken, { expires: 7 });
-          storage.setCurrentUser(true);
-          storage.setUserData(res.user);
-          toast.success("Đăng nhập thành công");
-          navigate("/");
-        })
-        .catch((err) => {
-          setFail(true);
-        });
-    }
-  };
   const storage = useContext(StorageContext);
   const navigate = useNavigate();
+
+  const handleLogin = ({ email, password }) => {
+    LoginRequest(email, password)
+      .then((res) => {
+        Cookies.set("token", res.accessToken, { expires: 7 });
+        storage.setCurrentUser(true);
+        storage.setUserData(res.user);
+        toast.success("Đăng nhập thành công");
+        navigate("/");
+      })
+      .catch((err) => {
+        reset();
+        setFail(true);
+        toast.error("Email or password incorrect");
+      });
+  };
 
   const [fail, setFail] = useState(false);
 
@@ -61,8 +62,9 @@ function Login() {
           </div>
         </div>
         <form
-          onSubmit={form.handleSubmit(handleSubmit)}
+          onSubmit={handleSubmit(handleLogin)}
           className={cx("login")}
+          autoComplete="off"
         >
           <TitleInput
             title={"Đăng nhập"}
@@ -71,7 +73,7 @@ function Login() {
 
           <Controller
             name="email"
-            control={form.control}
+            control={control}
             render={({ field }) => (
               <TextField
                 onChange={field.onChange}
@@ -89,7 +91,7 @@ function Login() {
 
           <Controller
             name="password"
-            control={form.control}
+            control={control}
             render={({ field }) => (
               <TextField
                 onChange={field.onChange}

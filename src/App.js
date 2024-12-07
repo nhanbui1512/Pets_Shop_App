@@ -1,4 +1,3 @@
-import "./App.css";
 import {
   Route,
   RouterProvider,
@@ -46,6 +45,7 @@ const theme = createTheme({
     },
   },
 });
+
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -98,23 +98,25 @@ function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <ScrollToTop
-          className="scroll-btn"
-          smooth
-          component={<FontAwesomeIcon icon={faArrowUp} />}
-        />
-        <RouterProvider router={router} />
-        <ToastContainer
-          position="top-right"
-          autoClose={2500}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss={false}
-          pauseOnHover={false}
-          draggable
-        />
+        <div>
+          <ScrollToTop
+            className="scroll-btn"
+            smooth
+            component={<FontAwesomeIcon icon={faArrowUp} />}
+          />
+          <RouterProvider router={router} />
+          <ToastContainer
+            position="top-right"
+            autoClose={2500}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss={false}
+            pauseOnHover={false}
+            draggable
+          />
+        </div>
       </ThemeProvider>
     </>
   );
