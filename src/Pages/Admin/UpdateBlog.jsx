@@ -23,7 +23,6 @@ function UpdateBlog() {
         setTitle(res.title);
         setDescription(res.shortContent);
         contentRef.current.innerHTML = res.content;
-        console.log(res);
       })
       .catch((err) => {
         console.log(err);

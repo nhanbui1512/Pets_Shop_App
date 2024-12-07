@@ -8,7 +8,12 @@ import ListSkeleton from "../ListSkeleton";
 
 const cx = classNames.bind(styles);
 
-function SellerList({ items = [], headerColor = "#064475" }) {
+function SellerList({
+  items = [],
+  headerColor = "#064475",
+  title = "Sản phẩm mới nhất",
+  hideCategory = false,
+}) {
   const storage = useContext(StorageContext);
 
   return (
@@ -25,25 +30,27 @@ function SellerList({ items = [], headerColor = "#064475" }) {
               backgroundColor: headerColor,
             }}
           >
-            Sản phẩm mới nhất
+            {title}
           </h2>
         </div>
         <div>
-          <div
-            style={{
-              padding: 14,
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            {storage.categories.map((item, index) => {
-              return (
-                <div key={index} className={cx("link")}>
-                  <Link to={`/collections/${item._id}`}>{item.name}</Link>
-                </div>
-              );
-            })}
-          </div>
+          {hideCategory || (
+            <div
+              style={{
+                padding: 14,
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              {storage.categories.map((item, index) => {
+                return (
+                  <div key={index} className={cx("link")}>
+                    <Link to={`/collections/${item._id}`}>{item.name}</Link>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       </div>
       <div className={cx("product-container")}>

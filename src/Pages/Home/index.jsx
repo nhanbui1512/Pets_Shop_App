@@ -3,39 +3,47 @@ import styles from "./Home.module.scss";
 import SellerList from "../../Components/SellerList";
 import { useEffect, useState } from "react";
 import Loader from "../../Components/Loader";
-import Pagination from "@mui/material/Pagination";
-import Stack from "@mui/material/Stack";
-import data from "./data";
-import { getProducts } from "../../Services/API/Products";
-import data from "../ProductDetail/data";
-import { getPaginatedArray } from "../../Utils/Array";
+import {
+  getProducts,
+  getProductsByCategory,
+} from "../../Services/API/Products";
 const cx = classNames.bind(styles);
 
 function Home() {
-  const [page, setPage] = useState(1);
   const [products, setProducts] = useState([]);
+  const [catProducts, setCatProducts] = useState([]);
+  const [dogProducts, setDogProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [totalPage, setTotalPage] = useState(1);
-
-  const handleChange = (event, number) => {
-    setPage(number);
-    window.scrollTo(0, 0);
-  };
 
   useEffect(() => {
-    const limit = 21;
     setLoading(true);
     setLoading(false);
-    getProducts({ page: page, perPage: 6 })
+    getProducts({ page: 1, perPage: 3 })
       .then((res) => {
-        console.log(res);
         setProducts(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
-    // setProducts(data.docs);
-  }, [page]);
+
+    getProductsByCategory({ id: 8, perPage: 3 })
+      .then((res) => {
+        setCatProducts(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    getProductsByCategory({ id: 7, perPage: 3 })
+      .then((res) => {
+        setDogProducts(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <div className={cx("wrapper")}>
@@ -44,7 +52,25 @@ function Home() {
           <Loader className={cx("loading")} />
         </div>
       )}
-      <SellerList headerColor="#f24f5a" items={products} />
+      <SellerList headerColor="#f24f5a" items={products} hideCategory />
+      <SellerList
+        headerColor="#2bafa4"
+        items={products}
+        hideCategory
+        title="Sản phẩm bán chạy"
+      />
+      <SellerList
+        headerColor="#6170bc"
+        items={dogProducts}
+        hideCategory
+        title="Thức ăn cho chó"
+      />
+      <SellerList
+        headerColor="#f24f5a"
+        items={catProducts}
+        hideCategory
+        title="Thức ăn cho mèo"
+      />
       <div
         style={{
           display: "flex",

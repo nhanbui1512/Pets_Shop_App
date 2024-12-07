@@ -19,6 +19,7 @@ import { Skeleton } from "@mui/material";
 import { faEllipsis, faLink } from "@fortawesome/free-solid-svg-icons";
 import HeadlessTippy from "@tippyjs/react/headless";
 import { getProductById } from "../../Services/API/Products";
+import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 
 const cx = classNames.bind(styles);
 
@@ -88,8 +89,8 @@ function ProductDetail() {
     getProductById(id)
       .then((res) => {
         setProduct(res.data);
-        console.log(res);
         setOption(res.data?.options[0]);
+        contentRef.current.innerHTML = res.data.domDescription;
       })
       .catch((err) => {
         console.log(err);
@@ -128,6 +129,10 @@ function ProductDetail() {
               delay={[0, 300]}
               render={() => (
                 <div className={cx("more-menu")}>
+                  <div onClick={handleCoppyLink} className={cx("more-item")}>
+                    <FontAwesomeIcon icon={faPenToSquare} />
+                    <span>Edit</span>
+                  </div>
                   <div onClick={handleCoppyLink} className={cx("more-item")}>
                     <FontAwesomeIcon icon={faLink} />
                     <span>Coppy Link</span>

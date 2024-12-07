@@ -134,3 +134,10 @@ export async function deleteProduct(id) {
     throw error;
   }
 }
+
+export async function getProductsByCategory({ id, page = 1, perPage }) {
+  const response = await request.get(
+    `/products/category/${id}?&page=${page}&per_page=${perPage}`
+  );
+  return response?.data;
+}
