@@ -61,7 +61,7 @@ export default function BasicTable() {
   useEffect(() => {
     getProducts({ page: page, perPage: 20 })
       .then((res) => {
-        setProducts(res.docs);
+        setProducts(res.data);
         setTotalPage(res.totalPages);
       })
       .catch((err) => {
@@ -110,12 +110,8 @@ export default function BasicTable() {
                     {product.name}
                   </Link>
                 </TableCell>
-                <TableCell align="right">
-                  {product.categoryID[0]?.name}
-                </TableCell>
-                <TableCell align="right">
-                  {product.variantOptions.length}
-                </TableCell>
+                <TableCell align="right">{product.category.name}</TableCell>
+                <TableCell align="right">{product.options.length}</TableCell>
                 <TableCell align="right">
                   {formatDay(product.createdAt)}
                 </TableCell>

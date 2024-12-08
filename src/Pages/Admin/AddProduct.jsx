@@ -1,23 +1,24 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import InteractiveList from "../../Components/InteractiveList";
 import Button from "@mui/material/Button";
 import Editor from "../../Components/Editor";
-import { getAllCategories } from "../../Services/API/Category";
 import FilesManager from "../../Components/FilesManager";
 import { createProduct } from "../../Services/API/Products";
 
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import { StorageContext } from "../../Contexts/StorageContext";
 
 function AddProduct() {
   const [options, setOptions] = useState([]);
   const [productName, setProductName] = useState("");
   const [description, setDescription] = useState("");
-  const [categories, setCategories] = useState([]);
   const [imageFiles, setImageFiles] = useState([]);
 
   const contentRef = useRef();
   const categoryRef = useRef();
+
+  const { categories } = useContext(StorageContext);
 
   const handleAddProduct = (e) => {
     const descriptionDOM = contentRef.current.innerHTML;
@@ -44,15 +45,7 @@ function AddProduct() {
       });
   };
 
-  useEffect(() => {
-    getAllCategories()
-      .then((res) => {
-        setCategories(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  useEffect(() => {}, []);
   return (
     <div>
       <div className="row page-titles mx-0">

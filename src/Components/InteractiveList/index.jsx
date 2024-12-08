@@ -94,7 +94,7 @@ export default function InteractiveList({
                       </Avatar>
                     </ListItemAvatar>
                     <ListItemText
-                      primary={item.name}
+                      primary={item.optionName}
                       secondary={`${item.price}đ`}
                     />
                     <ListItemText primary={`${item.quantity} sản phẩm`} />
@@ -184,7 +184,7 @@ export default function InteractiveList({
                     <Button
                       onClick={() => {
                         updateOption({
-                          id: edit._id,
+                          id: edit.id,
                           name: edit.name,
                           value: "",
                           quantity: edit.quantity,
@@ -202,7 +202,7 @@ export default function InteractiveList({
                           const options = [...prev];
 
                           const item = options.find(
-                            (option) => option._id === edit._id
+                            (option) => option.id === edit.id
                           );
                           item.name = edit.name;
                           item.price = edit.price;

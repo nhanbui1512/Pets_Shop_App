@@ -20,6 +20,7 @@ import { faEllipsis, faLink } from "@fortawesome/free-solid-svg-icons";
 import HeadlessTippy from "@tippyjs/react/headless";
 import { getProductById } from "../../Services/API/Products";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
+import EditProductModal from "../../Components/Modals/EditProductModal";
 
 const cx = classNames.bind(styles);
 
@@ -34,6 +35,7 @@ function ProductDetail() {
   const storage = useContext(StorageContext);
   const selectRef = useRef();
   const contentRef = useRef();
+  const [openEditor, setOpenEditor] = useState(false);
 
   const handleBuy = () => {
     storage.setCartItems((prev) => {
@@ -78,6 +80,10 @@ function ProductDetail() {
       .catch(function (error) {
         toast.error("Chưa thể sao chép đường dẫn");
       });
+  };
+
+  const handleCloseEditor = () => {
+    setOpenEditor(false);
   };
 
   useEffect(() => {
@@ -126,7 +132,10 @@ function ProductDetail() {
               delay={[0, 300]}
               render={() => (
                 <div className={cx("more-menu")}>
-                  <div onClick={handleCoppyLink} className={cx("more-item")}>
+                  <div
+                    onClick={() => setOpenEditor(true)}
+                    className={cx("more-item")}
+                  >
                     <FontAwesomeIcon icon={faPenToSquare} />
                     <span>Edit</span>
                   </div>
@@ -218,6 +227,11 @@ function ProductDetail() {
         </div>
       </div>
       <div className={cx(["dom-content", "std"])} ref={contentRef}></div>
+      <EditProductModal
+        data={product}
+        open={openEditor}
+        handleClose={handleCloseEditor}
+      />
     </div>
   );
 }
