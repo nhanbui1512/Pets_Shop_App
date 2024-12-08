@@ -15,11 +15,10 @@ export async function Login(email, password) {
 
 export async function Register({ firstName, lastName, email, password }) {
   try {
-    const res = await request.post("/auth/register", {
+    const res = await request.post("/users", {
       email: email,
       password: password,
-      firstName: firstName,
-      lastName: lastName,
+      userName: `${firstName} ${lastName}`,
     });
 
     return res.data;
