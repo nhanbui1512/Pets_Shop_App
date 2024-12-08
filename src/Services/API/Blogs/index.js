@@ -1,10 +1,16 @@
 import request from "../request";
-export async function createBlog({ title, DOMContent, shortContent }) {
+export async function createBlog({
+  title,
+  DOMContent,
+  shortContent,
+  thumbNail,
+}) {
   try {
     const res = await request.post("/blogs", {
-      title,
-      content: DOMContent,
-      shortContent,
+      title: title,
+      shortDescription: shortContent,
+      domDescription: DOMContent,
+      thumbNail: thumbNail,
     });
 
     return res.data;
@@ -15,7 +21,7 @@ export async function createBlog({ title, DOMContent, shortContent }) {
 
 export async function getBlogs({ page, perPage }) {
   try {
-    const res = await request.get(`/blogs?limit=${perPage}&page=${page}`);
+    const res = await request.get(`/blogs?per_page=${perPage}&page=${page}`);
     return res.data;
   } catch (error) {
     throw error;

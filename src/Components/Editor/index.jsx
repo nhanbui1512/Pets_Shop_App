@@ -1,34 +1,34 @@
+import { Button } from "@mui/material";
+
 function Editor({ contentRef = null }) {
   return (
-    <div className="row">
+    <div className="row border border-solid border-[#000]">
       <div className="col-12">
         <div className="card">
           <div className="card-body">
             <div ref={contentRef} className="click2edit m-b-40">
-              Click on Edite button and change the text then save it.
+              Click on Edit button and change the text then save it.
             </div>
-            <div style={{ marginTop: 12 }}>
-              <button
+            <div style={{ marginTop: 12, display: "flex", gap: 8 }}>
+              <Button
+                variant="contained"
                 id="edit"
-                className="btn btn-info btn-rounded"
                 onClick={() => {
                   window.edit();
                 }}
-                type="button"
               >
                 Edit
-              </button>
-              <button
-                style={{ marginLeft: 10 }}
-                id="save"
-                className="btn btn-success btn-rounded"
+              </Button>
+
+              <Button
+                color="success"
+                variant="contained"
                 onClick={() => {
                   window.save();
                 }}
-                type="button"
               >
                 Save
-              </button>
+              </Button>
             </div>
           </div>
         </div>

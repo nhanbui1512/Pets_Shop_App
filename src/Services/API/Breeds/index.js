@@ -2,7 +2,7 @@ import request from "../request";
 
 export async function getBreeds({ page, perPage }) {
   try {
-    const res = await request.get(`/breeds?limit=${perPage}&page=${page}`);
+    const res = await request.get(`/breeds?per_page=${perPage}&page=${page}`);
     return res.data;
   } catch (error) {
     throw error;

@@ -20,8 +20,8 @@ function BreedDetail() {
     window.scrollTo(0, 0);
     getBreedById(id)
       .then((res) => {
-        setData(res);
-        contentRef.current.innerHTML = res.htmlDomDescription;
+        setData(res.data);
+        contentRef.current.innerHTML = res.data.content;
       })
       .catch((err) => {
         console.log(err);
@@ -32,7 +32,7 @@ function BreedDetail() {
     <div className={cx("app")}>
       <div className={cx("content-left")}>
         <div className={cx("content-left_box")}>
-          <div className={cx("content-left_title")}>{data?.breed_name}</div>
+          <div className={cx("content-left_title")}>{data?.name}</div>
           <div className={cx("content-left_house")}>
             <Link>{formatDay(data.createdAt)}</Link>
           </div>

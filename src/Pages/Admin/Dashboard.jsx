@@ -8,7 +8,7 @@ function Dashboard() {
   const storageContext = useContext(StorageContext);
   const socket = storageContext.socket;
   useEffect(() => {
-    socket.connect();
+    // socket.connect();
   }, [socket]);
   return (
     <div>

@@ -2,32 +2,41 @@ import { Link } from "react-router-dom";
 import style from "./header.module.scss";
 import classNames from "classnames/bind";
 import * as React from "react";
-import MenuItem from "@mui/material/MenuItem";
 import { useState } from "react";
 
-import { MenuList, Paper } from "@mui/material";
+import { CircularProgress, Paper } from "@mui/material";
 import { useDebounce } from "../../Hooks";
 import { searchProduct } from "../../Services/API/Products";
+import SearchItem from "../SearchItem";
 
 const cx = classNames.bind(style);
 function Header() {
   const [searchValue, setSearchValue] = useState("");
   const [searchResult, setSearchResult] = useState([]);
+  const [searchPopper, setSearchPopper] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const debounceValue = useDebounce(searchValue, 600);
 
   React.useEffect(() => {
     if (!debounceValue.trim()) {
       setSearchResult([]);
+      setSearchPopper(false);
       return;
     }
 
     const fetchApi = async () => {
+      setLoading(true);
       try {
-        const result = await searchProduct({ value: debounceValue });
-        setSearchResult(result.docs);
+        const result = await searchProduct({ search: debounceValue });
+        setSearchResult(result.data);
+        if (result.data?.length > 0) {
+          setSearchPopper(true);
+        }
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchApi();
@@ -42,37 +51,43 @@ function Header() {
           </Link>
         </div>
         <div className={cx(["header-content_search", "search-container"])}>
-          <input
-            value={searchValue}
-            onChange={(e) => {
-              setSearchValue(e.target.value);
-            }}
-            className={cx("input-search_header")}
-            id={cx("search-box")}
-            type="text"
-            placeholder="Search for products, brands and more"
-          />
-          <Paper hidden={!searchResult.length > 0} className={cx("menu")}>
-            <MenuList>
-              {/* <MenuItem>Product 1</MenuItem>
-              <MenuItem>Product 2</MenuItem>
-              <MenuItem>Product 3</MenuItem> */}
+          <div className="relative w-full h-full">
+            <input
+              onBlur={() => setSearchPopper(false)}
+              value={searchValue}
+              onChange={(e) => {
+                setSearchValue(e.target.value);
+              }}
+              className={cx("input-search_header")}
+              id={cx("search-box")}
+              type="text"
+              placeholder="Search for products, brands and more"
+            />
 
-              {searchResult.map((item, index) => {
+            {loading && (
+              <div className="absolute right-3 top-3">
+                <CircularProgress size={20} />
+              </div>
+            )}
+          </div>
+
+          <Paper hidden={!searchPopper} className={cx("menu")}>
+            <div className="flex flex-col px-2 gap-3">
+              {searchResult.map((product, index) => {
+                const productName = product.name;
+                const image = product.product_images?.[0]?.fileUrl;
+                const price = product.options?.[0]?.price;
                 return (
-                  <Link to={`/product/${item._id}`} key={index}>
-                    <MenuItem
-                      onClick={() => {
-                        setSearchResult([]);
-                        setSearchValue("");
-                      }}
-                    >
-                      <p className={cx("search-item")}>{item.name}</p>
-                    </MenuItem>
-                  </Link>
+                  <SearchItem
+                    key={index}
+                    title={productName}
+                    image={image}
+                    price={price}
+                    productId={product.id}
+                  />
                 );
               })}
-            </MenuList>
+            </div>
           </Paper>
 
           <button id={cx("search-button")}>Search</button>

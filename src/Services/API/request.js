@@ -1,11 +1,12 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-const dev = "http://localhost:3001/api";
+const dev = "https://7b57-116-103-16-29.ngrok-free.app/api";
 const request = axios.create({
   baseURL: dev,
   headers: {
     Accept: "application/json, text/plain, */*",
+    "ngrok-skip-browser-warning": "69420",
   },
 });
 

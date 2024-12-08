@@ -94,9 +94,13 @@
 .menu {
   position: absolute;
   top: 100%;
-  width: 80%;
+  width: 100%;
   z-index: 99;
+  left: 0;
+  max-height: 492px;
+  overflow: scroll;
 }
+
 .search-item {
   max-width: 100%;
   overflow: hidden;

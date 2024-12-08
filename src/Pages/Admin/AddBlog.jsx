@@ -4,6 +4,7 @@ import Button from "@mui/material/Button";
 import { createBlog } from "../../Services/API/Blogs";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import uploadFile from "../../Services/Cloudinary";
 
 function AddBlog() {
   const contentRef = useRef();
@@ -15,7 +16,12 @@ function AddBlog() {
   const handleAddBlog = () => {
     const DOMContent = contentRef.current.innerHTML;
 
-    createBlog({ title, DOMContent, shortContent: description })
+    createBlog({
+      title,
+      shortContent: description,
+      DOMContent,
+      thumbNail: thumbnail,
+    })
       .then((res) => {
         toast.success("Create Blog Successfully");
         contentRef.current.innerHTML = "";
@@ -103,13 +109,21 @@ function AddBlog() {
                             const file = e.target.files[0];
                             const previewURL = URL.createObjectURL(file);
                             file.preview = previewURL;
-                            setThumbnail(file);
+
+                            uploadFile(file)
+                              .then((res) => {
+                                setThumbnail(res.data.secure_url);
+                                toast.success("Upload ảnh thành công");
+                              })
+                              .catch((err) => {
+                                toast.error("Upload ảnh không thành công");
+                              });
                           }
                         }}
                         className="form-control"
                         id="val-desc"
                       />
-                      {thumbnail && <img src={thumbnail.preview} alt=""></img>}
+                      {thumbnail && <img src={thumbnail} alt=""></img>}
                     </div>
                   </div>
 

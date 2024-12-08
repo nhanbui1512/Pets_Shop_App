@@ -5,7 +5,7 @@ import { useState } from "react";
 import { formatDay } from "../../Utils/time";
 import { Link } from "react-router-dom";
 import ListSkeleton from "../../Components/ListSkeleton";
-import data from "./data";
+import { getBreeds } from "../../Services/API/Breeds";
 
 const cx = classNames.bind(styles);
 
@@ -13,7 +13,13 @@ function Animal() {
   const [breeds, setBreeds] = useState([]);
 
   useEffect(() => {
-    setBreeds(data.docs);
+    getBreeds({ page: 1, perPage: 30 })
+      .then((res) => {
+        setBreeds(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
   return (
     <div className={cx("wrapper")}>
@@ -26,16 +32,16 @@ function Animal() {
                 return (
                   <div key={index} className="col-md-6 col-lg-3">
                     <div className="card">
-                      <Link to={`/animals`}>
+                      <Link to={`/animals/${breed.id}`}>
                         <img
                           className={cx(["card-img", "img-fluid"])}
-                          src={breed.breedImages[0]}
+                          src={breed.thumbNail}
                           alt=""
                         />
                       </Link>
                       <div className="card-body">
-                        <Link to={`/animals`}>
-                          <h5 className="card-title">{breed.breed_name}</h5>
+                        <Link to={`/animals/${breed.id}`}>
+                          <h5 className="card-title">{breed.name}</h5>
                         </Link>
                         <p className="card-text">{breed.appearance}</p>
                         <p className="card-text">

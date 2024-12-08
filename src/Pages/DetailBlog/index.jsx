@@ -6,7 +6,7 @@ import { Link, useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 
 import { formatDay } from "../../Utils/time";
-import blogs from "./data";
+import { getBlogById } from "../../Services/API/Blogs";
 
 const cx = classNames.bind(styles);
 
@@ -17,9 +17,14 @@ function DetailBlog() {
   const { id } = useParams();
 
   useEffect(() => {
-    const res = blogs.docs.find((item) => item._id === id);
-    setData(res);
-    contentRef.current.innerHTML = res.content;
+    getBlogById(id)
+      .then((res) => {
+        setData(res.data);
+        contentRef.current.innerHTML = res.data.domDescription;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, [id]);
 
   return (

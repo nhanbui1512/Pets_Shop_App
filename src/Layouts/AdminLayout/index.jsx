@@ -1,16 +1,16 @@
 import { useContext, useState } from "react";
-import { Link, Navigate, Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import DropdownMenu from "../../Components/DropdownMenu";
 import { StorageContext } from "../../Contexts/StorageContext";
 import Cookies from "js-cookie";
 
-function AdminLayout({ children }) {
+function AdminLayout() {
   const [openSidebar, setOpenSidebar] = useState(true);
   const storage = useContext(StorageContext);
 
-  if (!storage.userData || storage.userData.role.roleName !== "admin") {
-    return <Navigate to="/login" />;
-  }
+  // if (!storage.userData || storage.userData?.role?.roleName !== "admin") {
+  //   return <Navigate to="/login" />;
+  // }
 
   return (
     <div
@@ -324,7 +324,12 @@ function AdminLayout({ children }) {
           </div>
         </div>
 
-        <div className="nk-sidebar">
+        <div
+          style={{
+            backgroundColor: "#f3f1fa",
+          }}
+          className="nk-sidebar"
+        >
           <div className="nk-nav-scroll">
             <ul className="metismenu" id="menu">
               <DropdownMenu title={"Category"}>

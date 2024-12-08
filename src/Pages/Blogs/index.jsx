@@ -5,7 +5,7 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import styles from "./Blogs.module.scss";
 import Blog from "../../Components/Blog";
 import { useEffect, useState } from "react";
-import data from "./data";
+import { getBlogs } from "../../Services/API/Blogs";
 
 const cx = classNames.bind(styles);
 
@@ -13,7 +13,13 @@ function Blogs() {
   const [blogs, setBlogs] = useState([]);
 
   useEffect(() => {
-    setBlogs(data.docs);
+    getBlogs({ page: 1, perPage: 20 })
+      .then((res) => {
+        setBlogs(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   return (

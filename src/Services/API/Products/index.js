@@ -18,13 +18,10 @@ export async function getProductById(id) {
   }
 }
 
-export async function searchProduct({ page = 1, perPage = 10, value = "" }) {
-  // Chuyển đổi object thành chuỗi query
-  let searchString = `description:"${value}"`;
-
+export async function searchProduct({ page = 1, perPage = 10, search = "" }) {
   try {
     const res = await request.get(
-      `/products?limit=${perPage}&page=${page}&search=${searchString}`
+      `/products?per_page=${perPage}&page=${page}&search=${search}`
     );
 
     return res.data;
